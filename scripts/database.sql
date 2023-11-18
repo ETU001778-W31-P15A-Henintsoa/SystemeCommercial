@@ -149,7 +149,7 @@ create table Message(
     foreign key (idMail) references Mail(idMail)
 );
 
------------------------------------- MESSAGE --------------------------------------
+------------------------------------ PROFORMA --------------------------------------
 create sequence seqProforma;
 create table Proforma(
     idProforma varchar(20) default concat('PRO' || nextval('seqProforma')) primary key,
@@ -159,13 +159,14 @@ create table Proforma(
     foreign key (idFournisseur) references Fournisseur(idFournisseur)
 );
 
------------------------------------- MESSAGE -------------------------------------
+------------------------------------ DONNEE PROFORMA -------------------------------------
 create sequence seqDonneeProforma;
 create table DonneeProforma(
     idDonneeProforma varchar(20) default concat('DOP' || nextval('seqDonneeProforma')) primary key,
     idArticle varchar(20),
     id varchar(20),
     foreign key (idFournisseur) references Fournisseur(idFournisseur)
+);
   
   
   
