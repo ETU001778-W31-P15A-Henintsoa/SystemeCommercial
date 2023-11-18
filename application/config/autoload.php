@@ -135,5 +135,6 @@ $autoload['language'] = array();
 
 
 
-$autoload['model'] = array('Generalisation');
+
+$autoload['model'] = array('Generalisation', 'Mail_modele', 'Proforma_modele');
 

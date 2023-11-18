@@ -57,3 +57,15 @@ VALUES
 insert into validation(idBrancheDepartement,libelle) values
 ('BDEPT1','achat'),
 ('BDEPT3','premier validation bon acahat');
+
+-- Henintsoa 18 Novembre 21:21
+------------------------------------ VILLE ---------------------------------------
+insert into Ville(nomVille) values
+ ('Antananarivo'),
+ ('Antsirable');
+
+------------------------------------ FOURNISSEUR ---------------------------------
+insert into Fournisseur(nomFournisseur, email, motdepasse, adresse, idVille) values 
+('SHOPRITE', 'shoprite@gmail.com', 'shoprite', 'Lot II BIS Tanjobato', 'VILLE1'),
+('JUMBO SCORE', 'jumbo@gmail.com', 'jumbo', 'Lot III BIS Ankorondrano', 'VILLE1'),
+('LEADER PRICE', 'lederprice@gmail.com', 'leaderprice', 'Lot VI BIS Ankorondrano', 'VILLE1');
