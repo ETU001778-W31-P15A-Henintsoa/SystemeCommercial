@@ -45,3 +45,22 @@ create table Message(
     piecejointe varchar(20),
     foreign key (idMail) references Mail(idMail)
 );
+
+------------------------------------ MESSAGE --------------------------------------
+create sequence seqProforma;
+create table Proforma(
+    idProforma varchar(20) default concat('PRO' || nextval('seqProforma')) primary key,
+    idFournisseur varchar(20),
+    piecejointe varchar(20),
+    idbesoin varchar(20),
+    foreign key (idFournisseur) references Fournisseur(idFournisseur)
+);
+
+------------------------------------ MESSAGE --------------------------------------
+create sequence seqDonneeProforma;
+create table DonneeProforma(
+    idDonneeProforma varchar(20) default concat('DOP' || nextval('seqDonneeProforma')) primary key,
+    idArticle varchar(20),
+    id varchar(20),
+    foreign key (idFournisseur) references Fournisseur(idFournisseur)
+);

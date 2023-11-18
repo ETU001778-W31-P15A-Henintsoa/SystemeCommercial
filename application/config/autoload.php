@@ -135,5 +135,5 @@ $autoload['language'] = array();
 
 
 
-$autoload['model'] = array();
+$autoload['model'] = array('Mail_modele', 'Proforma_modele');
 
