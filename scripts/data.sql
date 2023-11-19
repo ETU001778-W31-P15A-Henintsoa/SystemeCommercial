@@ -75,7 +75,6 @@ insert into Fournisseur(nomFournisseur, email, motdepasse, adresse, idVille) val
 ('JUMBO SCORE', 'jumbo@gmail.com', 'jumbo', 'Lot III BIS Ankorondrano', 'VILLE1'),
 ('LEADER PRICE', 'leader@gmail.com', 'leaderprice', 'Lot VI BIS Ankorondrano', 'VILLE1');
 
-
 ------------------------------------ ADRESSEMAIL ------------------------------------------
 insert into adresseMail(idsociete, adresseMAil) values
 ('ENT1', 'dimpex@gmail.com', 'dimpex'),
@@ -83,3 +82,7 @@ insert into adresseMail(idsociete, adresseMAil) values
 ('FOU2', 'jumbo@gmail.com', 'jumbo'),
 ('FOU3', 'leader@gmail.com', 'leader');
 
+
+--------------------------------------Fiderana 19-11-23 13:07-------------------------------------------
+update employePoste set idBrancheDepartement='BDEPT3' where idemployePoste='EPOST3';
+update validation set libelle='premier validation bon achat' where idValidation='VAL2';
