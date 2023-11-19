@@ -135,5 +135,5 @@ $autoload['language'] = array();
 
 
 
-$autoload['model'] = array('Generalisation');
+$autoload['model'] = array('Generalisation','Login_modele');
 
