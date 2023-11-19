@@ -3,100 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questions/Reponses</title>
+    <title>Besoin en achat</title>
 </head>
+<style>
+    body{
+        width:1000px;
+        margin-left:auto;
+        margin-right:auto;
+        float:right;
+        backgroundcolor:red;
+    }
+    #plus{
+        margin-left:auto;
+        margin-right:auto;
+    }
+    /* input{
+        width:1000px;
+    } */
+</style>
 <body>
-
-<?php  // var_dump($besoin); ?>
-    <form action="<?php echo site_url("welcome/formulaireFicheEvaluation"); ?>" method="post">
-        <div >
-            <!-- <h3>Question pour le <?php echo $besoin[$i]->branche; ?></h3> -->
-            <div class="mb-3"><input id="basic-default-fullname" class="form-control" type="hidden" name="<?php echo $article[$i]->idArticle; ?>" value="<?php echo $article[$i]->idArticle; ?>"></div>
-            <div class="mb-3"><input id="basic-default-fullname" class="form-control" type="hidden" name="iddepartement" value="<?php echo $besoin[$i]->iddepartement; ?>"></div>
-            <!-- Question 1 -->
-            <div id="question1">
-                <h5>Question 1</h5>
-                <div class="mb-3"><input id="basic-default-fullname" class="form-control" type="text" name="<?php echo $article[$i]->idArticle; ?>question1" placeholder="Question1"></div>
-                <div class="mb-3"><input id="basic-default-fullname" class="form-control" type="number" name="<?php echo $article[$i]->idArticle; ?>coeffquestion1" placeholder="Coefficient"></div>
-                </br>
-                <div class="mb-3"><input id="basic-default-fullname" class="form-control" type="text" name="<?php echo $article[$i]->idArticle; ?>question1reponse" placeholder="question1reponse1"></div>
-                </br>
-                <div class="mb-3"><input id="basic-default-fullname" class="form-control" type="text" name="<?php echo $article[$i]->idArticle; ?>question1autre1" id="question1autre1" placeholder="Autre 1"><span id="<?php echo $article[$i]->idArticle; ?>11"><button type="button" id="<?php echo $article[$i]->idArticle; ?>11" onclick="plusautrereponse('<?php echo $article[$i]->idArticle; ?>',1,1)">+</button></span></div>
-                <div id='question1autre2'></div>
+    <form action="<?php echo site_url("ControllerBesoinAchat/entrerBesoin"); ?>" method="post" >
+        <input type="hidden" value="1" name="nombreArticle" id="inputHidden">
+        <div class="mb-3 row">
+            <label for="html5-date-input" class="col-md-2 col-form-label">Date de besoin</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="date"  id="html5-date-input" name="dateBesoin" />
+                </div>
+        </div>
+        <div class="mb-3" id="form">
+            <label for="exampleFormControlSelect1" class="form-label">Entrez un article</label>
+            <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" name="article1">
+                <?php 
+                    for ($i=0; $i <count($article) ; $i++) { ?>
+                        <option value="<?php echo $article[$i]->idarticle; ?>"><?php echo $article[$i]->nomarticle; ?></option>
+                <?php }
+                ?>
+            </select>
+            <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input
+                    type="number"
+                    class="form-control border-0 shadow-none"
+                    placeholder="quantite"
+                    name="quantite1"
+                  />
+                </div>
+              </div>
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                <span id="plus"><label for="exampleFormControlSelect1" class="form-label"><button type="button" onclick="autreArticle()" >+</button></label></span>
+                </div>
+              </div>
+        </div>
+        <div class="mb-3">
+            <div class="card-body">
+                <div class="demo-inline-spacing">
+                    <button type="submit" class="btn btn-primary">Entrer</button>
+                </div>
             </div>
-
-            <!-- Question 2 -->
-             <div id="question2">
-                <h5>Question 2</h5>
-                <div class="mb-3"><input id="basic-default-fullname" class="form-control" type="text" name="<?php echo $article[$i]->idArticle; ?>question2" placeholder="Question2"></div>
-                <div class="mb-3"><input id="basic-default-fullname" class="form-control" type="number" name="<?php echo $article[$i]->idArticle; ?>coeffquestion2" placeholder="Coefficient"></div>
-                </br>
-                <div class="mb-3"><input id="basic-default-fullname" class="form-control" type="text" name="<?php echo $article[$i]->idArticle; ?>question2reponse" placeholder="question2reponse1"></div>
-                </br>
-                <div class="mb-3"><input id="basic-default-fullname" class="form-control" type="text" name="<?php echo $article[$i]->idArticle; ?>question2autre1" id="question2autre1" placeholder="Autre 1"><span id="<?php echo $article[$i]->idArticle; ?>21"><button type="button" id="<?php echo $article[$i]->idArticle; ?>21" onclick="plusautrereponse('<?php echo $article[$i]->idArticle; ?>',2,1)">+</button></span></div>
-                <div id='question2autre2'></div>
-            </div>
-
-             <!-- Question 3 -->
-            <div id="question3">
-                <h5>Question 3</h5>
-                <div class="mb-3"><input id="basic-default-fullname" class="form-control" type="text" name="<?php echo $article[$i]->idArticle; ?>question3" placeholder="Question3"></div>
-                <div class="mb-3"><input id="basic-default-fullname" class="form-control" type="number" name="<?php echo $article[$i]->idArticle; ?>coeffquestion3" placeholder="Coefficient"></div>
-                </br>
-                <div class="mb-3"><input id="basic-default-fullname" class="form-control" type="text" name="<?php echo $article[$i]->idArticle; ?>question3reponse" placeholder="question3reponse1"></div>
-                </br>
-                <div class="mb-3"><input id="basic-default-fullname" class="form-control" type="text" name="<?php echo $article[$i]->idArticle; ?>question3autre1" id="question3autre1" placeholder="Autre 1"><span id="<?php echo $article[$i]->idArticle; ?>31"><button type="button" id="<?php echo $article[$i]->idArticle; ?>31" onclick="plusautrereponse('<?php echo $article[$i]->idArticle; ?>',3,1)">+</button></span></div>
-                <div id='question3autre2'></div>
-            </div>
-            </div>
-    </div>
-    <div class="mb-3"><input id="basic-default-fullname" class="form-control" type="submit" value="OK">
+        </div>
     </form> 
 </body>
 
 
 <script>
-    function plusautrereponse(idbesoins, numeroquestion, numeroreponse) {
-        var string = 'question' + numeroquestion + 'autre' + numeroreponse;
-        // alert(string);
-        var element = document.getElementById(string);
-            if (element.value == "") {
-                alert("Suggestion vide");
-            } else {
+    window.onbeforeunload = function() {
+        localStorage.setItem('quantiteArticle',1);
+    };
 
-                numeroreponseavant = numeroreponse;
-                numeroreponse = numeroreponse + 1;
-                numeromanaraka = numeroreponse + 1;
+    function avoirQuantite(){
+        return localStorage.setItem('quantiteArticle');
+    }
 
-                var idspan = "" + idbesoins + numeroquestion+numeroreponse
+    function autreArticle() {
+        var numero=localStorage.getItem('quantiteArticle');
+        // var quantite = 'quantite'+$numero;
+        var nombreArticle=parseInt(numero)+1;
+        // var element = document.getElementById(string);
+        //     if (element.value == "") {
+        //         alert("Assurer vous d'abord que les anciens formulaires sont bien remplis");
+        //     } else {
+                var conteneurForm= document.getElementById("form");
+                
+                
+                // var idspan = "" + idbesoins + numeroquestion+numeroreponse
+                var div=document.createElement("div");
+                var nouveau =   '<label for="exampleFormControlSelect1" class="form-label">Entrez un article</label><select name=article'+nombreArticle+' class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" ><?php for ($i=0; $i <count($article) ; $i++) { ?><option value="<?php echo $article[$i]->idarticle; ?>"><?php echo $article[$i]->nomarticle; ?></option><?php } ?></select><div class="navbar-nav align-items-center"><div class="nav-item d-flex align-items-center"><i class="bx bx-search fs-4 lh-0"></i><input type="number" class="form-control border-0 shadow-none" placeholder="quantite" name=quantite'+nombreArticle+' /> </div> </div> <div class="navbar-nav align-items-center"> <div class="nav-item d-flex align-items-center"><span id="plus"><label for="exampleFormControlSelect1" class="form-label"><button type="button" onclick="$nombreQuantite=autreArticle()">+</button></label></span> </div> </div>';
+                div.innerHTML = nouveau;
+                conteneurForm.appendChild(div);
+                localStorage.setItem('quantiteArticle',nombreArticle)
 
-                var nouveau = "<div class="mb-3"><input id="basic-default-fullname" class="form-control" type=text name='"+idbesoins+"question" + numeroquestion + "autre" + numeroreponse + "' id='question"+numeroquestion+"autre"+numeroreponse+"' placeholder='Autre " + numeroreponse + "'  "+"/> <span id='"+ idspan +"'><button type='button' id='"+ idspan +"'  onclick=plusautrereponse('" +idbesoins+ "'," + numeroquestion + "," + numeroreponse + ")>+</button></span>" +
-                    "<div id='question" + numeroquestion + "autre" + numeromanaraka + "'></div>";
+                var hidden=document.getElementById("inputHidden");
+                hidden.value=nombreArticle;
 
-                string = 'question' + numeroquestion + 'autre' + numeroreponse;
-                // alert(nouveau);
-
-                var conteneur = document.getElementById(string);
-                conteneur.innerHTML = nouveau;
-
-                //Creation du bouton
-                // let btn = document.createElement("button");
-                // btn.innerHTML = "+";
-                // btn.type = "button";
-
-                // btn.addEventListener("click",()=>{
-                //     plusautrereponse(idbesoins , numeroquestion,numeroreponse); 
-                // });
-
-                // var span = document.getElementById(idspan);
-                // span.appendChild(btn);
-
-                // alert("" + idbesoins + numeroquestion + "" + numeroreponseavant);
-
-                // Suppression du span
-                var ancienSpan = document.getElementById("" + idbesoins + numeroquestion + "" + numeroreponseavant);
-                ancienSpan.remove();
-            }   
+                var span = document.getElementById("plus");
+                span.remove();
     }
 </script>
 </html>
