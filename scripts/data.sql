@@ -69,3 +69,8 @@ insert into Fournisseur(nomFournisseur, email, motdepasse, adresse, idVille) val
 ('SHOPRITE', 'shoprite@gmail.com', 'shoprite', 'Lot II BIS Tanjobato', 'VILLE1'),
 ('JUMBO SCORE', 'jumbo@gmail.com', 'jumbo', 'Lot III BIS Ankorondrano', 'VILLE1'),
 ('LEADER PRICE', 'lederprice@gmail.com', 'leaderprice', 'Lot VI BIS Ankorondrano', 'VILLE1');
+
+
+--------------------------------------Fiderana 19-11-23 13:07-------------------------------------------
+update employePoste set idBrancheDepartement='BDEPT3' where idemployePoste='EPOST3';
+update validation set libelle='premier validation bon achat' where idValidation='VAL2';
