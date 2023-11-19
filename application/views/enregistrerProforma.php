@@ -3,7 +3,7 @@
             <div class="container-xxl flex--1 container-p-y">
               <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Gestion </span> Proforma</h4>
 
-              <div class=">
+              <div class="row">
 
 
                 <!-- Merged -->
@@ -12,49 +12,44 @@
                     <h5 class="card-header">Saisie de proforma</h5>
                     <div class="card-body demo-vertical-spacing demo-only-element">
                     <form action="<?php echo site_url("welcome/formulaireDemandeConge"); ?>" method="post">
-
+                    <input type="hidden" value="" name="idproforma"/>
+        
                     <div class="mb-3">
-                        <div class="input-group">
-                            <label class="input-group-text" for="inputGroupSelect01">Articles</label>
-                            <select class="form-select" id="inputGroupSelect01">
+                    <label for="html5-number-input" class="col-md-2 col-form-label"> Articles </label>
+                            <select class="form-select" id="inputGroupSelect01" name="idarticle">
                               <option selected>Choisir</option>
-                              <option value="1">One</option>
-                              <option value="2">Two</option>
-                              <option value="3">Three</option>
+                              <?php for($i=0; $i<count($articles); $i++){ ?>
+                                <option value="<?= $articles[$i]->idarticle ?>"><?= $articles[$i]->nomarticle ?></option>
+                              <?php } ?>
                             </select>
-                        </div>
                     </div>
 
                     <div class="mb-3">
-                        <div class="input-group">
-                            <label class="input-group-text" for="inputGroupSelect01">Fournisseur</label>
-                            <select class="form-select" id="inputGroupSelect01">
-                              <option selected>Choisir</option> 
-                              <option value="1">One</option>
-                              <option value="2">Two</option>
-                              <option value="3">Three</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="html5-number-input" class="col-md-2 col-form-label">Quantite <Article></Article></label>
-                          <input class="form-control" type="number" value="0.0" id="html5-number-input" />
+                          <label for="html5-number-input" class="col-md-2 col-form-label">Quantite </label>
+                          <input class="form-control" type="number" value="0.0" id="html5-number-input" name="quantite"/>
                     </div>
 
                     <div class="mb-3">
                         <label for="html5-number-input" class="col-md-2 col-form-label">Prix TTC</label>
-                          <input class="form-control" type="number" value="18" id="html5-number-input" />
+                          <input class="form-control" type="number" value="18" id="html5-number-input" name="prixTTc" />
                     </div>
 
                       <div class="mb-3">
                         <div class="form-check mt-3">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" name="tva"/>
                             <label class="form-check-label" for="defaultCheck1"> TVA </label>
                           </div>
                       </div>
 
+                      <div class="mb-3">
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" name="livraisonpartielle"/>
+                            <label class="form-check-label" for="defaultCheck1"> Livraison Partielle </label>
+                          </div>
+                      </div>
+
                       <button type="submit" class="btn btn-primary">Enregistrer</button>
+                      <button type="button" class="btn btn-primary"><a href=""> Retour a L'acceuil</a></button>
                     
                     </form>
                     </div>

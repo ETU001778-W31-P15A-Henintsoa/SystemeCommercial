@@ -10,8 +10,12 @@
                 <div class="col-md-12">
                   <div class="card mb-4">
                     <h5 class="card-header">Formulaire d'envoie</h5>
+                    
                     <div class="card-body demo-vertical-spacing demo-only-element">
-                    <form action="<?php echo site_url("welcome/formulaireDemandeConge"); ?>" method="post">
+                      <?php if(isset($erreur)){
+                      echo "<p style='color:red;''>".$erreur."</p>";
+                      } ?>
+                    <form action="<?php echo site_url("mail/envoieMail"); ?>" method="post" enctype="multipart/form-data">
                       <div class="mb-3">
                         <label for="formFile" class="form-label">E-Mail</label>
                         <div class="input-group">
@@ -21,6 +25,7 @@
                             placeholder="Jean@gmail.com"
                             aria-label="Jean"
                             aria-describedby="basic-addon13"
+                            name="mail"
                             />
                         </div>
                       </div>
@@ -28,13 +33,13 @@
                       <div class="mb-3">
                         <label for="formFile" class="form-label">Message</label>
                         <div class="input-group input-group-merge speech-to-text">
-                            <textarea class="form-control" placeholder="Chere Jean, ......" rows="2"></textarea>
+                            <textarea class="form-control" placeholder="Chere Jean, ......" rows="2" name="message"></textarea>
                         </div>
                       </div>
 
                       <div class="mb-3">
                         <label for="formFile" class="form-label">Piece jointe</label>
-                        <input class="form-control" type="file" id="formFile" />
+                        <input class="form-control" type="file" id="formFile" name="piecejointe" />
                       </div>
 
                       <button type="submit" class="btn btn-primary">Envoyer</button>

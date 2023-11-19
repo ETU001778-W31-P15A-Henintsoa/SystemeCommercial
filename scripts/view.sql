@@ -14,3 +14,10 @@ create or replace view v_posteEmploye as
 create or replace view v_posteEmployeValidation as 
     select pEmp.*,libelle from v_posteEmploye as pEmp
         left join validation as v on v.idBrancheDepartement=pEmp.idBrancheDepartement;
+
+----------------------------------- V_DonneeProforma ------------------------------
+create or replace view v_DonneeProforma as
+    select Proforma.idProforma, Proforma.idFournisseur, Proforma.piecejointe, Proforma.idbesoinAchat,
+    DonneeProforma.idDonneeProforma, DonneeProforma.idArticle, DonneeProforma.quantite, DonneeProforma.prixUnitaire, DonneeProforma.TVA, DonneeProforma.livraisonPartielle
+    from Proforma 
+        join DonneeProforma on DonneeProforma.idProforma = Proforma.idProforma;

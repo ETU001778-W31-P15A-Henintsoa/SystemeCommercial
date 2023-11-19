@@ -70,7 +70,7 @@ create table besoinAchat(
 -----------------------------Type article---------------------------------
 create sequence seqTypeArticle;
 create table typeArticle(
-    idTypeArticle varchar(20) default concat('TART'|| nextval('seqDetailBesoinAchat')) primary key,
+    idTypeArticle varchar(20) default concat('TART'|| nextval('seqTypeArticle')) primary key,
     libelle varchar(50)
 );
 
@@ -116,6 +116,12 @@ create table Ville(
 create sequence seqEntreprise;
 create table Entreprise(
     idEntreprise varchar(20) default concat('ENT' || nextval('seqEntreprise')) primary key,
+    nomEntreprise varchar(20),
+    adresse varchar(50),
+    numerofax varchar(20),
+    contact varchar(15),
+    idVille varchar(20),
+    foreign key (idVille) references  Ville(idVille)
 );
 
 ------------------------------------ FOURNISSEUR ---------------------------------
@@ -130,13 +136,24 @@ create table Fournisseur(
     foreign key (idVille) references Ville(idVille)
 );
 
+------------------------------------ ADRESSE MAIL ----------------------------------------
+create sequence seqAdresseMail;
+create table AdresseMail(
+    idAdresseMail varchar(20) default concat('ADM' || nextval('seqAdresseMail')) primary key,
+    idSociete varchar(20),
+    adresseMAil varchar(50),
+    motdepasse varchar(10)
+);
+
 ------------------------------------ EMAIL ----------------------------------------
 create sequence seqMail;
 create table Mail(
     idMail varchar(20) default concat('MAIL' || nextval('seqMail')) primary key,
     dateenvoie timestamp,
     envoyeur varchar(20),
-    destinataire varchar(20)
+    destinataire varchar(20),
+    foreign key (envoyeur) references AdresseMail(idAdresseMail),
+    foreign key (destinataire) references AdresseMail(idAdresseMail)
 );
 
 ------------------------------------ MESSAGE --------------------------------------
@@ -155,17 +172,22 @@ create table Proforma(
     idProforma varchar(20) default concat('PRO' || nextval('seqProforma')) primary key,
     idFournisseur varchar(20),
     piecejointe varchar(20),
-    idbesoin varchar(20),
-    foreign key (idFournisseur) references Fournisseur(idFournisseur)
+    idbesoinAchat varchar(20),
+    foreign key (idFournisseur) references Fournisseur(idFournisseur),
+    foreign key (idbesoinAchat) references besoinAchat(idbesoinAchat)
 );
 
 ------------------------------------ DONNEE PROFORMA -------------------------------------
 create sequence seqDonneeProforma;
 create table DonneeProforma(
     idDonneeProforma varchar(20) default concat('DOP' || nextval('seqDonneeProforma')) primary key,
+    idProforma varchar(20),
     idArticle varchar(20),
-    id varchar(20),
-    foreign key (idFournisseur) references Fournisseur(idFournisseur)
+    quantite float,
+    prixUnitaire float,
+    TVA boolean,
+    livraisonPartielle boolean,
+    foreign key (idProforma) references Proforma(idProforma)
 );
   
   
