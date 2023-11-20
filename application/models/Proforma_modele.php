@@ -19,34 +19,60 @@
             $this->Generalisation->insertion("donneeproforma(idproforma, idarticle, quantite, prixunitaire, tva, livraisonpartielle)", sprintf("('%s', '%s', %s, %s, %s, %s)", $idproforma, $idarticle, $quantite, $prixTTC, $TVA, $livraison));
         }
 
-        public function avoirFournisseurArticle($idbesoin){
-            $avoirDetailBesoins = $this->Generalisation->avoirTableSpecifique("detailbesoinachat", "*", sprintf("idbesoinachat='%s'", $idbesoin));
+        public function avoirFournisseurArticle($idregroupement){
+            $avoirDetailBesoins = $this->Generalisation->avoirTableSpecifique("regroupement", "*", sprintf("idregroupement='%s'", $idregroupement));
             $fournisseur = $this->Generalisation->avoirTable("fournisseur");
+            $donnee = array();            
 
             for ($i=0; $i < count($avoirDetailBesoins); $i++) { 
+                $donnee[$i]['regroupement'] = $avoirDetailBesoins[$i];
                 $data = array();
                 for ($j=0; $j < count($fournisseur); $j++) { 
                     $data[$j]['fournisseur'] = $fournisseur[$j]; 
-                    $donneeproforma = $this->Generalisation->avoirTableSpecifique("v_donneeproforma", "*", sprintf("idbesoinachat='%s' and idfournisseur='%s' and idarticle='%s'", $idbesoin, $fournisseur[$j]->idfournisseur, $avoirDetailBesoins[$i]->idarticle));
+                    $donneeproforma = $this->Generalisation->avoirTableSpecifique("v_donneeproforma", "*", sprintf("idregroupement='%s' and idfournisseur='%s' and idarticle='%s'", $idregroupement, $fournisseur[$j]->idfournisseur, $avoirDetailBesoins[$i]->idarticle));
                     if(count($donneeproforma)!=0){
-                        $data[$j]['donnee'] = $donneeproforma[0];
+                        $data[$j]['prixunitaire'] = ($donneeproforma[0]->prixunitaire);
+                        $data[$j]['quantite'] = ($donneeproforma[0]->prixunitaire);
                     }
                 }
-                $avoirDetailBesoins[$i]['data'] = $data;
+                // $avoirDetailBesoins[$i]['data'] = $data;
+                $donnee[$i]['data'] = $data;
             }
             return $avoirDetailBesoins;
         }
 
-        public function avoirMoinsDisant($idbesoin){
-            $detailBesoin = $this->avoirFournisseurArticle($idbesoin);
+        public function data(){
+            $regroupement = array();
+            $regroupement[0]['data'] = array();
+            $regroupement[0]['data'][0]['fournisseur'] = '1';
+            $regroupement[0]['data'][0]['quantite']= 10;
+            $regroupement[0]['data'][0]['prixunitaire']= 500;
+            $regroupement[0]['data'][1]['fournisseur'] = '2';
+            $regroupement[0]['data'][1]['quantite'] = 30;
+            $regroupement[0]['data'][1]['prixunitaire'] = 1400;
+            $regroupement[0]['data'][2]['fournisseur'] = '3';
+            $regroupement[0]['data'][2]['quantite']= 2;
+            $regroupement[0]['data'][2]['prixunitaire']= 200;
+            return $regroupement;
+        }
+
+        public function avoirMoinsDisant($idregroupement){
+            // $detailBesoin = $this->avoirFournisseurArticle($idregroupement);
+            $detailBesoin =$this->data();
+
+            // var_dump($detailBesoin);
+        
             for ($i=0; $i <count($detailBesoin) ; $i++) { 
                 $detail = $detailBesoin[$i];
+                // var_dump($detail);
                 if(count($detail['data'])!=0){
                     // Récupérer la liste des IDs
-                    $ids = array_column($detail['data'][0], 'prixUnitaire');
+                    $prixunitaires = array_column($detail['data'], 'prixunitaire');
 
                     // Trier le tableau $data en fonction de l'ID
-                    array_multisort($ids, SORT_ASC, $data);
+                    array_multisort($prixunitaires, SORT_ASC, $detail['data']);
+
+                    $detailBesoin[$i]['data'] = $detail['data'];
                 }
             }
             return $detailBesoin;

@@ -106,4 +106,9 @@ class Proforma extends CI_Controller {
 
 		redirect("proforma/versEnregistrementProforma?idproforma=".$idproforma);
 	}
+
+	public function versMoinsDisant(){
+		$data =$this->Proforma_modele->avoirMoinsDisant("");
+		var_dump($data);
+	}
 }

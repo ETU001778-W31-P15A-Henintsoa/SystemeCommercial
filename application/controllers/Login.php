@@ -13,9 +13,10 @@
 
 			$reponse = $this->Login_modele->verification_login($mail, $mdp);
 
+			// var_dump($_SESSION);
 
 			if($reponse==true){
-				redirect("welcome/header");
+				redirect("welcome/versAcceuil");
 			}
 		}
 
