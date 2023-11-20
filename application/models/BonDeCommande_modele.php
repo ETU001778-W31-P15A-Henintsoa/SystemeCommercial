@@ -121,6 +121,13 @@
             return $result;
         }
 
+        public function avoirDetailRegroupement() {
+            $sql = "SELECT * FROM v_detailregroupement where etat = 21";
+            $query = $this->db->query($sql);
+            $result = $query->result_array();
+            return $result;
+        }
+
         public function nombreEnLettres($nombre) {
             $unites = array("", "Un", "Deux", "Trois", "Quatre", "Cinq", "Six", "Sept", "Huit", "Neuf");
             $dizaines = array("", "Dix", "Vingt", "Trente", "Quarante", "Cinquante", "Soixante", "Soixante-Dix", "Quatre-Vingts", "Quatre-Vingt-Dix");
