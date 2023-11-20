@@ -19,10 +19,10 @@
             $this->Generalisation->insertion("donneeproforma(idproforma, idarticle, quantite, prixunitaire, tva, livraisonpartielle)", sprintf("('%s', '%s', %s, %s, %s, %s)", $idproforma, $idarticle, $quantite, $prixTTC, $TVA, $livraison));
         }
 
-        public function calculMoinsDisant($idbesoin){
+        public function avoirFournisseurArticle($idbesoin){
             $avoirDetailBesoins = $this->Generalisation->avoirTableSpecifique("detailbesoinachat", "*", sprintf("idbesoinachat='%s'", $idbesoin));
             $fournisseur = $this->Generalisation->avoirTable("fournisseur");
-            
+
             for ($i=0; $i < count($avoirDetailBesoins); $i++) { 
                 $data = array();
                 for ($j=0; $j < count($fournisseur); $j++) { 
@@ -34,7 +34,24 @@
                 }
                 $avoirDetailBesoins[$i]['data'] = $data;
             }
+            return $avoirDetailBesoins;
         }
+
+        public function avoirMoinsDisant($idbesoin){
+            $detailBesoin = $this->avoirFournisseurArticle($idbesoin);
+            for ($i=0; $i <count($detailBesoin) ; $i++) { 
+                $detail = $detailBesoin[$i];
+                if(count($detail['data'])!=0){
+                    // Récupérer la liste des IDs
+                    $ids = array_column($detail['data'][0], 'prixUnitaire');
+
+                    // Trier le tableau $data en fonction de l'ID
+                    array_multisort($ids, SORT_ASC, $data);
+                }
+            }
+            return $detailBesoin;
+        }
+
 
         // // Exemple de tableau multidimensionnel
         // $data = array(

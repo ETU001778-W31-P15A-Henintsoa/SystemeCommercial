@@ -1,0 +1,37 @@
+
+--------------- Installation de NODEJS
+sudo apt install nodejs
+sudo apt install nodejs npm
+node -v
+npm -v
+
+--------------- Installation de NODEJS 14
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+source ~/.bashrc
+nvm install 14
+nvm alias default 14
+node -v
+
+
+
+--------------- Creation du projet Node JS
+npx create-react-app exercice
+
+//CHAT GPT
+**** Aller vers le Repertoire ou je vais mettre le projet 
+
+cd ~/chemin/vers/votre/projet
+
+**** Initialisez un projet Node.js en exécutant la commande suivante. Cette commande vous guidera à travers un processus interactif pour configurer votre projet. Vous serez invité à répondre à diverses questions concernant le nom du projet, la version, la description, l'entrée principale (fichier JavaScript principal), les auteurs, les licences, etc. Vous pouvez appuyer sur "Entrée" pour accepter les valeurs par défaut ou fournir vos propres informations.
+
+npm init
+
+
+**** Une fois que vous avez configuré votre projet avec npm init, un fichier package.json sera créé dans le répertoire de votre projet. Ce fichier contiendra les informations de configuration que vous avez fournies. Installez les dépendances dont vous avez besoin pour votre projet. Par exemple, si vous souhaitez créer un serveur web avec Express.js, vous pouvez l'installer en utilisant la commande
+
+
+npm install express
+
+**** Pour exécuter votre application, utilisez la commande node suivie du nom de votre fichier JavaScript principal. Par exemple, si votre fichier principal est app.js, exécutez :
+
+node app.js

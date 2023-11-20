@@ -19,8 +19,7 @@ class Proforma extends CI_Controller {
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 	
-	public function versEnregistrementProforma()
-	{
+	public function versEnregistrementProforma(){
 		$this->load->view('header');
 		$idproforma = $this->input->get("idproforma");
 		$articles = $this->Generalisation->avoirTable("article");
@@ -29,8 +28,7 @@ class Proforma extends CI_Controller {
 		$this->load->view('enregistrerProforma', $data);
 	}
 
-	public function versEnregistrementReponseProforma()
-	{
+	public function versEnregistrementReponseProforma(){
 		if(isset($_GET['erreur'])){
 			$data['erreur'] = $_GET['erreur'];
 		};
@@ -89,6 +87,7 @@ class Proforma extends CI_Controller {
 	public function formulaireEnregistrementReponseProforma(){
 		$idFournisseur = $this->input->post("idfournisseur");
 		$idbesoin = $this->input->post("idbesoins");
+
 		$pj = $this->upload_file();
 		
 		$proforma = $this->Proforma_modele->insertionReponseProforma($idFournisseur, $pj, $idbesoin);

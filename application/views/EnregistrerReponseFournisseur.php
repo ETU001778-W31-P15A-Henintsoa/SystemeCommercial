@@ -14,7 +14,7 @@
                     <?php if(isset($erreur)){
                       echo "<p style='color:red;''>".$erreur."</p>";
                       } ?>
-                    <form action="<?php echo site_url("proforma/formulaireEnregistrementReponseProforma"); ?>" method="post">
+                    <form action="<?php echo site_url("proforma/formulaireEnregistrementReponseProforma"); ?>" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                             <label for="formFile" class="form-label">Fournisseur</label>
                             <select class="form-select" id="" name="idfournisseur">
