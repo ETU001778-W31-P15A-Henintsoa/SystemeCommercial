@@ -42,7 +42,10 @@ create or replace view v_detailregroupement as
         join detailRegroupement dr on r.idRegroupement=dr.idRegroupement;
 -- ----------------------v_bondecommande-----------------------------------
 create or replace view v_BonDeCommande AS
-select abdc.*,bdc.idfournisseur,bdc.DateBonDeCommande,Fournisseur.nomFournisseur from BonDeCommande bdc
+select abdc.*,bdc.idfournisseur,bdc.DateBonDeCommande,Fournisseur.nomFournisseur,Livraison.libelle as livraison,TypedePaiment.libelle as paiement from BonDeCommande bdc
 join Fournisseur on bdc.idfournisseur=Fournisseur.idfournisseur
-join ArticleBonDeCommande abdc on bdc.idBonDeCommande=abdc.idBonDeCommande;
+join ArticleBonDeCommande abdc on bdc.idBonDeCommande=abdc.idBonDeCommande
+join Livraison on bdc.idLivraison = Livraison.idLivraison
+join TypedePaiment on bdc.idpayement = TypedePaiment.idTypeDePayement;
+
 

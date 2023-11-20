@@ -25,9 +25,9 @@
                     <div class="card-body">
                         <p for=""><strong>Fournisseur : </strong> <?php echo $donnee[0]['nomfournisseur']; ?></p>
                         <p for=""><strong>IDBonDeCommande : </strong> <?php echo $donnee[0]['idbondecommande']; ?></p>
-                        <p for=""><strong>Delai de livraison :</strong> </p>
-                        <p for=""><strong>livraison partielle :</strong> <?php ?></p>
-                        <p for=""><strong>Mode de payment :</strong> <?php ?></p>
+                        <p for=""><strong>Delai de livraison :</strong><?php echo $donnee[0]['delailivraison']; ?> </p>
+                        <p for=""><strong>livraison partielle :</strong> <?php echo $donnee[0]['livraison']; ?></p>
+                        <p for=""><strong>Mode de payment :</strong> <?php echo $donnee[0]['paiement']; ?></p>
                     </div>
                 </div>
             </div>

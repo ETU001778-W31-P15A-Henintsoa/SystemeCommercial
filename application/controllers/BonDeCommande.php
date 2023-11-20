@@ -8,11 +8,38 @@ class BonDeCommande extends CI_Controller {
         $this->load->view('header');
     }
 
-    public function versListeBonDeCommande() {
+    public function generer() {
         $this->load->model('BonDeCommande_modele');
-        $data['bonDeCommandeNonValide'] = $this->BonDeCommande_modele->avoirListeBonDeCommandeNonValide();
+        $data['typepaiement'] = $this->BonDeCommande_modele->avoirListePayment();
+        $data['livraison'] = $this->BonDeCommande_modele->avoirLivraison();
         $this->load->view('header');
-        $this->load->view('listeBonDeCommande',$data);
+        $this->load->view('GenererBonDeCommande',$data);
+    }
+
+    public function genererBonDeCommande() {
+        $datedelai = $this->input->post('date');
+        $paiement = $this->input->post('paiement');
+        $livraison = $this->input->post('livraison');
+        $this->load->model('BonDeCommande_modele');
+        $idregroupement;
+        $moinsDisant=$this->Proforma_modele->avoirMoinsDisant($idregroupement);
+        $this->BonDeCommande_modele->genererBonDeCommande($datedelai,$livraison,$paiement,$quantiteDemandee, $moinsDisant);
+    }
+
+    public function versListeBonDeCommande() {
+        $idEmploye = 'EMP1';
+        $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
+        if($employePoste[0]->libelle=="finance") {
+            $this->load->model('BonDeCommande_modele');
+            $data['bonDeCommandeNonValide'] = $this->BonDeCommande_modele->avoirListeBonDeCommandeNonValide();
+            $data['bonDeCommandeValide'] = $this->BonDeCommande_modele->avoirListeBonDeCommandeValide();
+            $this->load->view('header');
+            $this->load->view('listeBonDeCommande',$data);
+        }else{
+            $data["error"]="Vous n'avez pas accès à cette page";
+            $this->load->view('header');
+            $this->load->view('errors/erreurValidationAchat',$data);
+        }
     }
 
     public function versDetailBonDeCommande() {
@@ -29,5 +56,11 @@ class BonDeCommande extends CI_Controller {
         $data['lettre'] = $this->BonDeCommande_modele->nombreEnLettres($data['sommeTTC']);
         $this->load->view('header');
         $this->load->view('DetailBonDeCommande',$data); 
+    }
+
+    public function valider(){
+        $idbondecommande = $_GET['id'];
+        $this->Generalisation->miseAJour("bondecommande","etat=1"," idbondecommande='".$idbondecommande."'");
+        redirect('BonDeCommande/versListeBonDeCommande');
     }
 }

@@ -58,7 +58,9 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('database', 'session', 'upload', 'email');
+
+$autoload['libraries'] = array('database', 'session', 'upload');
+
 
 /*
 | -------------------------------------------------------------------c
@@ -134,5 +136,6 @@ $autoload['language'] = array();
 */
 
 $autoload['model'] = array('Generalisation', 'Mail_modele', 'Proforma_modele','Login_modele', 'BesoinAchat');
+
 
 

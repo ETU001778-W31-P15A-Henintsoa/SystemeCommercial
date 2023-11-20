@@ -86,3 +86,7 @@ insert into adresseMail(idsociete, adresseMAil) values
 --------------------------------------Fiderana 19-11-23 13:07-------------------------------------------
 update employePoste set idBrancheDepartement='BDEPT1' where idemployePoste='EPOST3';
 update validation set libelle='premier validation bon achat' where idValidation='VAL2';
+
+--------------------------------------Santatra 20-11-23 14:13-------------------------------------------
+insert into TypedePaiment(libelle) values('virement bancaire'),('cheque');
+insert into Livraison(libelle) values('non partielle'),('partielle');
