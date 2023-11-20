@@ -2,34 +2,40 @@
     if(! defined('BASEPATH')) exit('No direct script access allowed');
     class Proforma_modele extends CI_Model{
         public function insertionReponseProforma($idfournisseur, $pj, $idbesoin){
-            $this->Generalisation->insertion("proforma(idfournisseur, piecejointe, idbesoinachat)", sprintf("('%s', '%s', '%s')", $idfournisseur, $pj, $idbesoin));
+            $this->Generalisation->insertion("proforma(idfournisseur, piecejointe, idregroupement)", sprintf("('%s', '%s', '%s')", $idfournisseur, $pj, $idbesoin));
             $proforma =  $this->Generalisation->avoirTableConditionnee("proforma order by idproforma");
-            return $proforma[count($proforma)];
+            return $proforma[count($proforma)-1];
         }   
         
         public function insertionProforma($idproforma, $idarticle, $quantite, $prixTTC, $TVA, $livraison){
             if($TVA!=null){
-                $tva=true;
+                $TVA='true';
+            }else{
+                $TVA = 'false';
             }
 
             if($livraison!=null){
-                $livraison=true;
+                $livraison='true';
+            }else{
+                $livraison='false';
             }
 
             $this->Generalisation->insertion("donneeproforma(idproforma, idarticle, quantite, prixunitaire, tva, livraisonpartielle)", sprintf("('%s', '%s', %s, %s, %s, %s)", $idproforma, $idarticle, $quantite, $prixTTC, $TVA, $livraison));
         }
 
         public function avoirFournisseurArticle($idregroupement){
-            $avoirDetailBesoins = $this->Generalisation->avoirTableSpecifique("regroupement", "*", sprintf("idregroupement='%s'", $idregroupement));
+            $avoirDetailBesoins = $this->Generalisation->avoirTableSpecifique("v_detailregroupement", "*", sprintf("idregroupement='%s'", $idregroupement));
+
             $fournisseur = $this->Generalisation->avoirTable("fournisseur");
-            $donnee = array();            
+            $donnee = array();           
 
             for ($i=0; $i < count($avoirDetailBesoins); $i++) { 
                 $donnee[$i]['regroupement'] = $avoirDetailBesoins[$i];
                 $data = array();
                 for ($j=0; $j < count($fournisseur); $j++) { 
                     $data[$j]['fournisseur'] = $fournisseur[$j]; 
-                    $donneeproforma = $this->Generalisation->avoirTableSpecifique("v_donneeproforma", "*", sprintf("idregroupement='%s' and idfournisseur='%s' and idarticle='%s'", $idregroupement, $fournisseur[$j]->idfournisseur, $avoirDetailBesoins[$i]->idarticle));
+                    // var_dump($avoirDetailBesoins);
+                    $donneeproforma = $this->Generalisation->avoirTableConditionnee("v_donneeproforma where idregroupement='".$idregroupement."' and idfournisseur='".$fournisseur[$j]->idfournisseur."' and idarticle='".$avoirDetailBesoins[$i]->idarticle."'");
                     if(count($donneeproforma)!=0){
                         $data[$j]['prixunitaire'] = ($donneeproforma[0]->prixunitaire);
                         $data[$j]['quantite'] = ($donneeproforma[0]->prixunitaire);
@@ -38,7 +44,7 @@
                 // $avoirDetailBesoins[$i]['data'] = $data;
                 $donnee[$i]['data'] = $data;
             }
-            return $avoirDetailBesoins;
+            return $donnee;
         }
 
         public function data(){
@@ -57,9 +63,8 @@
         }
 
         public function avoirMoinsDisant($idregroupement){
-            // $detailBesoin = $this->avoirFournisseurArticle($idregroupement);
-            $detailBesoin =$this->data();
-
+            $detailBesoin = $this->avoirFournisseurArticle($idregroupement);
+            // $detailBesoin =$this->data();
             // var_dump($detailBesoin);
         
             for ($i=0; $i <count($detailBesoin) ; $i++) { 

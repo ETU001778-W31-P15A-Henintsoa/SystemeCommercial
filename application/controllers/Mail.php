@@ -81,7 +81,7 @@ class Mail extends CI_Controller {
 	public function envoieMail(){
 		$mail = $this->input->post('mail');
 		$message = $this->input->post('message');
-		$pj = $this->upload_file();
+		// $pj = $this->upload_file();
 
 		if($mail=="" || $message==""){
 			$erreur = 'Champ(s) vide(s)';

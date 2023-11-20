@@ -86,12 +86,13 @@ class Proforma extends CI_Controller {
 
 	public function formulaireEnregistrementReponseProforma(){
 		$idFournisseur = $this->input->post("idfournisseur");
-		$idbesoin = $this->input->post("idbesoins");
+		$idregroupement = $this->input->post("idregroupement");
 
 		$pj = $this->upload_file();
 		
-		$proforma = $this->Proforma_modele->insertionReponseProforma($idFournisseur, $pj, $idbesoin);
-		redirect("proforma/versEnregistrementproforma?idproforma="."1");
+		$proforma = $this->Proforma_modele->insertionReponseProforma($idFournisseur, $pj, $idregroupement);
+		// var_dump($proforma);
+		redirect("proforma/versEnregistrementproforma?idproforma=".$proforma->idproforma);
 	}
 
 	public function formulaireEnregitrementProforma(){
@@ -108,7 +109,8 @@ class Proforma extends CI_Controller {
 	}
 
 	public function versMoinsDisant(){
-		$data =$this->Proforma_modele->avoirMoinsDisant("");
+		$data =$this->Proforma_modele->avoirMoinsDisant("REG5");
 		var_dump($data);
 	}
+
 }

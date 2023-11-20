@@ -30,6 +30,8 @@
                         </div>
                       </div>
 
+                      <input type="hidden" value="<?= $_GET['idregroupement'] ?> ">
+
                       <div class="mb-3">
                         <label for="formFile" class="form-label">Message</label>
                         <div class="input-group input-group-merge speech-to-text">

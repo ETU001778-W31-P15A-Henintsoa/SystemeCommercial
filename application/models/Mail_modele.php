@@ -132,7 +132,7 @@
         // }
 
         // Fonctions Fonctionnelles
-        public function envoieMail($destinataire, $message, $fichier){
+        public function envoieMail($destinataire, $message, $fichier, $idregroupement){
             $mail = $this->monMail();
             $message = "Demande de Proforma//".$message;
             $destinataire = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("adressemail='%s'", $destinataire));
@@ -151,6 +151,8 @@
             $mails = $this->Generalisation->avoirTableConditionnee("mail order by idmail");
 
             $this->Generalisation->insertion("message(idmail, libelle, piecejointe)", sprintf("('%s', '%s', '%s')", $mails[count($mails)-1]->idmail, $message, $fichier));
+
+            $this->Generalisation->miseAJour("regroupement", "etat=11", sprintf("idregroupement='%s'", $idregroupement));
 
             return true;
         }

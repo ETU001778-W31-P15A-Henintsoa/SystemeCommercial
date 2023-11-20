@@ -52,4 +52,15 @@ class BesoinAchat extends CI_Model {
         }
         return $affichageValide;
     }
+    // public function avoirAchatNonValide($iddepartement){
+    //     $nonValide=$this->Generalisation->avoirTableSpecifique("v_detailregroupement","*", "and etat=1");
+    //     $affichageNonValide=array();
+    //     $j=0;
+    //     for ($i=0; $i <count($nonValide) ; $i++) { 
+    //         $affichageNonValide[$j]['besoin']=$nonValide[$i];
+    //         $affichageNonValide[$j]['detail']=$this->Generalisation->avoirTableSpecifique("v_detailbesoinAchat","*"," idBesoinAchat='".$nonValide[$i]->idbesoinachat."' and etat=1");
+    //         $j++;
+    //     }
+    //     return $affichageNonValide;
+    // }
 }

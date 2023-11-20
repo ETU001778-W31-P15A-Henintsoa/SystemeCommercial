@@ -11,8 +11,8 @@
                   <div class="card mb-4">
                     <h5 class="card-header">Saisie de proforma</h5>
                     <div class="card-body demo-vertical-spacing demo-only-element">
-                    <form action="<?php echo site_url("welcome/formulaireDemandeConge"); ?>" method="post">
-                    <input type="hidden" value="" name="idproforma"/>
+                    <form action="<?php echo site_url("proforma/formulaireEnregitrementProforma"); ?>" method="post">
+                    <input type="hidden" value=<?= $_GET['idproforma'] ?> name="idproforma"/>
         
                     <div class="mb-3">
                     <label for="html5-number-input" class="col-md-2 col-form-label"> Articles </label>
@@ -36,14 +36,14 @@
 
                       <div class="mb-3">
                         <div class="form-check mt-3">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" name="tva"/>
+                            <input class="form-check-input" type="checkbox" id="defaultCheck1" name="tva"/>
                             <label class="form-check-label" for="defaultCheck1"> TVA </label>
                           </div>
                       </div>
 
                       <div class="mb-3">
                         <div class="form-check mt-3">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" name="livraisonpartielle"/>
+                            <input class="form-check-input" type="checkbox" id="defaultCheck1" name="livraisonpartielle"/>
                             <label class="form-check-label" for="defaultCheck1"> Livraison Partielle </label>
                           </div>
                       </div>

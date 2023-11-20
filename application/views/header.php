@@ -208,24 +208,17 @@
                   <div data-i18n="Authentications">Proforma</div>
                 </a>
                 <ul class="menu-sub">
-                  <li class="menu-item">
-                    <a href="<?php echo site_url('mail/versEnvoieMail'); ?>" class="menu-link">
-                      <div data-i18n="Tables"> Envoyer Mail Demande Proforma </div>
-                    </a>
-                  </li>
+                    <li class="menu-item">
+                      <a href="<?php echo site_url('welcome/versListeRegroupementEnvoyer'); ?>" class="menu-link">
+                        <div data-i18n="Tables"> Liste Regroupements </div>
+                      </a>
+                    </li>
 
-                  <li class="menu-item">
-                    <a href="<?php echo site_url(''); ?>" class="menu-link">
-                      <div data-i18n="Tables"></div>
+                  <!-- <li class="menu-item">
+                    <a href="<?php //echo site_url('proforma/versEnregistrementReponseProforma'); ?>" class="menu-link">
+                      <div data-i18n="Tables"> Regroupement Envoyer </div>
                     </a>
-                  </li>
-
-                  <li class="menu-item">
-                    <a href="<?php echo site_url(''); ?>" class="menu-link">
-                      <div data-i18n="Tables"></div>
-                    </a>
-                  </li>
-
+                  </li> -->
                 </ul>
               </li>
             </li>
