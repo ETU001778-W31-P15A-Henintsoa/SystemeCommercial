@@ -172,9 +172,9 @@ create table Proforma(
     idProforma varchar(20) default concat('PRO' || nextval('seqProforma')) primary key,
     idFournisseur varchar(20),
     piecejointe varchar(20),
-    idbesoinAchat varchar(20),
+    idRegroupement varchar(20),
     foreign key (idFournisseur) references Fournisseur(idFournisseur),
-    foreign key (idbesoinAchat) references besoinAchat(idbesoinAchat)
+    foreign key (idregroupement) references Regroupement(idRegroupement)
 );
 
 ------------------------------------ DONNEE PROFORMA -------------------------------------
