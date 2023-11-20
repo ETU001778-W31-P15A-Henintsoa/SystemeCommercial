@@ -15,6 +15,7 @@ create or replace view v_posteEmployeValidation as
     select pEmp.*,libelle from v_posteEmploye as pEmp
         left join validation as v on v.idBrancheDepartement=pEmp.idBrancheDepartement;
 
+
 ----------------------------------- V_DonneeProforma ------------------------------
 create or replace view v_DonneeProforma as
     select Proforma.idProforma, Proforma.idFournisseur, Proforma.piecejointe, Proforma.idbesoinAchat,
@@ -33,3 +34,10 @@ create or replace view v_detailbesoinachat as
     select dba.idArticle,quantite,dba.etat as etatDetail, nomArticle,ba.* from detailBesoinAchat dba
         join article a on a.idArticle=dba.idArticle
         join v_besoinAchat as ba on ba.idBesoinAchat=dba.idBesoinAchat;
+
+-- ----------------------v_bondecommande-----------------------------------
+create or replace view v_BonDeCommande AS
+select abdc.*,bdc.idfournisseur,bdc.DateBonDeCommande,Fournisseur.nomFournisseur from BonDeCommande bdc
+join Fournisseur on bdc.idfournisseur=Fournisseur.idfournisseur
+join ArticleBonDeCommande abdc on bdc.idBonDeCommande=abdc.idBonDeCommande;
+
