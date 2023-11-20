@@ -191,8 +191,35 @@ create table DonneeProforma(
 );
   
   
+-- ---------------------------PROFORMA--------------------------
+create sequence seqDonneeProforma;
+create table DonneeProforma(
+    idDonneeProforma varchar(20) default concat('DOP' || nextval('seqDonneeProforma')) primary key,
+    idArticle varchar(20),
+    id varchar(20),
+    foreign key (idFournisseur) references Fournisseur(idFournisseur)
   
-  
+-- ------------------Santatra 20/11/2023 BON DE COMMANDE -----------------------------------
+
+create sequence seqBonDeCommande;
+create table BonDeCommande(
+    idBonDeCommande varchar(20) default concat('COM' || nextval('seqBonDeCommande')) primary key,
+    idFournisseur varchar(20),
+    DateBonDeCommande date default current_date,
+    etat int default 0, --(0 non valide ni suspendu,11 valide)-
+    foreign key (idFournisseur) references Fournisseur(idFournisseur)
+);
+
+create sequence seqArtCommande;
+create table ArticleBonDeCommande(
+    idArticleBonDeCommande varchar(20) default concat('ACOM' || nextval('seqArtCommande')) primary key,
+    idBonDeCommande varchar(20),
+    idArticle varchar(20),
+    quantite float,
+    pu float,
+    foreign key (idArticle) references Article(idArticle),
+    foreign key(idBonDeCommande) references BonDeCommande(idBonDeCommande)
+);
 --------------------------- ALTER
 
 alter table branche add nomBranche varchar(40);
