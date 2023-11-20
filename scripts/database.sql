@@ -61,7 +61,7 @@ create table besoinAchat(
     idDepartement varchar(20),
     dateBesoin date,
     idEmploye varchar(20),
-    etat int, --(-1 suspendu,0 non valide ni suspendu,1 valide,11 a deja eu une demande de proformat,21 achete)--
+    etat int, --(-1 suspendu,0 non valide ni suspendu,1 valide,11 deja regroupe)--
     dateInsertion date,
     foreign key(idEmploye) references employe(idEmploye),
     foreign key(idDepartement) references departement(idDepartement)
@@ -70,7 +70,7 @@ create table besoinAchat(
 -----------------------------Type article---------------------------------
 create sequence seqTypeArticle;
 create table typeArticle(
-    idTypeArticle varchar(20) default concat('TART'|| nextval('seqDetailBesoinAchat')) primary key,
+    idTypeArticle varchar(20) default concat('TART'|| nextval('seqTypeArticle')) primary key,
     libelle varchar(50)
 );
 
@@ -116,6 +116,12 @@ create table Ville(
 create sequence seqEntreprise;
 create table Entreprise(
     idEntreprise varchar(20) default concat('ENT' || nextval('seqEntreprise')) primary key,
+    nomEntreprise varchar(20),
+    adresse varchar(50),
+    numerofax varchar(20),
+    contact varchar(15),
+    idVille varchar(20),
+    foreign key (idVille) references  Ville(idVille)
 );
 
 ------------------------------------ FOURNISSEUR ---------------------------------
@@ -130,13 +136,24 @@ create table Fournisseur(
     foreign key (idVille) references Ville(idVille)
 );
 
+------------------------------------ ADRESSE MAIL ----------------------------------------
+create sequence seqAdresseMail;
+create table AdresseMail(
+    idAdresseMail varchar(20) default concat('ADM' || nextval('seqAdresseMail')) primary key,
+    idSociete varchar(20),
+    adresseMAil varchar(50),
+    motdepasse varchar(10)
+);
+
 ------------------------------------ EMAIL ----------------------------------------
 create sequence seqMail;
 create table Mail(
     idMail varchar(20) default concat('MAIL' || nextval('seqMail')) primary key,
     dateenvoie timestamp,
     envoyeur varchar(20),
-    destinataire varchar(20)
+    destinataire varchar(20),
+    foreign key (envoyeur) references AdresseMail(idAdresseMail),
+    foreign key (destinataire) references AdresseMail(idAdresseMail)
 );
 
 ------------------------------------ MESSAGE --------------------------------------
@@ -149,23 +166,29 @@ create table Message(
     foreign key (idMail) references Mail(idMail)
 );
 
------------------------------------- MESSAGE --------------------------------------
+------------------------------------ PROFORMA --------------------------------------
 create sequence seqProforma;
 create table Proforma(
     idProforma varchar(20) default concat('PRO' || nextval('seqProforma')) primary key,
     idFournisseur varchar(20),
     piecejointe varchar(20),
-    idbesoin varchar(20),
-    foreign key (idFournisseur) references Fournisseur(idFournisseur)
+    idRegroupement varchar(20),
+    foreign key (idFournisseur) references Fournisseur(idFournisseur),
+    foreign key (idregroupement) references Regroupement(idRegroupement)
 );
 
------------------------------------- MESSAGE -------------------------------------
+------------------------------------ DONNEE PROFORMA -------------------------------------
 create sequence seqDonneeProforma;
 create table DonneeProforma(
     idDonneeProforma varchar(20) default concat('DOP' || nextval('seqDonneeProforma')) primary key,
+    idProforma varchar(20),
     idArticle varchar(20),
-    id varchar(20),
-    foreign key (idFournisseur) references Fournisseur(idFournisseur)
+    quantite float,
+    prixUnitaire float,
+    TVA boolean,
+    livraisonPartielle boolean,
+    foreign key (idProforma) references Proforma(idProforma)
+);
   
   
 -- ---------------------------PROFORMA--------------------------
@@ -206,9 +229,15 @@ create table ArticleBonDeCommande(
 
 alter table branche add nomBranche varchar(40);
 
+-------------------------Fiderana 20 novembre 2023 09h------------------------------
+-----------------------------------------regroupement---------------------------------------------
+create sequence seqregroupement;
+create table regroupement(
+    idRegroupement varchar(20) default concat('REG' || nextval('seqregroupement')) primary key,
+    dateRegroupement date
+);
 
-<<<<<<< Updated upstream
-=======
+
 ----------------------------------------detailRegroupement------------------------------------------
 create sequence seqdetailregroupement;
 create table detailregroupement(
@@ -219,6 +248,11 @@ create table detailregroupement(
     foreign key(idArticle) references article(idArticle),
     foreign key(idRegroupement) references regroupement(idRegroupement)
 );
+
+
+------------------------------------------alter besoinAchat-------------------------------------------------------
+alter table besoinAchat add idRegroupement varchar(20), add constraint idregroup foreign key(idRegroupement) references regroupement(idRegroupement);
+alter table regroupement add etat int; -------(1 rehefa vaao regroupe, 11 rehefa vita demande proforma)---------------
 
 -- ----------------------Santatra 20 nov 2023 14:10-------------------------------
 create sequence seqPayement;
@@ -235,4 +269,4 @@ create table Livraison(
 ------------------------------------------alter besoinAchat-------------------------------------------------------
 alter table besoinAchat add idRegroupement varchar(20), add constraint idregroup foreign key(idRegroupement) references regroupement(idRegroupement);
 alter table regroupement add etat int; -------(1 rehefa vaao regroupe, 11 rehefa vita demande proforma)---------------
->>>>>>> Stashed changes
+

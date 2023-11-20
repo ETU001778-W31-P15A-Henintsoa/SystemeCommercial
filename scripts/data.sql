@@ -64,15 +64,27 @@ insert into Ville(nomVille) values
  ('Antananarivo'),
  ('Antsirable');
 
+------------------------------------ Entreprise ---------------------------------------
+insert into entreprise(nomEntreprise, adresse, numerofax, contact, idVille) values
+('DIMPEX', 'Lot 12 II BIS Andoharanofotsy', '00499221/709-338', '+261 332178522', 'VILLE1');
+
+
 ------------------------------------ FOURNISSEUR ---------------------------------
 insert into Fournisseur(nomFournisseur, email, motdepasse, adresse, idVille) values 
 ('SHOPRITE', 'shoprite@gmail.com', 'shoprite', 'Lot II BIS Tanjobato', 'VILLE1'),
 ('JUMBO SCORE', 'jumbo@gmail.com', 'jumbo', 'Lot III BIS Ankorondrano', 'VILLE1'),
-('LEADER PRICE', 'lederprice@gmail.com', 'leaderprice', 'Lot VI BIS Ankorondrano', 'VILLE1');
+('LEADER PRICE', 'leader@gmail.com', 'leaderprice', 'Lot VI BIS Ankorondrano', 'VILLE1');
+
+------------------------------------ ADRESSEMAIL ------------------------------------------
+insert into adresseMail(idsociete, adresseMAil) values
+('ENT1', 'dimpex@gmail.com', 'dimpex'),
+('FOU1', 'shoprite@gmail.com', 'shoprite'),
+('FOU2', 'jumbo@gmail.com', 'jumbo'),
+('FOU3', 'leader@gmail.com', 'leader');
 
 
 --------------------------------------Fiderana 19-11-23 13:07-------------------------------------------
-update employePoste set idBrancheDepartement='BDEPT3' where idemployePoste='EPOST3';
+update employePoste set idBrancheDepartement='BDEPT1' where idemployePoste='EPOST3';
 update validation set libelle='premier validation bon achat' where idValidation='VAL2';
 
 --------------------------------------Santatra 20-11-23 14:13-------------------------------------------

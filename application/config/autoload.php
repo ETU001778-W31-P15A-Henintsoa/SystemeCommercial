@@ -58,11 +58,9 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-<<<<<<< Updated upstream
-$autoload['libraries'] = array('database', 'session');
-=======
+
 $autoload['libraries'] = array('database', 'session', 'upload');
->>>>>>> Stashed changes
+
 
 /*
 | -------------------------------------------------------------------c
@@ -93,7 +91,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url');
+$autoload['helper'] = array('url', 'form');
 
 /*
 | -------------------------------------------------------------------
@@ -137,6 +135,7 @@ $autoload['language'] = array();
 |	$autoload['model'] = array('first_model' => 'first');
 */
 
-$autoload['model'] = array('Generalisation', 'Mail_modele', 'Proforma_modele','Login_modele','BesoinAchat');
+$autoload['model'] = array('Generalisation', 'Mail_modele', 'Proforma_modele','Login_modele', 'BesoinAchat');
+
 
 

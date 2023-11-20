@@ -165,14 +165,67 @@
               <li class="menu-item">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                   <!-- <i class="menu-icon tf-icons bx bx-lock-open-alt"></i> -->
-                  <div data-i18n="Authentications">enu 1</div>
+                  <div data-i18n="Authentications">Besoin en achat</div>
                 </a>
                 <ul class="menu-sub">
                   <li class="menu-item">
-                    <a href="" class="menu-link">
-                      <div data-i18n="Tables">Petit details 1</div>
+                    <a href="<?php echo site_url('ControllerBesoinAchat/formulaireBesoinAchat'); ?>" class="menu-link">
+                      <div data-i18n="Tables">Ajouter un besoin</div>
                     </a>
                   </li>
+
+                  <li class="menu-item">
+                    <a href="<?php echo site_url('ControllerBesoinAchat/affichageAchatNonValide'); ?>" class="menu-link">
+                      <div data-i18n="Tables">valider un besoin</div>
+                    </a>
+                  </li>
+
+                  <li class="menu-item">
+                    <a href="<?php echo site_url('ControllerBesoinAchat/avoirAchatValide'); ?>" class="menu-link">
+                      <div data-i18n="Tables">Besoin Achat Valide</div>
+                    </a>
+                  </li>
+
+                  <li class="menu-item">
+                    <a href="<?php echo site_url('welcome/versListeRegroupement'); ?>" class="menu-link">
+                      <div data-i18n="Tables"> Liste Regroupements </div>
+                    </a>
+                  </li>
+
+                  <li class="menu-item">
+                    <a href="<?php echo site_url('ControllerBesoinAchat/avoirAchatNonLivre'); ?>" class="menu-link">
+                      <div data-i18n="Tables"> Mes demandes d'Achats pas encore livré </div>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </li>
+
+
+              <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                  <!-- <i class="menu-icon tf-icons bx bx-lock-open-alt"></i> -->
+                  <div data-i18n="Authentications">Proforma</div>
+                </a>
+                <ul class="menu-sub">
+                  <li class="menu-item">
+                    <a href="<?php echo site_url('mail/versEnvoieMail'); ?>" class="menu-link">
+                      <div data-i18n="Tables"> Envoyer Mail Demande Proforma </div>
+                    </a>
+                  </li>
+
+                  <li class="menu-item">
+                    <a href="<?php echo site_url(''); ?>" class="menu-link">
+                      <div data-i18n="Tables"></div>
+                    </a>
+                  </li>
+
+                  <li class="menu-item">
+                    <a href="<?php echo site_url(''); ?>" class="menu-link">
+                      <div data-i18n="Tables"></div>
+                    </a>
+                  </li>
+
                 </ul>
               </li>
             </li>

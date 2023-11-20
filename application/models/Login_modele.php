@@ -6,21 +6,15 @@ class Login_modele extends CI_Model {
 			$error['error'] = "Les Champs ne doivent pas etre vides.";
 			$this->load->view('index', $error);
 		} else {
-			$users = $this->Generalisation->avoirTable('employe');
+			$users = $this->Generalisation->avoirTable('v_posteemploye');
 
 			$test = FALSE;
 			foreach ($users as $user) {
-				// var_dump($users);
-				if ($user->mail == $mail && $user->mdp == $mdp) {
-					// var_dump($user);
-					if($user->estactif == false) {
-						$error['error'] = "Cet Employe ne travail plus ici. Acces interdit";
-						$this->load->view('index',$error);
-						return false;
-					}else{
-						session_start();
-						$this->load->library('session');
-						return true; 
+				if ($user->mail == $mail && $user->motdepasse == $mdp) {
+					session_start();
+					$_SESSION['user'] = $user -> idemploye;
+					if($user->iddepartement == "DEPT3"){
+						$_SESSION['DeptAchat'] = true;
 					}
 				}
 			}

@@ -23,9 +23,17 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->view('index');
 	}
-	
-	public function header()
+
+	public function versAcceuil()
 	{
 		$this->load->view('header');
+		$this->load->view('acceuil');
+	}
+
+	public function versListeRegroupement()
+	{
+		$data['regroupements'] = $this->Generalisation->avoirTable("v_detailregroupement");
+		$this->load->view('header');
+		$this->load->view('listeRegroupement');
 	}
 }
