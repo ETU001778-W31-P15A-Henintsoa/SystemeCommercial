@@ -11,8 +11,8 @@ class ControllerBesoinAchat extends CI_Controller {
     public function entrerBesoin(){
         date_default_timezone_set('Africa/Nairobi');
         $date=date('Y-m-d');
-        $idEmploye=$_SESSION['user'];
-        $dateBesoin=$this->input->post('dateBesoin');
+        $idEmploye=$_SESSION['user'];//emp3
+        $dateBesoin=$_POST['dateBesoin'];
         $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmploye","*"," idemploye='".$idEmploye."'");
         $valeur="(default,'".$employePoste[0]->iddepartement."','".$dateBesoin."','".$idEmploye."',0,'".$date."')";
         $this->Generalisation->insertion("besoinAchat",$valeur);
@@ -28,7 +28,7 @@ class ControllerBesoinAchat extends CI_Controller {
     }
 
     public function affichageAchatNonValide(){
-        $idEmploye=$_SESSION['user'];
+        $idEmploye=$_SESSION['user'];//emp3
         $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
         echo $employePoste[0]->libelle;
 
@@ -46,11 +46,11 @@ class ControllerBesoinAchat extends CI_Controller {
     public function valider(){
         $idBesoinAchat=$_GET['idBesoinAchat'];
         $this->Generalisation->miseAJour("besoinAchat","etat=1"," idBesoinAchat='".$idBesoinAchat."'");
-        redirect('welcome/versAcceuil');
+        redirect("welcome/versAccueil");
     }
 
     public function avoirAchatValide(){
-        $idEmploye=$_SESSION['user'];
+        $idEmploye=$_SESSION['user'];//emp2
         $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
         if($employePoste[0]->nomdepartement=="Systeme commercial"){
             $data['besoinAchat']=$this->BesoinAchat->avoirAchatValide();
@@ -70,5 +70,13 @@ class ControllerBesoinAchat extends CI_Controller {
         $data['article']=$this->Generalisation->avoirTable("article");
         $this->load->view('header');
         $this->load->view('FormulaireBesoinAchat',$data);
+    }
+
+    public function avoirAchatNonLivre(){
+        $idEmploye='EMP3';
+        $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
+        $data['besoinAchat']=$this->BesoinAchat->avoirAchatValideNonLivre($employePoste[0]->iddepartement);
+        $this->load->view('header');
+        $this->load->view('AchatValideNonLivre',$data);
     }
 }

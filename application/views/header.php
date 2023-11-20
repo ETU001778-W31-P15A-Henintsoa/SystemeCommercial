@@ -191,6 +191,12 @@
                       <div data-i18n="Tables"> Liste Regroupements </div>
                     </a>
                   </li>
+
+                  <li class="menu-item">
+                    <a href="<?php echo site_url('ControllerBesoinAchat/avoirAchatNonLivre'); ?>" class="menu-link">
+                      <div data-i18n="Tables"> Mes demandes d'Achats pas encore livré </div>
+                    </a>
+                  </li>
                   
                 </ul>
               </li>
