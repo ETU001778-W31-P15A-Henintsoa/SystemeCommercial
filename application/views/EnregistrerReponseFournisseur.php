@@ -25,7 +25,7 @@
                             </select>
                     </div>
 
-                    <input type="hidden" name="idbesoin" value="">
+                    <input type="hidden" name="idregroupement" value="<?= $_GET['idregroupement'] ?>">
 
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Piece jointe</label>

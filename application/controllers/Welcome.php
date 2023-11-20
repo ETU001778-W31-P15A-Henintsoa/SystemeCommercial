@@ -32,8 +32,15 @@ class Welcome extends CI_Controller {
 
 	public function versListeRegroupement()
 	{
-		$data['regroupements'] = $this->Generalisation->avoirTable("v_detailregroupement");
+		$data['regroupement'] = $this->Generalisation->avoirTableConditionnee("v_detailregroupement where etat=1");
 		$this->load->view('header');
-		$this->load->view('listeRegroupement');
+		$this->load->view('listeRegroupement', $data);
+	}
+
+	public function versListeRegroupementEnvoyer()
+	{
+		$data['regroupement'] = $this->Generalisation->avoirTableConditionnee("v_detailregroupement where etat=11");
+		$this->load->view('header');
+		$this->load->view('listeRegroupementEnvoyer', $data);
 	}
 }

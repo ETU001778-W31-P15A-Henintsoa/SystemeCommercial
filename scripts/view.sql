@@ -18,10 +18,12 @@ create or replace view v_posteEmployeValidation as
 
 ----------------------------------- V_DonneeProforma ------------------------------
 create or replace view v_DonneeProforma as
-    select Proforma.idProforma, Proforma.idFournisseur, Proforma.piecejointe, Proforma.idbesoinAchat,
-    DonneeProforma.idDonneeProforma, DonneeProforma.idArticle, DonneeProforma.quantite, DonneeProforma.prixUnitaire, DonneeProforma.TVA, DonneeProforma.livraisonPartielle
-    from Proforma 
-        join DonneeProforma on DonneeProforma.idProforma = Proforma.idProforma;
+    select Proforma.idProforma, Proforma.idFournisseur, Proforma.piecejointe,
+    DonneeProforma.idDonneeProforma, DonneeProforma.prixUnitaire, DonneeProforma.TVA, DonneeProforma.livraisonPartielle,
+    v_detailregroupementArticle.*
+    from Proforma
+        join DonneeProforma on DonneeProforma.idProforma = Proforma.idProforma
+        join v_detailregroupementArticle on v_detailregroupementArticle.idregroupement=Proforma.idregroupement;
 -------------------------Fiderana 20 novembre 2023 09h15------------------------------
 --------------------------------v_besoinAchat-------------------------------------------------
 create or replace view v_besoinAchat as
@@ -40,6 +42,13 @@ create or replace view v_detailbesoinachat as
 create or replace view v_detailregroupement as
     select r.*,dr.quantite,dr.idArticle from regroupement r
         join detailRegroupement dr on r.idRegroupement=dr.idRegroupement;
+
+--------------------------------------v_detailregroupement--------------------------------------
+create or replace view v_detailregroupementArticle as
+    select r.*,dr.quantite, Article.* from regroupement r
+        join detailRegroupement dr on r.idRegroupement=dr.idRegroupement
+        join article on Article.idArticle = dr.idArticle;
+        
 -- ----------------------v_bondecommande-----------------------------------
 create or replace view v_BonDeCommande AS
 select abdc.*,bdc.idfournisseur,bdc.DateBonDeCommande,Fournisseur.nomFournisseur from BonDeCommande bdc
