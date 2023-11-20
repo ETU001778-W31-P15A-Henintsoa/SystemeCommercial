@@ -14,3 +14,16 @@ create or replace view v_posteEmploye as
 create or replace view v_posteEmployeValidation as 
     select pEmp.*,libelle from v_posteEmploye as pEmp
         left join validation as v on v.idBrancheDepartement=pEmp.idBrancheDepartement;
+
+-------------------------Fiderana 20 novembre 2023 09h15------------------------------
+--------------------------------v_besoinAchat-------------------------------------------------
+create or replace view v_besoinAchat as
+    select ba.*,e.nom,e.prenom,d.nomDepartement from besoinAchat ba
+        join employe e on e.idEmploye=ba.idEmploye
+        join departement d on d.idDepartement=ba.idDepartement;
+
+-------------------------------------v_detailbesoinachat------------------------------------------
+create or replace view v_detailbesoinachat as 
+    select dba.idArticle,quantite,dba.etat as etatDetail, nomArticle,ba.* from detailBesoinAchat dba
+        join article a on a.idArticle=dba.idArticle
+        join v_besoinAchat as ba on ba.idBesoinAchat=dba.idBesoinAchat;

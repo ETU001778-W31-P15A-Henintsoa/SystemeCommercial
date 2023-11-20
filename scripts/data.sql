@@ -72,5 +72,5 @@ insert into Fournisseur(nomFournisseur, email, motdepasse, adresse, idVille) val
 
 
 --------------------------------------Fiderana 19-11-23 13:07-------------------------------------------
-update employePoste set idBrancheDepartement='BDEPT3' where idemployePoste='EPOST3';
+update employePoste set idBrancheDepartement='BDEPT1' where idemployePoste='EPOST3';
 update validation set libelle='premier validation bon achat' where idValidation='VAL2';

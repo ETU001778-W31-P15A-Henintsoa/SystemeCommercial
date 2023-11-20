@@ -11,7 +11,7 @@ class ControllerBesoinAchat extends CI_Controller {
     public function entrerBesoin(){
         date_default_timezone_set('Africa/Nairobi');
         $date=date('Y-m-d');
-        $idEmploye='EMP1';
+        $idEmploye='EMP3';
         $dateBesoin=$_POST['dateBesoin'];
         $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmploye","*"," idemploye='".$idEmploye."'");
         $valeur="(default,'".$employePoste[0]->iddepartement."','".$dateBesoin."','".$idEmploye."',0,'".$date."')";
@@ -22,6 +22,48 @@ class ControllerBesoinAchat extends CI_Controller {
             $val="(default,'".$_POST['article'.$i]."',".$_POST['quantite'.$i].",'".$besoinAchat[0]->idbesoinachat."',1)";
             $this->Generalisation->insertion("detailBesoinAchat",$val);
         }
+        $data['article']=$this->Generalisation->avoirTable("article");
+        $this->load->view('header');
+        $this->load->view('formulaireBesoinAchat',$data);
+    }
+
+    public function affichageAchatNonValide(){
+        $idEmploye='EMP3';
+        $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
+        if($employePoste[0]->libelle=="achat"){
+            $data['besoinAchat']=$this->BesoinAchat->avoirAchatNonValide($employePoste[0]->iddepartement);
+            $this->load->view('header');
+            $this->load->view('achatNonValide',$data);
+        }else{
+            $data["error"]="Vous n'avez pas accès à cette page";
+            $this->load->view('header');
+            $this->load->view('errors/erreurValidationAchat',$data);
+        }
+    }
+
+    public function valider(){
+        $idBesoinAchat=$_GET['idBesoinAchat'];
+        $this->Generalisation->miseAJour("besoinAchat","etat=1"," idBesoinAchat='".$idBesoinAchat."'");
+    }
+
+    public function avoirAchatValide(){
+        $idEmploye='EMP2';
+        $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
+        if($employePoste[0]->nomdepartement=="Systeme commercial"){
+            $data['besoinAchat']=$this->BesoinAchat->avoirAchatValide();
+            $this->load->view('header');
+            $this->load->view('achatValide',$data);
+        }
+        else{
+            $data["error"]="Vous n'avez pas accès à cette page";
+            $this->load->view('header');
+            $this->load->view('errors/erreurValidationAchat',$data);
+        }
+    }
+
+    public function regrouper(){
+        $regroupement=$this->Generalisation->avoirTableSpecifique("v_detailBesoinachat","idArticle,sum(quantite)as quantite"," etat=1 group by idArticle");
+        $this->BesoinAchat->entrerRegroupement($regroupement);
         $data['article']=$this->Generalisation->avoirTable("article");
         $this->load->view('header');
         $this->load->view('formulaireBesoinAchat',$data);

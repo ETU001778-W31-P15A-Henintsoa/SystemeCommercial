@@ -61,7 +61,7 @@ create table besoinAchat(
     idDepartement varchar(20),
     dateBesoin date,
     idEmploye varchar(20),
-    etat int, --(-1 suspendu,0 non valide ni suspendu,1 valide,11 a deja eu une demande de proformat,21 achete)--
+    etat int, --(-1 suspendu,0 non valide ni suspendu,1 valide,11 deja regroupe)--
     dateInsertion date,
     foreign key(idEmploye) references employe(idEmploye),
     foreign key(idDepartement) references departement(idDepartement)
@@ -174,4 +174,25 @@ create table DonneeProforma(
 
 alter table branche add nomBranche varchar(40);
 
+-------------------------Fiderana 20 novembre 2023 09h------------------------------
+-----------------------------------------regroupement---------------------------------------------
+create sequence seqregroupement;
+create table regroupement(
+    idRegroupement varchar(20) default concat('REG' || nextval('seqregroupement')) primary key,
+    dateRegroupement date
+);
 
+----------------------------------------detailRegroupement------------------------------------------
+create sequence seqdetailregroupement;
+create table detailregroupement(
+    idDetailRegroupement varchar(20) default concat('DREG' || nextval('seqdetailregroupement')) primary key,
+    idArticle varchar(20),
+    quantite float,
+    idRegroupement varchar(20),
+    foreign key(idArticle) references article(idArticle),
+    foreign key(idRegroupement) references regroupement(idRegroupement)
+);
+
+------------------------------------------alter besoinAchat-------------------------------------------------------
+alter table besoinAchat add idRegroupement varchar(20), add constraint idregroup foreign key(idRegroupement) references regroupement(idRegroupement);
+alter table regroupement add etat int; -------(1 rehefa vaao regroupe, 11 rehefa vita demande proforma)---------------
