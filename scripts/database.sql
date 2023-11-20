@@ -184,7 +184,12 @@ create table BonDeCommande(
     idFournisseur varchar(20),
     DateBonDeCommande date default current_date,
     etat int default 0, --(0 non valide ni suspendu,11 valide)-
-    foreign key (idFournisseur) references Fournisseur(idFournisseur)
+    idPayement varchar(20),
+    idLivraison varchar(20),
+    delailivraison date,
+    foreign key (idFournisseur) references Fournisseur(idFournisseur),
+    foreign key (idPayement) references TypedePaiment(idTypeDePayement),
+    foreign key (idLivraison) references Livraison(idLivraison)
 );
 
 create sequence seqArtCommande;
@@ -202,3 +207,32 @@ create table ArticleBonDeCommande(
 alter table branche add nomBranche varchar(40);
 
 
+<<<<<<< Updated upstream
+=======
+----------------------------------------detailRegroupement------------------------------------------
+create sequence seqdetailregroupement;
+create table detailregroupement(
+    idDetailRegroupement varchar(20) default concat('DREG' || nextval('seqdetailregroupement')) primary key,
+    idArticle varchar(20),
+    quantite float,
+    idRegroupement varchar(20),
+    foreign key(idArticle) references article(idArticle),
+    foreign key(idRegroupement) references regroupement(idRegroupement)
+);
+
+-- ----------------------Santatra 20 nov 2023 14:10-------------------------------
+create sequence seqPayement;
+create table TypedePaiment(
+    idTypeDePayement varchar(20) default concat('PAY' || nextval('seqPayement')) primary key,
+    libelle varchar(50)
+);
+
+create sequence seqLivraison;
+create table Livraison(
+    idLivraison varchar(20) default concat('LIV' || nextval('seqLivraison')) primary key,
+    libelle varchar(50)
+);
+------------------------------------------alter besoinAchat-------------------------------------------------------
+alter table besoinAchat add idRegroupement varchar(20), add constraint idregroup foreign key(idRegroupement) references regroupement(idRegroupement);
+alter table regroupement add etat int; -------(1 rehefa vaao regroupe, 11 rehefa vita demande proforma)---------------
+>>>>>>> Stashed changes

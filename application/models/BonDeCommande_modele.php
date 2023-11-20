@@ -22,17 +22,18 @@
         }
         
 
-        public function genererBonDeCommande($quantiteDemandee, $moinsDisant) {
+        public function genererBonDeCommande($date,$livraison,$paiement, $moinsDisant) {
             date_default_timezone_set('Africa/Nairobi');
             usort($moinsDisant, function ($a, $b) {
                 return $a->pu - $b->pu;
             });
-        
-            $quantiteRestantes = $quantiteDemandee;
+            // $moinsDisant = $this->Proforma_modele->avoirMoinsDisant();
+            $quantiteRestantes = 0;
         
             foreach ($moinsDisant as $article) {
                 $idArticle = $article->idarticle;
-                $quantiteDemandee = 30; // Quantite demande par l'article
+                $quantiteDemandee = $this->avoirQuantiteDemande($idArticle,$idregroupement); // Quantite demande par l'article
+                $quantiteRestantes = $quantiteDemandee;
                 $quantiteDisponible = min($article->quantite, $quantiteDemandee, $quantiteRestantes[$idArticle]);
         
                 if ($quantiteDisponible > 0) {
@@ -48,6 +49,9 @@
                         // Insert a new record for the supplier and date
                         $data = array(
                             'idfournisseur' => $article->idfournisseur,
+                            'delailivraison' => $date,
+                            'idpayement' => $livraison,
+                            'idlivraison' => $paiement,
                             'datebondecommande' => date('Y-m-d')
                         );
                         $idbondecommande = $this->insertionBonDeCommande("bondecommande", $data);
@@ -75,6 +79,36 @@
         public function avoirListeBonDeCommandeNonValide() {
             $sql = "SELECT * FROM bondecommande where etat = 0";
             $query = $this->db->query($sql);
+            $result = $query->result_array();
+            return $result;
+        }
+
+        public function avoirListeBonDeCommandeValide() {
+            $sql = "SELECT * FROM bondecommande where etat = 1";
+            $query = $this->db->query($sql);
+            $result = $query->result_array();
+            return $result;
+        }
+
+        public function avoirListePayment() {
+            $sql = "SELECT * FROM TypedePaiment";
+            $query = $this->db->query($sql);
+            $result = $query->result_array();
+            return $result;
+        }
+
+        public function avoirLivraison() {
+            $sql = "SELECT * FROM Livraison";
+            echo $sql;
+            $query = $this->db->query($sql);
+            $result = $query->result_array();
+            return $result;
+        }
+
+        public function avoirQuantiteDemande($article,$idregroupement) {
+            $sql = "select * from detailregroupement where idarticle=? and idregroupement= ?";
+            
+            $query = $this->db->query($sql,array($idarticle,$idregroupement));
             $result = $query->result_array();
             return $result;
         }
