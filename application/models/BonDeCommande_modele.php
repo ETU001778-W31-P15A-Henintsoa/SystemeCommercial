@@ -10,6 +10,7 @@
         
         public function insertionBonDeCommande($NomTable, $data) {
             $this->db->insert($NomTable, $data);
+            $this->Generalisation->insertion("bo");
         
             // Manually fetch the last value from the sequence
             $query = $this->db->query("SELECT concat('COM' || currval('seqBonDeCommande')) AS idbondecommande");
@@ -31,15 +32,16 @@
             $quantiteRestantes = 0;
         
             foreach ($moinsDisant as $article) {
-                $idArticle = $article->idarticle;
-                $quantiteDemandee = $this->avoirQuantiteDemande($idArticle,$idregroupement); // Quantite demande par l'article
+                var_dump($article);
+                $idArticle = $article['regroupement']->idarticle;
+                $quantiteDemandee = $this->avoirQuantiteDemande($idArticle, $article['regroupement']->idregroupement); // Quantite demande par l'article
                 $quantiteRestantes = $quantiteDemandee;
-                $quantiteDisponible = min($article->quantite, $quantiteDemandee, $quantiteRestantes[$idArticle]);
-        
+                $quantiteDisponible = min($article['regroupement']->quantite, $quantiteDemandee, $quantiteRestantes);
+                echo "disponible ".$quantiteDisponible;
                 if ($quantiteDisponible > 0) {
                     // Check if a record for the same supplier and date already exists
                     $existingRecord = $this->db->get_where('bondecommande', array(
-                        'idfournisseur' => $article->idfournisseur,
+                        'idfournisseur' => $article['data'][0]['fournisseur']->idfournisseur,
                         'datebondecommande' => date('Y-m-d') // Assuming you want to use the current date
                     ))->row();
         
@@ -48,13 +50,14 @@
                     } else {
                         // Insert a new record for the supplier and date
                         $data = array(
-                            'idfournisseur' => $article->idfournisseur,
+                            'idfournisseur' => $article['data'][0]['fournisseur']->idfournisseur,
                             'delailivraison' => $date,
-                            'idpayement' => $livraison,
-                            'idlivraison' => $paiement,
+                            'idpayement' => $paiement,
+                            'idlivraison' => $livraison,
                             'datebondecommande' => date('Y-m-d')
                         );
-                        $idbondecommande = $this->insertionBonDeCommande("bondecommande", $data);
+                        // $idbondecommande = $this->insertionBonDeCommande("bondecommande", $data);
+                        $idbondecommande = $this->Generalisation->insertion("bondecommande(idfournisseur,delailivraison,idpayement,idlivraison)", sprintf("('%s', '%s', '%s', '%s')",$article['data'][0]['fournisseur']->idfournisseur,$date,$paiement,$livraison ));
                     }
         
                     echo "commande " . $idbondecommande;
@@ -62,7 +65,7 @@
                     // Insert into ArticleBonDeCommande
                     $this->Generalisation->insertion(
                         "ArticleBonDeCommande(idbondecommande,idArticle,quantite,pu)",
-                        sprintf("('%s','%s','%s','%s')", $idbondecommande, $idArticle, $quantiteDisponible, $article->pu)
+                        sprintf("('%s','%s','%s','%s')", $idbondecommande, $idArticle, $quantiteDisponible, $article['data'][0]['prixunitaire'])
                     );
         
                     $quantiteRestantes[$idArticle] -= $quantiteDisponible;
@@ -108,7 +111,7 @@
         public function avoirQuantiteDemande($article,$idregroupement) {
             $sql = "select * from detailregroupement where idarticle=? and idregroupement= ?";
             
-            $query = $this->db->query($sql,array($idarticle,$idregroupement));
+            $query = $this->db->query($sql,array($article, $idregroupement));
             $result = $query->result_array();
             return $result;
         }

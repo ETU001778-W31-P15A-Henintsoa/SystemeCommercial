@@ -9,6 +9,7 @@ class BonDeCommande extends CI_Controller {
     }
 
     public function generer() {
+        $data['idregroupement'] = $this->input->get('idregroupement');
         $this->load->model('BonDeCommande_modele');
         $data['typepaiement'] = $this->BonDeCommande_modele->avoirListePayment();
         $data['livraison'] = $this->BonDeCommande_modele->avoirLivraison();
@@ -17,13 +18,15 @@ class BonDeCommande extends CI_Controller {
     }
 
     public function genererBonDeCommande() {
-        $datedelai = $this->input->post('date');
+        $idregroupement = $this->input->post('idregroupement');
+        $datedelai = $this->input->post('delai');
         $paiement = $this->input->post('paiement');
         $livraison = $this->input->post('livraison');
         $this->load->model('BonDeCommande_modele');
         $idregroupement;
         $moinsDisant=$this->Proforma_modele->avoirMoinsDisant($idregroupement);
-        $this->BonDeCommande_modele->genererBonDeCommande($datedelai,$livraison,$paiement,$quantiteDemandee, $moinsDisant);
+        $this->BonDeCommande_modele->genererBonDeCommande($datedelai,$livraison,$paiement, $moinsDisant);
+        redirect('welcome/versAcceuil');
     }
 
     public function listeregroupement() {
@@ -34,7 +37,7 @@ class BonDeCommande extends CI_Controller {
     }
 
     public function versListeBonDeCommande() {
-        $idEmploye = 'EMP1';
+        $idEmploye = $_SESSION['user'];
         $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
         if($employePoste[0]->libelle=="finance") {
             $this->load->model('BonDeCommande_modele');

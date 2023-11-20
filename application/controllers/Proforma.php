@@ -113,4 +113,10 @@ class Proforma extends CI_Controller {
 		var_dump($data);
 	}
 
+	public function vers21(){
+		$idregroupement = $this->input->get("idregroupement");
+		$this->Generalisation->miseAJour("regroupement", "etat=21", sprintf("idregroupement='%s'", $idregroupement));
+		redirect('welcome/versAcceuil');
+	}
+
 }

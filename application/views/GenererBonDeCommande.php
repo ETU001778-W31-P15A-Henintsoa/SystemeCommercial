@@ -22,6 +22,7 @@
                             echo "<p style=color:red;>".$erreur."</p>";
                         }?>
                       <form action="<?php  echo site_url("BonDeCommande/genererBonDeCommande"); ?>" method="post">
+                      <input type="hidden" name="idregroupement" value="<?= $idregroupement ?>">
                       <div class="mb-3 row">
                         <label for="html5-date-input" class="col-md-2 col-form-label">Date delai de livraison</label>
                         <div class="col-md-10">

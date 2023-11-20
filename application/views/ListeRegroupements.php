@@ -27,11 +27,11 @@
                             foreach($regroupement as $regroupements) { ?>
                                  <tr>
                                     <td><?php echo $regroupements['idregroupement']; ?></td>
-                                    <td><?php echo $regroupements['dateregroupement']->format("Y-m-d"); ?></td>
+                                    <td><?php echo $regroupements['dateregroupement']; ?></td>
                                     <td><?php echo $regroupements['etat']; ?></td>
                                     <td><?php echo $regroupements['quantite']; ?></td>
                                     <td><?php echo $regroupements['idarticle']; ?></td>
-                                    <td><a href="<?php ?>">Generer Bon De Commande</a></td>
+                                    <td><a href="<?php echo site_url('BonDeCommande/generer?idregroupement='.$regroupements['idregroupement']); ?>">Generer Bon De Commande</a></td>
                                 </tr>
                             <?php }
                         ?>

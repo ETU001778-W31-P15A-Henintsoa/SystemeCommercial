@@ -189,16 +189,7 @@ create table DonneeProforma(
     livraisonPartielle boolean,
     foreign key (idProforma) references Proforma(idProforma)
 );
-  
-  
--- ---------------------------PROFORMA--------------------------
-create sequence seqDonneeProforma;
-create table DonneeProforma(
-    idDonneeProforma varchar(20) default concat('DOP' || nextval('seqDonneeProforma')) primary key,
-    idArticle varchar(20),
-    id varchar(20),
-    foreign key (idFournisseur) references Fournisseur(idFournisseur)
-  
+
 -- ------------------Santatra 20/11/2023 BON DE COMMANDE -----------------------------------
 
 create sequence seqBonDeCommande;
