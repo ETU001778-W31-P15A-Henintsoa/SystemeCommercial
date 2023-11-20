@@ -193,6 +193,11 @@
                     <div data-i18n="Basic">Generer Bon De Commande</div>
                   </a>
                 </li>
+                <li class="menu-item">
+                  <a href="<?php echo site_url('BonDeCommande/listeregroupement'); ?>" class="menu-link" target="_blank">
+                    <div data-i18n="Basic">listes De regroupement</div>
+                  </a>
+                </li>
               </ul>
             </li>
           </ul>

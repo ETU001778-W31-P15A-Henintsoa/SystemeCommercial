@@ -26,6 +26,13 @@ class BonDeCommande extends CI_Controller {
         $this->BonDeCommande_modele->genererBonDeCommande($datedelai,$livraison,$paiement,$quantiteDemandee, $moinsDisant);
     }
 
+    public function listeregroupement() {
+        $this->load->model('BonDeCommande_modele');
+        $data['regroupement'] = $this->BonDeCommande_modele->avoirDetailRegroupement();
+        $this->load->view('header');
+        $this->load->view('ListeRegroupements',$data);
+    }
+
     public function versListeBonDeCommande() {
         $idEmploye = 'EMP1';
         $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
