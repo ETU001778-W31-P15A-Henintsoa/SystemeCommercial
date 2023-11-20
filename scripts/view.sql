@@ -33,3 +33,9 @@ create or replace view v_detailbesoinachat as
     select dba.idArticle,quantite,dba.etat as etatDetail, nomArticle,ba.* from detailBesoinAchat dba
         join article a on a.idArticle=dba.idArticle
         join v_besoinAchat as ba on ba.idBesoinAchat=dba.idBesoinAchat;
+
+
+--------------------------------------v_detailregroupement--------------------------------------
+create or replace view v_detailregroupement as
+    select r.*,dr.quantite,dr.idArticle from regroupement r
+        join detailRegroupement dr on r.idRegroupement=dr.idRegroupement;
