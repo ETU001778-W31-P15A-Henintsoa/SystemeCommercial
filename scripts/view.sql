@@ -21,3 +21,15 @@ create or replace view v_DonneeProforma as
     DonneeProforma.idDonneeProforma, DonneeProforma.idArticle, DonneeProforma.quantite, DonneeProforma.prixUnitaire, DonneeProforma.TVA, DonneeProforma.livraisonPartielle
     from Proforma 
         join DonneeProforma on DonneeProforma.idProforma = Proforma.idProforma;
+-------------------------Fiderana 20 novembre 2023 09h15------------------------------
+--------------------------------v_besoinAchat-------------------------------------------------
+create or replace view v_besoinAchat as
+    select ba.*,e.nom,e.prenom,d.nomDepartement from besoinAchat ba
+        join employe e on e.idEmploye=ba.idEmploye
+        join departement d on d.idDepartement=ba.idDepartement;
+
+-------------------------------------v_detailbesoinachat------------------------------------------
+create or replace view v_detailbesoinachat as 
+    select dba.idArticle,quantite,dba.etat as etatDetail, nomArticle,ba.* from detailBesoinAchat dba
+        join article a on a.idArticle=dba.idArticle
+        join v_besoinAchat as ba on ba.idBesoinAchat=dba.idBesoinAchat;

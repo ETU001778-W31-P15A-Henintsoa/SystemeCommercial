@@ -165,14 +165,27 @@
               <li class="menu-item">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                   <!-- <i class="menu-icon tf-icons bx bx-lock-open-alt"></i> -->
-                  <div data-i18n="Authentications">enu 1</div>
+                  <div data-i18n="Authentications">Besoin en achat</div>
                 </a>
                 <ul class="menu-sub">
                   <li class="menu-item">
-                    <a href="" class="menu-link">
-                      <div data-i18n="Tables">Petit details 1</div>
+                    <a href="<?php echo site_url('ControllerBesoinAchat/formulaireBesoinAchat'); ?>" class="menu-link">
+                      <div data-i18n="Tables">Ajouter un besoin</div>
                     </a>
                   </li>
+
+                  <li class="menu-item">
+                    <a href="<?php echo site_url('ControllerBesoinAchat/affichageAchatNonValide'); ?>" class="menu-link">
+                      <div data-i18n="Tables">valider un besoin</div>
+                    </a>
+                  </li>
+
+                  <li class="menu-item">
+                    <a href="<?php echo site_url('ControllerBesoinAchat/avoirAchatValide'); ?>" class="menu-link">
+                      <div data-i18n="Tables">Besoin Achat Valide</div>
+                    </a>
+                  </li>
+
                 </ul>
               </li>
             </li>
