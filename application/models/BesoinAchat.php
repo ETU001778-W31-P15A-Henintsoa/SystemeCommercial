@@ -36,7 +36,7 @@ class BesoinAchat extends CI_Model {
         $regroupementBase=$this->Generalisation->avoirTableAutrement("regroupement","*"," order by idRegroupement desc");
         $this->miseAJourBesoinAchat($regroupementBase[0]->idregroupement);
         for ($i=0; $i <count($regroupement) ; $i++) { 
-            $valeur="(default,'".$regroupement[$i]->idarticle."',".$regroupement[$i]->quantite.",'".$regroupementBase[0]->idregroupement."',1)";
+            $valeur="(default,'".$regroupement[$i]->idarticle."',".$regroupement[$i]->quantite.",'".$regroupementBase[0]->idregroupement."')";
             $this->Generalisation->insertion("detailregroupement",$valeur);
         }
     }
