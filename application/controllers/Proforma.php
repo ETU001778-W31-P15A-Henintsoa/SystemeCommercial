@@ -108,15 +108,17 @@ class Proforma extends CI_Controller {
 		redirect("proforma/versEnregistrementProforma?idproforma=".$idproforma);
 	}
 
-	public function versMoinsDisant(){
-		$data =$this->Proforma_modele->avoirMoinsDisant("REG5");
-		var_dump($data);
-	}
-
 	public function vers21(){
 		$idregroupement = $this->input->get("idregroupement");
 		$this->Generalisation->miseAJour("regroupement", "etat=21", sprintf("idregroupement='%s'", $idregroupement));
 		redirect('welcome/versAcceuil');
+	}
+
+	public function versMoinsDisant(){
+		$data =$this->Proforma_modele->avoirMoinsDisant("REG5");
+		$ou = $this->Proforma_modele->OuAcheterQuoi($data);
+		$f = $this->Proforma_modele->OuAcheterQuoiParFournisseur($ou);
+		var_dump($f);
 	}
 
 }
