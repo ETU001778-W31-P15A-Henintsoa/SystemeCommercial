@@ -37,8 +37,8 @@
                     // var_dump($avoirDetailBesoins);
                     $donneeproforma = $this->Generalisation->avoirTableConditionnee("v_donneeproforma where idregroupement='".$idregroupement."' and idfournisseur='".$fournisseur[$j]->idfournisseur."' and idarticle='".$avoirDetailBesoins[$i]->idarticle."'");
                     if(count($donneeproforma)!=0){
-                        $data[$j]['prixunitaire'] = ($donneeproforma[0]->prixunitaire);
-                        $data[$j]['quantite'] = ($donneeproforma[0]->prixunitaire);
+                        $data[$j]['prixunitaire'] = floatval($donneeproforma[0]->prixunitaire);
+                        $data[$j]['quantite'] =floatval ($donneeproforma[0]->quantite);
                     }
                 }
                 // $avoirDetailBesoins[$i]['data'] = $data;
@@ -62,14 +62,34 @@
             return $regroupement;
         }
 
+        public function calculReste($quantiteNecessaire, $qf){
+            $reste = $qf - $quantiteNecessaire;
+
+            if($reste<0){
+                $quantiteNecessaire = $reste * (-1);
+            }else{
+                $quantiteNecessaire=0;
+            }
+            return $quantiteNecessaire;
+        }
+
+        public function transformerEnFloat($donnees){
+            foreach($donnees as $donnee){
+                $donnee['regroupement']->quantite = floatval($donnee['regroupement']->quantite);
+            }
+            return $donnees;
+        }
+
         public function avoirMoinsDisant($idregroupement){
             $detailBesoin = $this->avoirFournisseurArticle($idregroupement);
+            $detailBesoin = $this->transformerEnFloat($detailBesoin);
+            // var_dump($detailBesoin);
+
             // $detailBesoin =$this->data();
             // var_dump($detailBesoin);
         
             for ($i=0; $i <count($detailBesoin) ; $i++) { 
                 $detail = $detailBesoin[$i];
-                // var_dump($detail);
                 if(count($detail['data'])!=0){
                     // Récupérer la liste des IDs
                     $prixunitaires = array_column($detail['data'], 'prixunitaire');
@@ -81,6 +101,54 @@
                 }
             }
             return $detailBesoin;
+        }
+
+        public function OuAcheterQuoi($donnee){
+            $a = 0;
+            $ouAcheterQuoi = array();
+
+            // var_dump($donnee);
+
+            foreach($donnee as $donne){
+                $data = $donne['data'];
+                $ouAcheterQuoi[$a]['idarticle'] = $donne['regroupement']->idarticle;
+                $quantiteNecessaire = 15;
+                $i=0;
+                while($i<count($data) && $quantiteNecessaire!=0){
+                    // echo $quantiteNecessaire." avant";
+                    $intermediaire = $quantiteNecessaire;
+                    $quantiteNecessaire = $this->calculReste($quantiteNecessaire, $data[$i]['quantite']);
+                    // echo $quantiteNecessaire." apres";
+                    $ouAcheterQuoi[$a]['fournisseur'][$i][0] =  $data[$i]['fournisseur'];
+                    $ouAcheterQuoi[$a]['fournisseur'][$i][1] =  $intermediaire-$quantiteNecessaire;
+                    $ouAcheterQuoi[$a]['fournisseur'][$i][2] =  $data[$i]['prixunitaire'];
+                    $i++;
+                }
+            }
+            return $ouAcheterQuoi;
+        }
+
+        public function OuAcheterQuoiParFournisseur($ouAcheterQuoi){
+            $fournisseurs = $this->Generalisation->avoirTable('fournisseur');
+            // var_dump($ouAcheterQuoi);
+            foreach($fournisseurs as $fournisseur){
+                foreach($ouAcheterQuoi as $acheter){
+                    // var_dump($acheter['idarticle']);
+                    $i = 0;
+                    $fournisseur->aacheter = array();
+                    $data = array();
+                    foreach($acheter['fournisseur'] as $f){
+                        if($f[0]->idfournisseur == $fournisseur->idfournisseur){
+                            $data['acheter'][$i]['idarticle']=$acheter['idarticle'];
+                            $data['acheter'][$i]['quantite'] = $f[1];
+                            $data['acheter'][$i]['prixunitaire'] = $f[2];
+                        }
+                        $i++;
+                    }
+                    $fournisseur->aacheter = $data;
+                }
+            }
+            return $fournisseurs;
         }
 
 
