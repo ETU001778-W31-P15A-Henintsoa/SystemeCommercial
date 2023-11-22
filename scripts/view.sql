@@ -65,5 +65,3 @@ create or replace view v_DonneeProforma2 as
     from Proforma
         join DonneeProforma on DonneeProforma.idProforma = Proforma.idProforma
         join v_detailregroupementArticle on v_detailregroupementArticle.idregroupement=Proforma.idregroupement;
-
-

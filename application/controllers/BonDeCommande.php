@@ -21,13 +21,13 @@ class BonDeCommande extends CI_Controller {
 
     public function genererBonDeCommande() {
         $idregroupement = $this->input->post('idregroupement');
-        // $this->load->library('MYPDF');
+        $this->load->library('MYPDF');
         $datedelai = $this->input->post('delai');
         $paiement = $this->input->post('paiement');
         $livraison = $this->input->post('livraison');
         $this->load->model('BonDeCommande_modele');
         $idregroupement;
-        $moinsDisant=$this->Proforma_modele->ouAcheterQuoiParFournisseur($idregroupement);
+        $moinsDisant=$this->Proforma_modele->avoirMoinsDisant($idregroupement);
         $this->BonDeCommande_modele->genererBonDeCommande($datedelai,$livraison,$paiement, $moinsDisant);
         redirect('welcome/versAcceuil');
     }
@@ -87,7 +87,7 @@ class BonDeCommande extends CI_Controller {
         $idbondecommande = $_GET['id'];
         $idregroupement = $_GET['idregroupement'];
         echo $employePoste[0]->libelle;
-        if($employePoste[0]->libelle == "Directeur General"){
+        if($employePoste[0]->libelle == "DG"){
             $this->Generalisation->miseAJour("bondecommande","etat=31"," idbondecommande='".$idbondecommande."'");
             $this->Generalisation->miseAJour("regroupement","etat=41"," idregroupement='".$idregroupement."'");
             redirect('BonDeCommande/versListeBonDeCommande');
