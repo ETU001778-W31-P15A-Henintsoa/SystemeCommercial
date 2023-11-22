@@ -1,40 +1,25 @@
 <?php
-if (!defined('BASEPATH')) exit('No direct script access allowed');
+require_once APPPATH . 'libraries/tcpdf/tcpdf.php';
 
-require_once 'TCPDF/tcpdf.php';
-
-// Extend the TCPDF class to create custom Header and Footer
 class MYPDF extends TCPDF {
-
-    //Page header
+    
+    // En-tête du PDF
     public function Header() {
-        // Logo
-        $this->SetY(10);
-        $this->SetFont('helvetica', 'B', 15);
-        // Title
-        $this->Cell(0, 20, 'Footer Text', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+        // Sélectionnez la police
+        $this->SetFont('helvetica', 'B', 12);
+
+        // Ajoutez votre contenu d'en-tête ici
+        $this->Cell(0, 10, 'En-tête du PDF', 0, false, 'C', 0, '', 0, false, 'M', 'M');
     }
 
-    // Page footer
+    // Pied de page du PDF
     public function Footer() {
-        // Position at 15 mm from bottom
-        $this->SetY(-20);
-        // Set font
-        $this->SetFont('times', '',8);
-        // Page number
+        // Sélectionnez la police
+        $this->SetFont('helvetica', 'I', 8);
 
-        $html = <<<EOD
-        <font size="+1"><span><strong>Footer Example</span></strong></font>
-        <hr />
-        FooterText
-EOD;
-
-
-        $this->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
-        // print a block of text using Write()
-        //$this->Write(-60, $FooterText , '', 0, 'C', true, 0, false, false, 12);
+        // Ajoutez votre contenu de pied de page ici
+        $this->SetY(-15);
+        $this->Cell(0, 10, 'Pied de page du PDF', 0, false, 'C', 0, '', 0, false, 'T', 'M');
     }
 }
-
-
 ?>
