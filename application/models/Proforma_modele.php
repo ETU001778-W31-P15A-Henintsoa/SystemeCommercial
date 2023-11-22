@@ -126,7 +126,7 @@
                 }
             }
             return $ouAcheterQuoi;
-        }
+        }   
 
         public function OuAcheterQuoiParFournisseur($ouAcheterQuoi){
             $fournisseurs = $this->Generalisation->avoirTable('fournisseur');

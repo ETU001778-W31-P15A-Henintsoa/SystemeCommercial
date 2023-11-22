@@ -28,7 +28,7 @@ class Generalisation extends CI_Model {
 
     public function insertion($NomTable, $values){ // Metre values comme => '(data1, data2, 'data3')' par exemple
         $sql = sprintf('insert into %s values%s',$NomTable, $values);
-        echo $sql;
+        // echo $sql;
         $this->db->query($sql);  
 
     }

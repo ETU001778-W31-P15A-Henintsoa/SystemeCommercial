@@ -155,8 +155,8 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">Logout</div>
+                  <a href="" class="menu-link">
+                    <div data-i18n="Tables">Logout</div>
                   </a>
                 </li>
               </ul>
@@ -230,18 +230,18 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="<?php echo site_url('BonDeCommande/versListeBonDeCommande'); ?>" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">Liste Bon De Commande</div>
+                  <a href="<?php echo site_url('BonDeCommande/versListeBonDeCommande'); ?>" class="menu-link">
+                    <div data-i18n="Tables">Liste Bon De Commande</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="<?php echo site_url('BonDeCommande/generer'); ?>" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">Generer Bon De Commande</div>
+                  <a href="<?php echo site_url('BonDeCommande/generer'); ?>" class="menu-link">
+                    <div data-i18n="Tables">Generer Bon De Commande</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="<?php echo site_url('BonDeCommande/listeregroupement'); ?>" class="menu-link" target="_blank">
-                    <div data-i18n="Basic">listes De regroupement</div>
+                  <a href="<?php echo site_url('BonDeCommande/listeregroupement'); ?>" class="menu-link">
+                    <div data-i18n="Tables">listes De regroupement</div>
                   </a>
                 </li>
               </ul>
