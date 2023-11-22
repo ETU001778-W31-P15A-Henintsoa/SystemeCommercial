@@ -67,13 +67,29 @@ class BonDeCommande extends CI_Controller {
     public function valider(){
         $idEmploye = $_SESSION['user'];
         $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
-        if($employePoste[0]->libelle=="finance"  ) {
-            $idbondecommande = $_GET['id'];
+        $idbondecommande = $_GET['id'];
+        $idregroupement = $_GET['idregroupement'];
+        echo $employePoste[0]->libelle;
+        if($employePoste[0]->libelle == "premier validation bon achat") {
             $this->Generalisation->miseAJour("bondecommande","etat=21"," idbondecommande='".$idbondecommande."'");
+            $this->Generalisation->miseAJour("regroupement","etat=31"," idregroupement='".$idregroupement."'");
             redirect('BonDeCommande/versListeBonDeCommande');
-        }else if($employePoste[0]->libelle=="DG"){
-            $idbondecommande = $_GET['id'];
+        }else{
+            $data["error"]="Vous n'avez pas accès à cette page";
+            $this->load->view('header');
+            $this->load->view('errors/erreurValidationAchat',$data);
+        }
+    }
+
+    public function validerparDG(){
+        $idEmploye = $_SESSION['user'];
+        $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
+        $idbondecommande = $_GET['id'];
+        $idregroupement = $_GET['idregroupement'];
+        echo $employePoste[0]->libelle;
+        if($employePoste[0]->libelle == "DG"){
             $this->Generalisation->miseAJour("bondecommande","etat=31"," idbondecommande='".$idbondecommande."'");
+            $this->Generalisation->miseAJour("regroupement","etat=41"," idregroupement='".$idregroupement."'");
             redirect('BonDeCommande/versListeBonDeCommande');
         }else{
             $data["error"]="Vous n'avez pas accès à cette page";

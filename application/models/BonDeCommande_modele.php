@@ -59,7 +59,6 @@
                             echo "count". count($existingRecord);
                             $condition = "idarticle='".$idArticle."' and idfournisseur='".$moinsDisant[$i]['data'][$j]['fournisseur']->idfournisseur."'";
                                 $quantiteDisponibleArticleF = $this->Generalisation->avoirTableSpecifique("v_donneeproforma2","disponible",$condition); 
-                                
                             if(count($existingRecord) != 0) {
                                 $idbondecommande = $existingRecord[0]->idbondecommande;                
                             }else {
@@ -73,7 +72,7 @@
                                     echo "tafiditra_3";
                                     $quantite_entree = $quantiteDisponibleArticleF[0]->disponible;
                                     $quantiteRestantes = 0;
-                                    $bondecommande = $this->Generalisation->insertion("bondecommande(idfournisseur,delailivraison,idpayement,idlivraison)", sprintf("('%s', '%s', '%s', '%s')",$moinsDisant[$i]['data'][$j]['fournisseur']->idfournisseur,$date,$paiement,$livraison ));
+                                    $bondecommande = $this->Generalisation->insertion("bondecommande(idfournisseur,delailivraison,idpayement,idlivraison,idregroupement)", sprintf("('%s', '%s', '%s', '%s','%s')",$moinsDisant[$i]['data'][$j]['fournisseur']->idfournisseur,$date,$paiement,$livraison,$moinsDisant[$i]['regroupement']->idregroupement));
                                     // $idbondecommande = $bondecommande[0]->idbondecommande;
                                     $commande = $this->Generalisation->avoirTableAutrement("bondecommande","idbondecommande","order by idbondecommande desc limit 1");
                                     $idbondecommande =$commande[0]->idbondecommande;

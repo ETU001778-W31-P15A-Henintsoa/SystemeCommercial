@@ -57,7 +57,13 @@
                             <td><?php echo $bdcv['idbondecommande'];  ?></td>
                             <td><?php echo $bdcv['idfournisseur']; ?></td>
                             <td><?php echo $bdcv['datebondecommande']; ?></td>
-                            <td><span class="badge bg-label-warning me-1">Non Valide</span></td>
+                            <td><span class="badge bg-label-warning me-1">Non Valide par DG</span></td>
+                            <td>
+                                <a href="<?php echo site_url("BonDeCommande/validerparDG?id=".$bdcv['idbondecommande']."&& idregroupement=".$bdcv['idregroupement']); ?>">
+                                    <i class="bx bx-check" style="color:green;">
+                                    </i>
+                                </a>
+                            </td>
                             <td>
                                 <a href="<?php echo site_url("BonDeCommande/versDetailBonDeCommande?id=".$bdcv['idbondecommande']); ?>">Voir Detail</a>
                             </td>
@@ -89,7 +95,7 @@
                             <td><?php echo $bdcnv['datebondecommande']; ?></td>
                             <td><span class="badge bg-label-warning me-1">Non Valide</span></td>
                             <td>
-                                <a href="<?php echo site_url("BonDeCommande/valider?id=".$bdcnv['idbondecommande']); ?>">
+                                <a href="<?php echo site_url("BonDeCommande/valider?id=".$bdcnv['idbondecommande']."&& idregroupement=".$bdcnv['idregroupement']); ?>">
                                     <i class="bx bx-check" style="color:green;">
                                     </i>
                                 </a>
