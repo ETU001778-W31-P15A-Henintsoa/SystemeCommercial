@@ -21,7 +21,6 @@ VALUES
     ('Comptable',70000.00, 40000.00, 8.5, 'Finance et comptabilité', 'Analyste financier responsable de lanalyse des états financiers.'),
     ('Responsable commerciale',55000.00, 32000.00, 8.0, 'Système Commercial', 'Responsable des ventes spécialisé dans le système commercial.');
 
-
 ------------------------------------------Branche departement------------------------------------------------
 insert into brancheDepartement(idBranche,idDepartement) values
 ('BRA1','DEPT2'),
@@ -90,3 +89,31 @@ update validation set libelle='premier validation bon achat' where idValidation=
 --------------------------------------Santatra 20-11-23 14:13-------------------------------------------
 insert into TypedePaiment(libelle) values('virement bancaire'),('cheque');
 insert into Livraison(libelle) values('non partielle'),('partielle');
+
+
+
+------------------------------------- Henintsoa November 22--------------------------------------------
+
+-----------------------------------------------Branche----------------------------------------------------------
+INSERT INTO Branche (nomBranche,salaireMax, salaireMin, njHParPersonne, mission, descriptionPoste)
+VALUES
+('Directeur de Service Finance',550000.00, 320000.00, 8.0, 'Gestion du departement de Finance', 'Assure le bon fonctionnement des activites dans le departement Finance.');
+
+------------------------------------- Branche Departement ------------------------------------------------------
+insert into brancheDepartement(idBranche,idDepartement) values
+('BRA5','DEPT4');
+
+---------------------------------employe------------------------------------------------------
+INSERT INTO Employe (nom, prenom, adresse, matricule, dateNaissance, mail, motDePasse, etat)
+VALUES
+  ('Lova', 'Henintsoa', 'GVAS 8 Soama', 'MAT145521', '2001-12-11', 'henintsoa@gmail.com', 'henintsoa', 1);
+
+---------------------------------validation--------------------------------------------------
+insert into validation(idBrancheDepartement,libelle) values
+('BDEPT5','achat'),
+('BDEPT4','achat');
+
+--------------------------------------Poste EMploye-----------------------------------------------------------
+insert into employePoste(idBrancheDepartement,dateEmbauche,idEmploye) values
+('BDEPT5','2020-02-04','EMP4');
+

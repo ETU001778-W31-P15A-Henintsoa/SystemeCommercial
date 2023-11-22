@@ -112,7 +112,7 @@
             foreach($donnee as $donne){
                 $data = $donne['data'];
                 $ouAcheterQuoi[$a]['idarticle'] = $donne['regroupement']->idarticle;
-                $quantiteNecessaire = 15;
+                $quantiteNecessaire = $donne['regroupement']->quantite;
                 $i=0;
                 while($i<count($data) && $quantiteNecessaire!=0){
                     // echo $quantiteNecessaire." avant";

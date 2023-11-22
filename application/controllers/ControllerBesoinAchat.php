@@ -46,7 +46,7 @@ class ControllerBesoinAchat extends CI_Controller {
     public function valider(){
         $idBesoinAchat=$_GET['idBesoinAchat'];
         $this->Generalisation->miseAJour("besoinAchat","etat=1"," idBesoinAchat='".$idBesoinAchat."'");
-        redirect("welcome/versAccueil");
+        redirect("welcome/versAcceuil");
     }
 
     public function avoirAchatValide(){
