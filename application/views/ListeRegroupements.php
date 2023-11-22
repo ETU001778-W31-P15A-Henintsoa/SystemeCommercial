@@ -33,8 +33,7 @@
                                     <td><?php echo $regroupements['idarticle']; ?></td>
                                     <td><a href="<?php echo site_url('BonDeCommande/generer?idregroupement='.$regroupements['idregroupement']); ?>">Generer Bon De Commande</a></td>
                                 </tr>
-                            <?php }
-                        ?>
+                            <?php } ?>
                     </tbody>
                   </table>
                 </div>
