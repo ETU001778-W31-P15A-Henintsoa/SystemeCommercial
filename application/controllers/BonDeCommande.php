@@ -43,6 +43,7 @@ class BonDeCommande extends CI_Controller {
         $this->load->model('BonDeCommande_modele');
         $data['bonDeCommandeNonValide'] = $this->BonDeCommande_modele->avoirListeBonDeCommandeNonValide();
         $data['bonDeCommandeValide'] = $this->BonDeCommande_modele->avoirListeBonDeCommandeValide();
+        $data['bonDeCommandeValideDG'] = $this->BonDeCommande_modele->avoirListeBonDeCommandeValideDG();
         $this->load->view('header');
         $this->load->view('listeBonDeCommande',$data);
     }
@@ -66,9 +67,13 @@ class BonDeCommande extends CI_Controller {
     public function valider(){
         $idEmploye = $_SESSION['user'];
         $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
-        if($employePoste[0]->libelle=="finance") {
+        if($employePoste[0]->libelle=="finance"  ) {
             $idbondecommande = $_GET['id'];
-            $this->Generalisation->miseAJour("bondecommande","etat=1"," idbondecommande='".$idbondecommande."'");
+            $this->Generalisation->miseAJour("bondecommande","etat=21"," idbondecommande='".$idbondecommande."'");
+            redirect('BonDeCommande/versListeBonDeCommande');
+        }else if($employePoste[0]->libelle=="DG"){
+            $idbondecommande = $_GET['id'];
+            $this->Generalisation->miseAJour("bondecommande","etat=31"," idbondecommande='".$idbondecommande."'");
             redirect('BonDeCommande/versListeBonDeCommande');
         }else{
             $data["error"]="Vous n'avez pas accès à cette page";

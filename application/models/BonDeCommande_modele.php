@@ -162,7 +162,14 @@
         }
 
         public function avoirListeBonDeCommandeValide() {
-            $sql = "SELECT * FROM bondecommande where etat = 1";
+            $sql = "SELECT * FROM bondecommande where etat = 21";
+            $query = $this->db->query($sql);
+            $result = $query->result_array();
+            return $result;
+        }
+
+        public function avoirListeBonDeCommandeValideDG() {
+            $sql = "SELECT * FROM bondecommande where etat = 31";
             $query = $this->db->query($sql);
             $result = $query->result_array();
             return $result;
