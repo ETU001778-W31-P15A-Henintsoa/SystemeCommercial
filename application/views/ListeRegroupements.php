@@ -20,6 +20,7 @@
                         <th>etat</th>
                         <th>quantite</th>
                         <th>idarticle</th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">

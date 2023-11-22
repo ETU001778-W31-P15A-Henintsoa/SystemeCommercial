@@ -42,7 +42,7 @@ class Generalisation extends CI_Model {
     public function avoirTableSpecifique($NomTable, $colonnes, $conditions){
         // $sql = "SELECT $colonnes FROM $NomTable WHERE $conditions";
         $sql = "SELECT $colonnes FROM $NomTable WHERE $conditions";
-        // echo $sql;
+        echo $sql;
         $query = $this->db->query($sql);
         $resultats = array();
         $a=0;

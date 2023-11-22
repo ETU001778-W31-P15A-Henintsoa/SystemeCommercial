@@ -17,6 +17,7 @@
                             <th><strong>Fournisseur</strong></th>
                             <th><strong>date bon de commande</strong></th>
                             <th><strong></strong></th>
+                            <th><strong></strong></th>
                         </tr>
                         <!-- </thead> -->
                         <tbody class="table-border-bottom-0">
@@ -64,6 +65,9 @@
                             </td>
                             <td>
                                 <a href="<?php echo site_url("BonDeCommande/versDetailBonDeCommande?id=".$bdcnv['idbondecommande']); ?>">Voir Detail</a>
+                            </td>
+                            <td>
+                                <a href="<?php echo site_url("BonDeCommande/genererPDF?id=".$bdcnv['idbondecommande']); ?>">Generer PDF</a>
                             </td>
                         </tr>
                         <?php } ?>
