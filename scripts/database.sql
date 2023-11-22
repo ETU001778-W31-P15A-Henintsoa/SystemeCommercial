@@ -190,6 +190,19 @@ create table DonneeProforma(
     foreign key (idProforma) references Proforma(idProforma)
 );
 
+-- ----------------------Santatra 20 nov 2023 14:10-------------------------------
+create sequence seqPayement;
+create table TypedePaiment(
+    idTypeDePayement varchar(20) default concat('PAY' || nextval('seqPayement')) primary key,
+    libelle varchar(50)
+);
+
+create sequence seqLivraison;
+create table Livraison(
+    idLivraison varchar(20) default concat('LIV' || nextval('seqLivraison')) primary key,
+    libelle varchar(50)
+);
+
 -- ------------------Santatra 20/11/2023 BON DE COMMANDE -----------------------------------
 
 create sequence seqBonDeCommande;
@@ -201,9 +214,11 @@ create table BonDeCommande(
     idPayement varchar(20),
     idLivraison varchar(20),
     delailivraison date,
+    idregroupement varchar(20),
     foreign key (idFournisseur) references Fournisseur(idFournisseur),
     foreign key (idPayement) references TypedePaiment(idTypeDePayement),
-    foreign key (idLivraison) references Livraison(idLivraison)
+    foreign key (idLivraison) references Livraison(idLivraison),
+    foreign key(idregroupement) references Regroupement(idRegroupement)
 );
 
 create sequence seqArtCommande;
@@ -245,18 +260,7 @@ create table detailregroupement(
 alter table besoinAchat add idRegroupement varchar(20), add constraint idregroup foreign key(idRegroupement) references regroupement(idRegroupement);
 alter table regroupement add etat int; -------(1 rehefa vaao regroupe, 11 rehefa vita demande proforma)---------------
 
--- ----------------------Santatra 20 nov 2023 14:10-------------------------------
-create sequence seqPayement;
-create table TypedePaiment(
-    idTypeDePayement varchar(20) default concat('PAY' || nextval('seqPayement')) primary key,
-    libelle varchar(50)
-);
 
-create sequence seqLivraison;
-create table Livraison(
-    idLivraison varchar(20) default concat('LIV' || nextval('seqLivraison')) primary key,
-    libelle varchar(50)
-);
 ------------------------------------------alter besoinAchat-------------------------------------------------------
 alter table besoinAchat add idRegroupement varchar(20), add constraint idregroup foreign key(idRegroupement) references regroupement(idRegroupement);
 alter table regroupement add etat int; -------(1 rehefa vaao regroupe, 11 rehefa vita demande proforma)---------------
