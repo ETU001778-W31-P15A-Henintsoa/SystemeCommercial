@@ -115,10 +115,25 @@ class Proforma extends CI_Controller {
 	}
 
 	public function versMoinsDisant(){
-		$data =$this->Proforma_modele->avoirMoinsDisant("REG5");
-		$ou = $this->Proforma_modele->OuAcheterQuoi($data);
-		$f = $this->Proforma_modele->OuAcheterQuoiParFournisseur($ou);
-		var_dump($f);
+		// $data =$this->Proforma_modele->avoirMoinsDisant("REG5");
+		// $ou = $this->Proforma_modele->OuAcheterQuoi($data);
+		// $f = $this->Proforma_modele->OuAcheterQuoiParFournisseur("REG5");
+
+		// $regroupement = $this->Generalisation->avoirTableConditionnee("v_detailregroupementarticle where idregroupement='"."REG5"."'");
+		// $data['regroupement'] = $regroupement;
+	
+		// $this->load->view('proformaPourFournisseur', $data);
 	}
+
+	public function versViewDemandeProforma(){
+		$idregroupement = $this->input->get('idregroupement');
+		// $idregroupement = "REG5";
+
+		$regroupement = $this->Generalisation->avoirTableConditionnee("v_detailregroupementarticle where idregroupement='".$idregroupement."'");
+		$data['regroupement'] = $regroupement;
+	
+		$this->load->view('proformaPourFournisseur', $data);
+	}
+
 
 }

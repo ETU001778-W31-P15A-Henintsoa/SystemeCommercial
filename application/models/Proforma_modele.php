@@ -24,7 +24,7 @@
         }
 
         public function avoirFournisseurArticle($idregroupement){
-            $avoirDetailBesoins = $this->Generalisation->avoirTableSpecifique("v_detailregroupement", "*", sprintf("idregroupement='%s'", $idregroupement));
+            $avoirDetailBesoins = $this->Generalisation->avoirTableSpecifique("v_detailregroupementarticle", "*", sprintf("idregroupement='%s'", $idregroupement));
 
             $fournisseur = $this->Generalisation->avoirTable("fournisseur");
             $donnee = array();           
@@ -112,6 +112,7 @@
             foreach($donnee as $donne){
                 $data = $donne['data'];
                 $ouAcheterQuoi[$a]['idarticle'] = $donne['regroupement']->idarticle;
+                $ouAcheterQuoi[$a]['nomarticle'] = $donne['regroupement']->nomarticle;
                 $quantiteNecessaire = $donne['regroupement']->quantite;
                 $i=0;
                 while($i<count($data) && $quantiteNecessaire!=0){
@@ -128,47 +129,30 @@
             return $ouAcheterQuoi;
         }   
 
-        public function OuAcheterQuoiParFournisseur($ouAcheterQuoi){
+        public function OuAcheterQuoiParFournisseur($idregroupement){
+            $etape2 = $this->avoirMoinsDisant($idregroupement);
+            $ouAcheterQuoi = $this->OuAcheterQuoi($etape2);
+            
             $fournisseurs = $this->Generalisation->avoirTable('fournisseur');
             // var_dump($ouAcheterQuoi);
             foreach($fournisseurs as $fournisseur){
                 foreach($ouAcheterQuoi as $acheter){
-                    // var_dump($acheter['idarticle']);
+                    // var_dump($acheter);
                     $i = 0;
                     $fournisseur->aacheter = array();
-                    $data = array();
                     foreach($acheter['fournisseur'] as $f){
                         if($f[0]->idfournisseur == $fournisseur->idfournisseur){
-                            $data['acheter'][$i]['idarticle']=$acheter['idarticle'];
-                            $data['acheter'][$i]['quantite'] = $f[1];
-                            $data['acheter'][$i]['prixunitaire'] = $f[2];
+                            $fournisseur->aacheter[$i]['idarticle']=$acheter['idarticle'];
+                            $fournisseur->aacheter[$i]['nomarticle']=$acheter['nomarticle'];
+                            $fournisseur->aacheter[$i]['quantite'] = $f[1];
+                            $fournisseur->aacheter[$i]['prixunitaire'] = $f[2];
                         }
                         $i++;
                     }
-                    $fournisseur->aacheter = $data;
                 }
             }
             return $fournisseurs;
         }
-
-
-        // // Exemple de tableau multidimensionnel
-        // $data = array(
-        //     array('id' => 1, 'name' => 'John', 'age' => 25),
-        //     array('id' => 2, 'name' => 'Jane', 'age' => 30),
-        //     array('id' => 3, 'name' => 'Doe', 'age' => 20)
-        // );
-
-        // // Fonction de comparaison pour trier par rapport à la colonne 'age'
-        // function sortByAge($a, $b) {
-        //     return $a['age'] - $b['age'];
-        // }
-
-        // // Utilisation de usort() pour trier le tableau par rapport à la colonne 'age'
-        // usort($data, 'sortByAge');
-
-        // // Affichage du tableau trié
-        // print_r($data);
     }
     
 ?>
