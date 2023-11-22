@@ -25,7 +25,7 @@ create or replace view v_DonneeProforma as
         join DonneeProforma on DonneeProforma.idProforma = Proforma.idProforma
         join v_detailregroupementArticle on v_detailregroupementArticle.idregroupement=Proforma.idregroupement;
 -------------------------Fiderana 20 novembre 2023 09h15------------------------------
---------------------------------v_besoinAchat-------------------------------------------------
+--------------------------------v_xAchat-------------------------------------------------
 create or replace view v_besoinAchat as
     select ba.*,e.nom,e.prenom,d.nomDepartement from besoinAchat ba
         join employe e on e.idEmploye=ba.idEmploye
@@ -51,10 +51,19 @@ create or replace view v_detailregroupementArticle as
         
 -- ----------------------v_bondecommande-----------------------------------
 create or replace view v_BonDeCommande AS
-select abdc.*,bdc.idfournisseur,bdc.DateBonDeCommande,Fournisseur.nomFournisseur,Livraison.libelle as livraison,TypedePaiment.libelle as paiement from BonDeCommande bdc
+select abdc.*,bdc.idfournisseur,bdc.DateBonDeCommande,bdc.delailivraison,Fournisseur.nomFournisseur,Livraison.libelle as livraison,TypedePaiment.libelle as paiement from BonDeCommande bdc
 join Fournisseur on bdc.idfournisseur=Fournisseur.idfournisseur
 join ArticleBonDeCommande abdc on bdc.idBonDeCommande=abdc.idBonDeCommande
 join Livraison on bdc.idLivraison = Livraison.idLivraison
 join TypedePaiment on bdc.idpayement = TypedePaiment.idTypeDePayement;
+
+-- ----------------------v_donneeproforma2---------------------------------
+create or replace view v_DonneeProforma2 as
+    select Proforma.idProforma, Proforma.idFournisseur, Proforma.piecejointe,DonneeProforma.quantite as disponible,
+    DonneeProforma.idDonneeProforma, DonneeProforma.prixUnitaire, DonneeProforma.TVA, DonneeProforma.livraisonPartielle,
+    v_detailregroupementArticle.*
+    from Proforma
+        join DonneeProforma on DonneeProforma.idProforma = Proforma.idProforma
+        join v_detailregroupementArticle on v_detailregroupementArticle.idregroupement=Proforma.idregroupement;
 
 

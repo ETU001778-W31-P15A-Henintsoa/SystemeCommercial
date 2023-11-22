@@ -261,3 +261,7 @@ create table Livraison(
 alter table besoinAchat add idRegroupement varchar(20), add constraint idregroup foreign key(idRegroupement) references regroupement(idRegroupement);
 alter table regroupement add etat int; -------(1 rehefa vaao regroupe, 11 rehefa vita demande proforma)---------------
 
+
+-- ----------------------------------------alter bon de commande------------------------------------------------
+alter table BonDeCommande add delailivraison date;
+alter table BonDeCommande add idregroupement varchar(20),add constraint idreg foreign key(idregroupement) references regroupement(idregroupement);

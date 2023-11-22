@@ -13,7 +13,7 @@ class ControllerRegroupement extends CI_Controller {
         $idRegroupement=$_GET['idRegroupement'];
         $data['detail']=$this->RegroupementModele->avoirDetailRegroupementDepartement($idArticle,$idRegroupement);
         $this->load->view('header');
-		$this->load->view('detailRegroupement', $data);
+		$this->load->view('DetailRegroupement', $data);
     }
 }
 ?>

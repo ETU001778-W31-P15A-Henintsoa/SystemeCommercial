@@ -117,3 +117,27 @@ insert into validation(idBrancheDepartement,libelle) values
 insert into employePoste(idBrancheDepartement,dateEmbauche,idEmploye) values
 ('BDEPT5','2020-02-04','EMP4');
 
+
+-- -----------------------------------
+INSERT INTO Employe (nom, prenom, adresse, matricule, dateNaissance, mail, motDePasse, etat)
+VALUES
+  ('Koto', 'Ny Aina', '123 Rue de la Paix', 'MAT1234', '2000-05-15', 'koto@email.com', 'motdepasse1234', 1);
+
+INSERT INTO Departement (nomDepartement)
+VALUES
+    ('hors departement');
+
+INSERT INTO Branche (nomBranche,salaireMax, salaireMin, njHParPersonne)
+VALUES
+    ('Directeur Generale',2000000.00, 5000000.00, 8.0);
+
+insert into brancheDepartement(idBranche,idDepartement) values
+('BRA5','DEPT5');
+
+insert into employePoste(idBrancheDepartement,dateEmbauche,idEmploye) values
+('BDEPT5','2020-02-04','EMP4');
+
+insert into validation(idBrancheDepartement,libelle)
+values('BDEPT5','Directeur General');
+
+

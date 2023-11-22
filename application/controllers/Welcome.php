@@ -32,15 +32,36 @@ class Welcome extends CI_Controller {
 
 	public function versListeRegroupement()
 	{
-		$data['regroupement'] = $this->Generalisation->avoirTableConditionnee("v_detailregroupement where etat=1");
-		$this->load->view('header');
-		$this->load->view('listeRegroupement', $data);
+		$idEmploye=$_SESSION['user'];//emp3
+        $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
+        echo $employePoste[0]->libelle;
+
+        if($employePoste[0]->nomdepartement=="Systeme commercial"){
+			$data['regroupement'] = $this->Generalisation->avoirTableConditionnee("v_detailregroupement where etat=1");
+			$this->load->view('header');
+			$this->load->view('listeRegroupement', $data);
+        }else{
+            $data["error"]="Vous n'avez pas accès à cette page";
+            $this->load->view('header');
+            $this->load->view('errors/erreurValidationAchat',$data);
+        }
 	}
 
 	public function versListeRegroupementEnvoyer()
 	{
-		$data['regroupement'] = $this->Generalisation->avoirTableConditionnee("v_detailregroupement where etat=11");
-		$this->load->view('header');
-		$this->load->view('listeRegroupementEnvoyer', $data);
+		$idEmploye=$_SESSION['user'];//emp3
+        $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
+        echo $employePoste[0]->libelle;
+
+        if($employePoste[0]->nomdepartement=="Systeme commercial"){
+			$data['regroupement'] = $this->Generalisation->avoirTableConditionnee("v_detailregroupement where etat=11");
+			$this->load->view('header');
+			$this->load->view('listeRegroupementEnvoyer', $data);
+        }else{
+            $data["error"]="Vous n'avez pas accès à cette page";
+            $this->load->view('header');
+            $this->load->view('errors/erreurValidationAchat',$data);
+        }
+		
 	}
 }
