@@ -57,7 +57,7 @@ join ArticleBonDeCommande abdc on bdc.idBonDeCommande=abdc.idBonDeCommande
 join Livraison on bdc.idLivraison = Livraison.idLivraison
 join TypedePaiment on bdc.idpayement = TypedePaiment.idTypeDePayement;
 
-
+-- ----------------------v_donneeproforma2---------------------------------
 create or replace view v_DonneeProforma2 as
     select Proforma.idProforma, Proforma.idFournisseur, Proforma.piecejointe,DonneeProforma.quantite as disponible,
     DonneeProforma.idDonneeProforma, DonneeProforma.prixUnitaire, DonneeProforma.TVA, DonneeProforma.livraisonPartielle,
