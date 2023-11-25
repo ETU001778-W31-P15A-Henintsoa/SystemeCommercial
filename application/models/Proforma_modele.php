@@ -24,7 +24,6 @@
         }
 
 
-
         /*public function avoirFournisseurArticle($idregroupement){
 
             $avoirDetailBesoins = $this->Generalisation->avoirTableSpecifique("v_detailregroupement", "*", sprintf("idregroupement='%s'", $idregroupement));
@@ -39,7 +38,7 @@
                 for ($j=0; $j < count($fournisseur); $j++) { 
                     $data[$j]['fournisseur'] = $fournisseur[$j]; 
                     // var_dump($avoirDetailBesoins);
-                    $donneeproforma = $this->Generalisation->avoirTableConditionnee("v_donneeproforma2 where idregroupement='".$idregroupement."' and idfournisseur='".$fournisseur[$j]->idfournisseur."' and idarticle='".$avoirDetailBesoins[$i]->idarticle."'");
+                    $donneeproforma = $this->Generalisation->avoirTableConditionnee("v_donneeproforma where idregroupement='".$idregroupement."' and idfournisseur='".$fournisseur[$j]->idfournisseur."' and idarticle='".$avoirDetailBesoins[$i]->idarticle."'");
                     if(count($donneeproforma)!=0){
                         $data[$j]['idfournisseur'] = $donneeproforma[0]->idfournisseur;
                         $data[$j]['prixunitaire'] = floatval($donneeproforma[0]->prixunitaire);
