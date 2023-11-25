@@ -91,7 +91,7 @@
                         <?php foreach($bonDeCommandeNonValide as $bdcnv) { ?>
                         <tr>
                             <td><?php echo $bdcnv['idbondecommande'];  ?></td>
-                            <td><?php echo $bdcnv['idfournisseur']; ?></td>
+                            <td><?php echo $bdcnv['nomfournisseur']; ?></td>
                             <td><?php echo $bdcnv['datebondecommande']; ?></td>
                             <td><span class="badge bg-label-warning me-1">Non Valide</span></td>
                             <td>
@@ -104,7 +104,7 @@
                                 <a href="<?php echo site_url("BonDeCommande/versDetailBonDeCommande?id=".$bdcnv['idbondecommande']); ?>">Voir Detail</a>
                             </td>
                             <td>
-                                <a href="<?php echo site_url("BonDeCommande/genererPDF?id=".$bdcnv['idbondecommande']); ?>">Generer PDF</a>
+                                <a href="<?php echo site_url("BonDeCommande/genererPDF?id=".$bdcnv['idbondecommande']."&fournisseur=".$bdcnv['nomfournisseur']."&date=".$bdcnv['datebondecommande']); ?>">Generer PDF</a>
                             </td>
                         </tr>
                         <?php } ?>
