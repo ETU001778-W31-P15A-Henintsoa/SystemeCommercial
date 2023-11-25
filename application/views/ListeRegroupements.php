@@ -18,8 +18,6 @@
                         <th>idregroupement </th>
                         <th>date regroupement </th>
                         <th>etat</th>
-                        <th>quantite</th>
-                        <th>idarticle</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -30,9 +28,7 @@
                                     <td><?php echo $regroupements['idregroupement']; ?></td>
                                     <td><?php echo $regroupements['dateregroupement']; ?></td>
                                     <td><?php echo $regroupements['etat']; ?></td>
-                                    <td><?php echo $regroupements['quantite']; ?></td>
-                                    <td><?php echo $regroupements['idarticle']; ?></td>
-                                    <td><a href="<?php echo site_url('BonDeCommande/generer?idregroupement='.$regroupements['idregroupement']); ?>">Generer Bon De Commande</a></td>
+                                   <td><a href="<?php echo site_url('BonDeCommande/generer?idregroupement='.$regroupements['idregroupement']); ?>">Generer Bon De Commande</a></td>
                                 </tr>
                             <?php }
                         ?>
