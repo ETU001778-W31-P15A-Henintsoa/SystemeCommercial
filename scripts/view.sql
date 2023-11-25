@@ -59,17 +59,7 @@ join TypedePaiment on bdc.idpayement = TypedePaiment.idTypeDePayement
 where abdc.quantite != 0;
 -- ----------------------v_donneeproforma2---------------------------------
 create or replace view v_DonneeProforma2 as
-<<<<<<< Updated upstream
-    select Proforma.idProforma, Proforma.idFournisseur, Proforma.piecejointe,DonneeProforma.quantite as disponible,
-    DonneeProforma.idDonneeProforma, DonneeProforma.prixUnitaire, DonneeProforma.TVA, DonneeProforma.livraisonPartielle,
-    v_detailregroupementArticle.*
-    from Proforma
-        join DonneeProforma on DonneeProforma.idProforma = Proforma.idProforma
-        join v_detailregroupementArticle on v_detailregroupementArticle.idregroupement=Proforma.idregroupement;
-=======
     SELECT DISTINCT p.*,dp.idDonneeProforma,dp.idArticle ,dp.quantite,dp.prixUnitaire,dp.TVA,dp.livraisonPartielle
         FROM Proforma p
             JOIN DonneeProforma dp ON p.idProforma = dp.idProforma
             JOIN v_detailregroupement vdr ON p.idRegroupement = vdr.idRegroupement;
-
->>>>>>> Stashed changes
