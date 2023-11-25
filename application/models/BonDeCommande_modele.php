@@ -23,21 +23,21 @@
         }
         
         public function avoirListeBonDeCommandeNonValide() {
-            $sql = "SELECT * FROM bondecommande where etat = 0";
+            $sql = "SELECT * FROM v_bondecommande where etat = 0";
             $query = $this->db->query($sql);
             $result = $query->result_array();
             return $result;
         }
 
         public function avoirListeBonDeCommandeValide() {
-            $sql = "SELECT * FROM bondecommande where etat = 21";
+            $sql = "SELECT * FROM v_bondecommande where etat = 21";
             $query = $this->db->query($sql);
             $result = $query->result_array();
             return $result;
         }
 
         public function avoirListeBonDeCommandeValideDG() {
-            $sql = "SELECT * FROM bondecommande where etat = 31";
+            $sql = "SELECT * FROM v_bondecommande where etat = 31";
             $query = $this->db->query($sql);
             $result = $query->result_array();
             return $result;
@@ -67,7 +67,7 @@
         }
 
         public function avoirDetailBonDeCommande($idbondecommande) {
-            $sql = "SELECT * FROM v_bondecommande where idbondecommande = ?";
+            $sql = "SELECT * FROM v_DetailBonDeCommande where idbondecommande = ?";
             // echo $sql;
             $query = $this->db->query($sql,array($idbondecommande));
             $result = $query->result_array();

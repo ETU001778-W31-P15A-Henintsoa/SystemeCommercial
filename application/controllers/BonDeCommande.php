@@ -4,11 +4,6 @@ date_default_timezone_set('Africa/Nairobi'); // Remplacez 'Africa/Nairobi' par l
 
 
 class BonDeCommande extends CI_Controller {
-    public function moinsdisant() {
-        $this->load->model('BonDeCommande_modele');
-        $data['proforma'] = $this->BonDeCommande_modele->avoirMoinsDisant();
-        $this->load->view('header');
-    }
 
     public function generer() {
         $data['idregroupement'] = $this->input->get('idregroupement');
@@ -109,12 +104,85 @@ class BonDeCommande extends CI_Controller {
     
         // Récupérer le contenu du PDF
         $idbondecommande = $this->input->get('id');
-        $fournisseur;
-        $datecommande;
-        $data['content'] = $this->genererPDFContenu($idbondecommande);
-    
-        // Ajoutez vos personnalisations TCPDF ici si nécessaire
+        $fournisseur = $this->input->get('fournisseur');
+        $datecommande = $this->input->get('date'); ;
+
+        $nomPDF = "Commande_".$fournisseur."_".$datecommande.".pdf";
         $pdf->AddPage();
+        $style = '
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+            }
+
+            header {
+                background-color: #333;
+                color: #fff;
+                text-align: center;
+                padding: 1em;
+            }
+
+            section {
+                margin: 20px;
+            }
+
+            .order-summary {
+                border: 1px solid #ddd;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 5px;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+
+            th, td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+
+            th {
+                background-color: #333;
+                color: #fff;
+            }
+
+            .total {
+                margin-top: 20px;
+                text-align: right;
+            }
+
+            .signatures {
+                margin-top: 30px;
+                text-align: center;
+            }
+
+            .signature-box {
+                display: inline-block;
+                border: 1px solid #ddd;
+                padding: 10px;
+                margin: 0 20px;
+            }
+
+            footer {
+                background-color: #333;
+                color: #fff;
+                text-align: center;
+                padding: 1em;
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+            }
+        </style>
+        ';
+        $pdf->writeHTML($style, true, false, true, false, '');
+        $data['content'] = $this->genererPDFContenu($idbondecommande);
     
         // Ajoutez le HTML au PDF
         $pdf->writeHTML($data['content'], true, false, true, false, '');
@@ -124,7 +192,7 @@ class BonDeCommande extends CI_Controller {
     
         // Chargez la vue avec les données
         $this->load->view('BonDeCommandePDF', $data);
-        $pdf->Output('commande.pdf', 'I');
+        $pdf->Output($nomPDF, 'I');
     }
     
     public function genererBonDeCommande() {

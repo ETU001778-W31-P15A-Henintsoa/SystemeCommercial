@@ -50,7 +50,12 @@ create or replace view v_detailregroupementArticle as
         join article on Article.idArticle = dr.idArticle;
         
 -- ----------------------v_bondecommande-----------------------------------
-create or replace view v_BonDeCommande AS
+create or replace view v_bondecommande as
+select Fournisseur.nomfournisseur,bdc.*
+    from BonDeCommande bdc
+    join Fournisseur on bdc.idfournisseur=Fournisseur.idfournisseur; 
+
+create or replace view v_DetailBonDeCommande AS
 select abdc.*,bdc.idfournisseur,bdc.DateBonDeCommande,bdc.delailivraison,Fournisseur.nomFournisseur,Livraison.libelle as livraison,TypedePaiment.libelle as paiement from BonDeCommande bdc
 join Fournisseur on bdc.idfournisseur=Fournisseur.idfournisseur
 join ArticleBonDeCommande abdc on bdc.idBonDeCommande=abdc.idBonDeCommande
