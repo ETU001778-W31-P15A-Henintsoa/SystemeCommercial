@@ -22,137 +22,6 @@
             return $lastInsertedId;
         }
         
-
-        public function genererBonDeCommande($date,$livraison,$paiement, $moinsDisant) {
-            date_default_timezone_set('Africa/Nairobi');
-            usort($moinsDisant, function ($a, $b) {
-                return $a->pu - $b->pu;
-            });
-            // $moinsDisant = $this->Proforma_modele->avoirMoinsDisant();
-            // foreach($moinsDisant as $article) {
-            //     var_dump($article);
-            // }
-            $quantiteRestantes = 0;
-            for($i=0;$i<count($moinsDisant);$i++) {
-                $idArticle = $moinsDisant[$i]['regroupement']->idarticle;
-                $avoirQuantite = $this->avoirQuantiteDemande($idArticle, $moinsDisant[$i]['regroupement']->idregroupement); 
-                $quantiteDemandee = $avoirQuantite[$i]['quantite'];
-                $quantiteRestantes = $quantiteDemandee;
-                $quantiteDisponible = min($moinsDisant[$i]['regroupement']->quantite, $quantiteDemandee, $quantiteRestantes);
-                var_dump($moinsDisant[$i]);
-                while($quantiteRestantes != 0 && $quantiteDisponible > 0) {
-                    echo "tafiditra";
-                    // $j = count($moinsDisant[$i]['data'])
-                    $existingRecord = 0;
-                    // echo count($moinsDisant[$i]['data']);
-                    for($i=0;$i<count($moinsDisant);$i++) {
-                        for ($j = 0; $j < count($moinsDisant[$i]['data']); $j++) {
-                            echo count($moinsDisant[$i]['data']);
-                            echo "tafiditra ato";
-                            var_dump($moinsDisant[$i]['data']);
-                            // echo $moinsDisant[$j]['data'][$j]['fournisseur']->idfournisseur;
-                            $condition1 = "idfournisseur='".$moinsDisant[$i]['data'][$j]['fournisseur']->idfournisseur."'";
-                            $existingRecord = $this->Generalisation->avoirTableSpecifique("bondecommande", "idbondecommande",$condition1);
-                            $quantite_entree = 0;
-                            // echo "quantite== ".$quantiteDisponibleArticleF[0];
-                            $idbondecommande;
-                            echo "count". count($existingRecord);
-                            $condition = "idarticle='".$idArticle."' and idfournisseur='".$moinsDisant[$i]['data'][$j]['fournisseur']->idfournisseur."'";
-                                $quantiteDisponibleArticleF = $this->Generalisation->avoirTableSpecifique("v_donneeproforma2","disponible",$condition); 
-                            if(count($existingRecord) != 0) {
-                                $idbondecommande = $existingRecord[0]->idbondecommande;                
-                            }else {
-                                
-                               
-
-                                echo "tafiditra 2";
-                                // $quantiteDisponibleArticleF = $this->Generalisation->avoirTableSpecifique("v_donneeproforma2","disponible","idarticle='%s' and idfournisseur='%s'",sprintf($idArticle,$moinsDisant[$i]['data'][$j]['fournisseur']->idfournisseur)); 
-                                // var_dump($quantiteDisponibleArticleF);
-                                if($quantiteDemandee >= $quantiteRestantes ) {
-                                    echo "tafiditra_3";
-                                    $quantite_entree = $quantiteDisponibleArticleF[0]->disponible;
-                                    $quantiteRestantes = 0;
-                                    $bondecommande = $this->Generalisation->insertion("bondecommande(idfournisseur,delailivraison,idpayement,idlivraison,idregroupement)", sprintf("('%s', '%s', '%s', '%s','%s')",$moinsDisant[$i]['data'][$j]['fournisseur']->idfournisseur,$date,$paiement,$livraison,$moinsDisant[$i]['regroupement']->idregroupement));
-                                    // $idbondecommande = $bondecommande[0]->idbondecommande;
-                                    $commande = $this->Generalisation->avoirTableAutrement("bondecommande","idbondecommande","order by idbondecommande desc limit 1");
-                                    $idbondecommande =$commande[0]->idbondecommande;
-                                    echo $idbondecommande;
-                                    $this->Generalisation->insertion(
-                                        "ArticleBonDeCommande(idbondecommande,idArticle,quantite,pu)",
-                                        sprintf("('%s','%s','%s','%s')", $idbondecommande, $idArticle, $quantite_entree, $moinsDisant[$i]['data'][$j]['prixunitaire'])
-                                    );
-
-                                    
-                                }else {
-                                    $quantiteRestantes = $quantiteRestantes - $quantiteDemandee;
-                                    
-                                }
-                            }
-                        }   
-                    }
-                    }
-            }
-            // $quantiteRestantes = 0;
-            // var_dump($moinsDisant);
-            // $i=0;
-            
-            //
-            // echo $quantiteDemandee;
-            
-            // echo $idArticle;
-            /*foreach ($moinsDisant as $article) {
-                // var_dump($article);
-                $i =0 ;
-                $idArticle = $article['regroupement']->idarticle;
-                $avoirQuantite = $this->avoirQuantiteDemande($idArticle, $article['regroupement']->idregroupement); // Quantite demande par l'article
-                $quantiteDemandee = $avoirQuantite[$i]['quantite'];
-                $quantiteRestantes = $quantiteDemandee;
-                $quantiteDisponible = min($article['regroupement']->quantite, $quantiteDemandee, $quantiteRestantes); 
-                echo "disponible ".$quantiteDisponible;
-                 
-                if ($quantiteDisponible > 0) {
-                    
-                       
-                    // Check if a record for the same supplier and date already exists
-                    $existingRecord = $this->db->get_where('bondecommande', array(
-                        'idfournisseur' => $article['data'][$i]['fournisseur']->idfournisseur,
-                        'datebondecommande' => date('Y-m-d') // Assuming you want to use the current date
-                    ))->row();
-                    
-                    if ($existingRecord) {
-                        $idbondecommande = $existingRecord->idbondecommande;
-                    } else {
-                        // Insert a new record for the supplier and date
-                         $this->Generalisation->insertion("bondecommande(idfournisseur,delailivraison,idpayement,idlivraison)", sprintf("('%s', '%s', '%s', '%s')",$article['data'][$i]['fournisseur']->idfournisseur,$date,$paiement,$livraison ));
-                        $bondecommande = $this->Generalisation->avoirTableAutrement("bondecommande", "idbondecommande", "order by idbondecommande limit 1" );
-                        // var_dump($bondecommande);
-                        $idbondecommande = $bondecommande[0]->idbondecommande;
-                         
-                    }
-        
-                    echo "commande " . $idbondecommande;
-        
-                    // Insert into ArticleBonDeCommande
-                    $this->Generalisation->insertion(
-                        "ArticleBonDeCommande(idbondecommande,idArticle,quantite,pu)",
-                        sprintf("('%s','%s','%s','%s')", $idbondecommande, $idArticle, $quantiteDisponible, $article['data'][0]['prixunitaire'])
-                    );
-        
-                    $quantiteRestantes = $quantiteRestantes - $quantiteDisponible;
-                    echo "quantiterestatnte== ".$quantiteRestantes;
-                    $i++;
-                }
-        
-                // $quantiteRestante = sum($quantiteRestantes);
-                $quantiteRestante = 0;
-                $quantiteRestante = $quantiteRestante + $quantiteRestantes; 
-                if ($quantiteRestante == 0) {
-                    break;
-                }
-            }*/
-        }
-        
-        
         public function avoirListeBonDeCommandeNonValide() {
             $sql = "SELECT * FROM bondecommande where etat = 0";
             $query = $this->db->query($sql);
@@ -206,7 +75,7 @@
         }
 
         public function avoirDetailRegroupement() {
-            $sql = "SELECT * FROM v_detailregroupement where etat = 21";
+            $sql = "SELECT * FROM regroupement where etat = 21";
             $query = $this->db->query($sql);
             $result = $query->result_array();
             return $result;
@@ -271,17 +140,73 @@
             $dizaine = floor($nombre / 10);
             $unite = $nombre % 10;
 
-            if ($dizaine == 1) {
+            if ($dizaine == 10) {
                 // Cas spéciaux (11, 12, 13, ...)
                 $lettre .= $speciaux[$unite];
             } else {
-                $lettre .= $dizaines[$dizaine];
-                if ($unite > 0) {
-                    $lettre .= "-" . $unites[$unite];
+                if ($dizaine == 7 || $dizaine == 9) {
+                    // Handle the special cases for 70 and 90
+                    $lettre .= $dizaines[$dizaine];
+                    if ($unite > 0) {
+                        $lettre .= "-" . $unites[$unite];
+                    }
+                } else {
+                    $lettre .= $dizaines[$dizaine];
+                    if ($unite > 0) {
+                        if ($unite == 1 && $dizaine > 1) {
+                            // Add "et" for numbers like 21, 31, etc.
+                            $lettre .= " et " . $unites[$unite];
+                        } else {
+                            $lettre .=  $unites[$unite];
+                        }
+                    }
                 }
             }
 
             return $lettre;
+
+        }
+
+        public function GenerationBonDeCommande($date,$livraison,$paiement,$moinsDisant) {
+            for($i=0;$i<count($moinsDisant);$i++) {
+                $idregroupement = $moinsDisant[$i]['regroupement']->idregroupement;
+                $quantiteDemandee = $moinsDisant[$i]['regroupement']->quantite;
+                $reste = $quantiteDemandee;
+                    $idArticle = $moinsDisant[$i]['regroupement']->idarticle;
+                    
+                    while($reste != 0 ) {
+                        for($k=0;$k<count($moinsDisant[$i]['data']);$k++) {
+                                $idbondecommande="";
+                                $condition1 = "idfournisseur='".$moinsDisant[$i]['data'][$k]['fournisseur']->idfournisseur."'";
+                                $bondecommande = $this->Generalisation->avoirTableSpecifique("bondecommande", "idbondecommande",$condition1);
+                                if(count($bondecommande) != 0) {
+                                    $idbondecommande = $bondecommande[0]->idbondecommande;  
+                                    if($moinsDisant[$i]['data'][$k]['quantite'] >= $reste && $idArticle = $moinsDisant[$i]['regroupement']->idarticle) {
+                                        $this->Generalisation->insertion("articlebondecommande(idbondecommande,idarticle,quantite,pu)",sprintf("('%s','%s','%s','%s')",$idbondecommande,$idArticle,$reste,$moinsDisant[$i]['data'][$k]['prixunitaire']));
+                                        $reste = 0;
+                                    }else {
+                                        $reste -= $moinsDisant[$i]['data'][$k]['quantite'];
+                                        $this->Generalisation->insertion("articlebondecommande(idbondecommande,idarticle,quantite,pu)",sprintf("('%s','%s','%s','%s')",$idbondecommande,$idArticle,$moinsDisant[$i]['data'][$k]['quantite'],$moinsDisant[$i]['data'][$k]['prixunitaire']));
+                                    }
+                                   
+                                }else {
+                                    if($moinsDisant[$i]['data'][$k]['quantite'] >= $reste && $idArticle = $moinsDisant[$i]['regroupement']->idarticle) {
+                                        $this->Generalisation->insertion("bondecommande(idfournisseur,idpayement,idlivraison,delailivraison,idregroupement)", sprintf("('%s','%s','%s','%s','%s')",$moinsDisant[$i]['data'][$k]['fournisseur']->idfournisseur,$paiement,$livraison,$date,$idregroupement));  
+                                        $commande = $this->Generalisation->avoirTableAutrement("bondecommande","idbondecommande","order by idbondecommande desc limit 1");
+                                        $idbondecommande =$commande[0]->idbondecommande;  
+                                        $this->Generalisation->insertion("articlebondecommande(idbondecommande,idarticle,quantite,pu)",sprintf("('%s','%s','%s','%s')",$idbondecommande,$idArticle,$reste,$moinsDisant[$i]['data'][$k]['prixunitaire']));
+                                        $reste = 0;
+                                    }else {
+                                        $reste -= $moinsDisant[$i]['data'][$k]['quantite'];
+                                        $this->Generalisation->insertion("bondecommande(idfournisseur,idpayement,idlivraison,delailivraison,idregroupement)", sprintf("('%s','%s','%s','%s','%s')",$moinsDisant[$i]['data'][$k]['fournisseur']->idfournisseur,$paiement,$livraison,$date,$idregroupement));
+                                        $commande = $this->Generalisation->avoirTableAutrement("bondecommande","idbondecommande","order by idbondecommande desc limit 1");
+                                        $idbondecommande =$commande[0]->idbondecommande;  
+                                        $this->Generalisation->insertion("articlebondecommande(idbondecommande,idarticle,quantite,pu)",sprintf("('%s','%s','%s','%s')",$idbondecommande,$idArticle,$moinsDisant[$i]['data'][$k]['quantite'],$moinsDisant[$i]['data'][$k]['prixunitaire']));
+                                    }
+                                }
+                        }      
+                    }
+            }
         }
 
     }   

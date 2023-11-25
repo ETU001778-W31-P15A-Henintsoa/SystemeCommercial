@@ -13,7 +13,7 @@ create or replace view v_posteEmploye as
 ------------------------v_posteEmployeValidation-----------------------
 create or replace view v_posteEmployeValidation as 
     select pEmp.*,libelle from v_posteEmploye as pEmp
-        left join validation as v on v.idBrancheDepartement=pEmp.idBrancheDepartement;
+        join validation as v on v.idBrancheDepartement=pEmp.idBrancheDepartement;
 
 
 ----------------------------------- V_DonneeProforma ------------------------------
@@ -55,13 +55,21 @@ select abdc.*,bdc.idfournisseur,bdc.DateBonDeCommande,bdc.delailivraison,Fournis
 join Fournisseur on bdc.idfournisseur=Fournisseur.idfournisseur
 join ArticleBonDeCommande abdc on bdc.idBonDeCommande=abdc.idBonDeCommande
 join Livraison on bdc.idLivraison = Livraison.idLivraison
-join TypedePaiment on bdc.idpayement = TypedePaiment.idTypeDePayement;
-
+join TypedePaiment on bdc.idpayement = TypedePaiment.idTypeDePayement
+where abdc.quantite != 0;
 -- ----------------------v_donneeproforma2---------------------------------
 create or replace view v_DonneeProforma2 as
+<<<<<<< Updated upstream
     select Proforma.idProforma, Proforma.idFournisseur, Proforma.piecejointe,DonneeProforma.quantite as disponible,
     DonneeProforma.idDonneeProforma, DonneeProforma.prixUnitaire, DonneeProforma.TVA, DonneeProforma.livraisonPartielle,
     v_detailregroupementArticle.*
     from Proforma
         join DonneeProforma on DonneeProforma.idProforma = Proforma.idProforma
         join v_detailregroupementArticle on v_detailregroupementArticle.idregroupement=Proforma.idregroupement;
+=======
+    SELECT DISTINCT p.*,dp.idDonneeProforma,dp.idArticle ,dp.quantite,dp.prixUnitaire,dp.TVA,dp.livraisonPartielle
+        FROM Proforma p
+            JOIN DonneeProforma dp ON p.idProforma = dp.idProforma
+            JOIN v_detailregroupement vdr ON p.idRegroupement = vdr.idRegroupement;
+
+>>>>>>> Stashed changes

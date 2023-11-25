@@ -19,19 +19,6 @@ class BonDeCommande extends CI_Controller {
         $this->load->view('GenererBonDeCommande',$data);
     }
 
-    public function genererBonDeCommande() {
-        $idregroupement = $this->input->post('idregroupement');
-        $this->load->library('MYPDF');
-        $datedelai = $this->input->post('delai');
-        $paiement = $this->input->post('paiement');
-        $livraison = $this->input->post('livraison');
-        $this->load->model('BonDeCommande_modele');
-        $idregroupement;
-        $moinsDisant=$this->Proforma_modele->avoirMoinsDisant($idregroupement);
-        $this->BonDeCommande_modele->genererBonDeCommande($datedelai,$livraison,$paiement, $moinsDisant);
-        redirect('welcome/versAcceuil');
-    }
-
     public function listeregroupement() {
         $this->load->model('BonDeCommande_modele');
         $data['regroupement'] = $this->BonDeCommande_modele->avoirDetailRegroupement();
@@ -52,7 +39,6 @@ class BonDeCommande extends CI_Controller {
         $idbondecommande = $this->input->get('id');
         $this->load->model('BonDeCommande_modele');
         $data['donnee'] = $this->BonDeCommande_modele->avoirDetailBonDeCommande($idbondecommande);
-        // Calculer le TTC pour chaque élément dans $data['donnee']
         $sommeTTC = 0;
         foreach ($data['donnee'] as &$article) {
             $article['ttc'] = $article['quantite'] * $article['pu'];
@@ -102,8 +88,6 @@ class BonDeCommande extends CI_Controller {
         
         $this->load->model('BonDeCommande_modele');
         $data['donnee'] = $this->BonDeCommande_modele->avoirDetailBonDeCommande($idbondecommande);
-        
-        // Calculer le TTC pour chaque élément dans $data['donnee']
         $sommeTTC = 0;
         foreach ($data['donnee'] as &$article) {
             $article['ttc'] = $article['quantite'] * $article['pu'];
@@ -115,20 +99,18 @@ class BonDeCommande extends CI_Controller {
         if (empty($data['donnee'])) {
             show_error("Aucune donnée trouvée pour le bon de commande avec l'ID $idbondecommande");
         }
-    
-        // Charger la vue dans une variable
         $this->load->view('header');
         return $this->load->view('BonDeCommandePDF', $data, true);
     }
   
     public function genererPDF() {
-        // require_once APPPATH . 'libraries/MYPDF.php'; // Assurez-vous que le chemin est correct
-    
         // Créer une instance de votre classe MYPDF
         $pdf = new TCPDF();
     
         // Récupérer le contenu du PDF
         $idbondecommande = $this->input->get('id');
+        $fournisseur;
+        $datecommande;
         $data['content'] = $this->genererPDFContenu($idbondecommande);
     
         // Ajoutez vos personnalisations TCPDF ici si nécessaire
@@ -145,9 +127,16 @@ class BonDeCommande extends CI_Controller {
         $pdf->Output('commande.pdf', 'I');
     }
     
-    
-    
-    
+    public function genererBonDeCommande() {
+        $idregroupement = $this->input->post('idregroupement');
+        $datedelai = $this->input->post('delai');
+        $paiement = $this->input->post('paiement');
+        $livraison = $this->input->post('livraison');
+        $this->load->model('BonDeCommande_modele');
+        $moinsDisant=$this->Proforma_modele->avoirMoinsDisant($idregroupement);
+        $this->BonDeCommande_modele->GenerationBonDeCommande($datedelai,$livraison,$paiement,$moinsDisant);
+        redirect('welcome/versAcceuil');
+    }
     
     
     
