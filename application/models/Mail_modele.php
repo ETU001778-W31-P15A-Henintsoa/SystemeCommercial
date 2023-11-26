@@ -164,6 +164,20 @@
         }
 
 
+        public function message($mail, $fournisseur){
+            $messages = $this->Generalisation->avoirTableConditionnee(sprintf("v_mailmessage where (envoyeur='%s' and destinataire='%s') or (envoyeur='%s' and destinataire='%s')", $mail->idadressemail, $fournisseur->idadressemail, $fournisseur->idadressemail, $mail->idadressemail));
+            // var_dump($messages);
+            foreach($messages as $message){
+                if($message->envoyeur == $mail->idadressemail){
+                    $message->etat = 1;
+                }
+                if($message->piecejointe!="" && $message->piecejointe!=null){
+                    $message->p = 1;
+                }
+            }
+            return $messages;
+        }
+
     }
     
 ?>

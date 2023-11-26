@@ -1,0 +1,251 @@
+/* body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .messaging-container {
+    max-width: 600px;
+    margin: 50px auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  .person {
+    margin-bottom: 10px;
+  }
+  
+  .person-1 .message {
+    background-color: #e6f7ff;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 80%;
+  }
+  
+  .person-2 .message {
+    background-color: #ccffcc;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 80%;
+  }
+  
+  /* Style supplémentaire pour les messages 
+  .message {
+    word-wrap: break-word;
+  }
+  
+  /* Alignement des messages 
+  .person-1 {
+    text-align: left;
+    margin-left: 10px;
+  }
+  
+  .person-2 {
+    text-align: right;
+    margin-right: 10px;
+  }*/
+
+  #conteneur-message{
+    padding: 15px;
+  }
+
+/*
+.person i {
+    font-size: 24px;
+    margin-right: 5px;
+  }
+  
+  .person-1 {
+    text-align: left;
+    margin-left: 10px;
+  }
+  
+  .person-2 {
+    text-align: right;
+    margin-right: 10px;
+  } */
+
+  /* body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0e6f6; /* Couleur de fond violette pâle 
+  }
+  
+  .messaging-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 10px;
+  }
+  
+  .person {
+    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 10px;
+  }
+  
+  .person-1 {
+    background-color: #9c27b0; /* Violet foncé 
+    color: #fff; /* Texte blanc 
+    text-align: left;
+    margin-left: 10px;
+  }
+  
+  .person-2 {
+    background-color: #673ab7; /* Violet plus clair 
+    color: #fff; /* Texte blanc 
+    text-align: right;
+    margin-right: 10px;
+  }
+  
+  .message {
+    word-wrap: break-word;
+  }
+  
+  .person i {
+    font-size: 24px;
+    margin-right: 5px;
+  } */
+
+  /* body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0e6f6; /* Couleur de fond violette pâle 
+  }
+  
+  .messaging-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 10px;
+  }
+  
+  .person {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .bubble {
+    background-color: #0084ff; /* Couleur bleue similaire à Messenger 
+    color: #fff; /* Texte blanc 
+    border-radius: 12px;
+    padding: 10px;
+    display: inline-block;
+    max-width: 70%;
+  }
+  
+  .person-1 .bubble {
+    border-top-left-radius: 0;
+  }
+  
+  .person-2 .bubble {
+    border-top-right-radius: 0;
+  }
+  
+  .message {
+    word-wrap: break-word;
+    margin: 0; /* Supprimez la marge par défaut du texte dans la bulle 
+  }
+  
+  .person i {
+    font-size: 24px;
+    margin-right: 10px;
+  }
+  
+  .person-1 {
+    flex-direction: row-reverse;
+  }
+  
+  .person-1 i {
+    margin-left: 10px;
+  }
+  
+  .person-2 {
+    flex-direction: row;
+  }
+  
+  .person-2 i {
+    margin-right: 10px;
+  } */
+  
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0e6f6; /* Couleur de fond violette pâle */
+  }
+  
+  .messaging-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 10px;
+  }
+  
+  .person {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .bubble2 {
+    background-color: #d9d8da; /* Violet foncé similaire à Messenger */
+    color: #212020; /* Texte blanc */
+    border-radius: 12px;
+    padding: 10px;
+    display: inline-block;
+    max-width: 70%;
+  }
+
+  .bubble1 {
+    background-color: #673ab7; /* Violet foncé similaire à Messenger */
+    color: #fff; /* Texte blanc */
+    border-radius: 12px;
+    padding: 10px;
+    display: inline-block;
+    max-width: 70%;
+  }
+  
+  .person-1 .bubble {
+    border-top-left-radius: 0;
+  }
+  
+  .person-2 .bubble {
+    border-top-right-radius: 0;
+  }
+  
+  .message {
+    word-wrap: break-word;
+    margin: 0; /* Supprimez la marge par défaut du texte dans la bulle */
+  }
+  
+  .person i {
+    font-size: 24px;
+    /* margin: 0 10px 0 0; /* Ajustez la marge à droite pour l'icône utilisateur  */
+  }
+
+  .person #icone{
+    display: inline;
+    padding: 10px;
+  }
+  
+  .person-1 {
+    flex-direction: row-reverse;
+  }
+  
+  /* .person-1 i {
+    margin: 0 0 0 10px; /* Ajustez la marge à gauche pour l'icône utilisateur 
+  } */
+  
+  .person-2 {
+    flex-direction: row;
+  }
+
+  #date{
+    color: grey;
+    font-size: 10px;
+  }
+  
+  
+  
+  

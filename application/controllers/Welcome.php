@@ -34,7 +34,7 @@ class Welcome extends CI_Controller {
 	{
 		$idEmploye=$_SESSION['user'];//emp3
         $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
-        echo $employePoste[0]->libelle;
+        // echo $employePoste[0]->libelle;
 
         if($employePoste[0]->nomdepartement=="Systeme commercial"){
 			$data['regroupement'] = $this->Generalisation->avoirTableConditionnee("v_detailregroupement where etat=1");
@@ -51,7 +51,7 @@ class Welcome extends CI_Controller {
 	{
 		$idEmploye=$_SESSION['user'];//emp3
         $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
-        echo $employePoste[0]->libelle;
+        // echo $employePoste[0]->libelle;
 
         if($employePoste[0]->nomdepartement=="Systeme commercial"){
 			$data['regroupement'] = $this->Generalisation->avoirTableConditionnee("v_detailregroupement where etat=11");

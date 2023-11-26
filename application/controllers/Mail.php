@@ -98,5 +98,29 @@ class Mail extends CI_Controller {
 		redirect("welcome/versAcceuil");
 	}
 
+	public function versAfficheMessages(){
+		$idfourniseur = $this->input->get('idfournisseur');
+		$fournisseur = $this->Generalisation->avoirTableSpecifique('fournisseur', '*', sprintf("idfournisseur='%s'", $idfourniseur));
+		$mailFournissuer = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("idsociete='%s'", $idfourniseur));
+		$mail = $this->Mail_modele->monMail();
+		$data['messages'] = $this->Mail_modele->message($mail, $mailFournissuer[0]);
+		$data['nomFournisseur'] = $fournisseur[0]->nomfournisseur;
+		$this->load->view('header');
+		$this->load->view('affichagemail', $data);
+	}
+
+	public function versListeFournisseur(){
+		$idEmploye=$_SESSION['user'];
+		$employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
+		$data['fournisseurs'] = $this->Generalisation->avoirTable('fournisseur');
+		if($employePoste[0]->nomdepartement=="Systeme commercial"){
+			$this->load->view('header');
+			$this->load->view('listeFournisseurs', $data);
+        }else{
+            $data["error"]="Vous n'avez pas accès à cette page";
+            $this->load->view('header');
+            $this->load->view('errors/erreurValidationAchat',$data);
+        }
+	}
 	
 }
