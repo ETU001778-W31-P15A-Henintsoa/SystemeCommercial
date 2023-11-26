@@ -135,5 +135,22 @@ class Proforma extends CI_Controller {
 		$this->load->view('proformaPourFournisseur', $data);
 	}
 
+	public function genererPDFContenu($idregroupement) {
+		$regroupement = $this->Generalisation->avoirTableConditionnee("v_detailregroupementarticle where idregroupement='".$idregroupement."'");
+		$data['regroupement'] = $regroupement;
+		return $this->load->view('proformaPourFournisseur', $data,true);
+	}
+
+	public function genererPDF() {
+		$pdf = new TCPDF();
+		$idregroupement = $this->input->get('idregroupement');
+		$pdf->AddPage();
+        $data['content'] = $this->genererPDFContenu($idbondecommande);
+		$pdf->writeHTML($data['content'], true, false, true, false, '');
+		$data['pdf'] = $pdf;
+		$this->load->view('BonDeCommandePDF', $data);
+        $pdf->Output("demandeproforma_".$idregroupement, 'I');
+	}
+
 
 }
