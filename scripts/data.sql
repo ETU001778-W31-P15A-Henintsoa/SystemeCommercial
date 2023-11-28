@@ -75,7 +75,7 @@ insert into Fournisseur(nomFournisseur, email, motdepasse, adresse, idVille) val
 ('LEADER PRICE', 'leader@gmail.com', 'leaderprice', 'Lot VI BIS Ankorondrano', 'VILLE1');
 
 ------------------------------------ ADRESSEMAIL ------------------------------------------
-insert into adresseMail(idsociete, adresseMAil) values
+insert into adresseMail(idsociete, adresseMAil, motdepasse) values
 ('ENT1', 'dimpex@gmail.com', 'dimpex'),
 ('FOU1', 'shoprite@gmail.com', 'shoprite'),
 ('FOU2', 'jumbo@gmail.com', 'jumbo'),

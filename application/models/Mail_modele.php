@@ -131,14 +131,17 @@
         //     }
         // }
 
+        public function copierPdf($pdf){
+            shell_exec("cp /var/www/html/SystemeCommercial/SystemeCommercial/upload/".$pdf." /var/www/html/Fournisseur/FournisseurSystemeCommercial/upload/");
+        }
+
         // Fonctions Fonctionnelles
         public function envoieMail($destinataire, $message, $fichier, $idregroupement){
             $mail = $this->monMail();
             $message = "Demande de Proforma//".$message;
             $destinataire = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("adressemail='%s'", $destinataire));
-           
-            // $fichier = FCPATH . 'upload/'.$fichier;
-            // $this->envoyerEmailReel($destinataire, $sujet, $message, $fichier);
+            $fichier = FCPATH . 'upload/'.$fichier;
+            $this->envoyerEmailReel($destinataire, $sujet, $message, $fichier);
 
             // var_dump($destinataire);
 
@@ -165,9 +168,11 @@
 
 
         public function message($mail, $fournisseur){
-            $messages = $this->Generalisation->avoirTableConditionnee(sprintf("v_mailmessage where (envoyeur='%s' and destinataire='%s') or (envoyeur='%s' and destinataire='%s')", $mail->idadressemail, $fournisseur->idadressemail, $fournisseur->idadressemail, $mail->idadressemail));
+            $messages = $this->Generalisation->avoirTableConditionnee(sprintf("v_mailmessage where (envoyeur='%s' and destinataire='%s') or (envoyeur='%s' and destinataire='%s') order by dateenvoie", $mail->idadressemail, $fournisseur->idadressemail, $fournisseur->idadressemail, $mail->idadressemail));
             // var_dump($messages);
             foreach($messages as $message){
+                $message->etat = 0;
+                $message->p = 0;
                 if($message->envoyeur == $mail->idadressemail){
                     $message->etat = 1;
                 }

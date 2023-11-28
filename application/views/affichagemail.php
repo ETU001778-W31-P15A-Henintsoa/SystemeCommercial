@@ -12,8 +12,10 @@
                 <!-- Merged -->
                 <div class="col-md-12">
                   <div class="card mb-3" id="conteneur-message">
-                    <?php foreach($messages as $message){ 
-                        if($message->etat!=1){
+                    <?php
+                    // var_dump($messages); 
+                    foreach($messages as $message){ 
+                        if($message->etat==1){
                         ?>
                             <!-- <div class="messaging-container"> -->
                             <div class="mb-3 person person-1">
@@ -22,7 +24,7 @@
                                 <div id="icone" class="bubble2">
                                     <div class="message"><?= explode("//", $message->libelle)[1] ?></div>
                                     <?php if($message->p==1){ ?>
-                                        <div><img src=<?= site_url("upload".$message->piecejointe) ?> alt=<?= $message->piecejointe ?>></div>
+                                        <div><img src=<?= base_url("upload/".$message->piecejointe) ?> alt=<?= $message->piecejointe ?>></div>
                                     <?php } ?>    
                                 </div>
                                 
@@ -34,7 +36,7 @@
                        <div class="bubble1">
                             <div class="message"><?= explode("//", $message->libelle)[1] ?></div>
                             <?php if($message->p==1){ ?>
-                                <div><img src="<?= site_url("upload".$message->piecejointe) ?>" alt=<?= $message->piecejointe ?>></div>
+                                <div><img src="<?= base_url("upload/".$message->piecejointe) ?>" alt=<?= $message->piecejointe ?>></div>
                             <?php } ?>
                         </div>
                         <div id="date"><?= $message->dateenvoie ?></div>

@@ -144,12 +144,13 @@ class Proforma extends CI_Controller {
 	public function genererPDF() {
 		$pdf = new TCPDF();
 		$idregroupement = $this->input->get('idregroupement');
+		$date = date("Y-m-d");
 		$pdf->AddPage();
-        $data['content'] = $this->genererPDFContenu($idbondecommande);
+        $data['content'] = $this->genererPDFContenu($idregroupement);
 		$pdf->writeHTML($data['content'], true, false, true, false, '');
 		$data['pdf'] = $pdf;
-		$this->load->view('BonDeCommandePDF', $data);
-        $pdf->Output("demandeproforma_".$idregroupement, 'I');
+		$this->load->view('proformaPourFournisseur', $data);
+        $pdf->Output("demandeproforma_".$idregroupement."_".$date.".pdf", 'I');
 	}
 
 

@@ -162,7 +162,7 @@ create table Message(
     idMessage varchar(20) default concat('MESS' || nextval('seqMessage')) primary key,
     idMail varchar(20),
     libelle text,
-    piecejointe varchar(20),
+    piecejointe varchar(60),
     foreign key (idMail) references Mail(idMail)
 );
 
@@ -269,3 +269,5 @@ alter table regroupement add etat int; -------(1 rehefa vaao regroupe, 11 rehefa
 -- ----------------------------------------alter bon de commande------------------------------------------------
 alter table BonDeCommande add delailivraison date;
 alter table BonDeCommande add idregroupement varchar(20),add constraint idreg foreign key(idregroupement) references regroupement(idregroupement);
+
+alter table Proforma alter column piecejointe TYPE varchar(60);

@@ -30,7 +30,8 @@
                             <?= $regroupement[$i]->idregroupement ?></td>
                             <td><?= $regroupement[$i]->dateregroupement ?></td>
                             <td><span class="badge bg-label-warning me-1"><a  href="<?php echo site_url('Mail/versEnvoieMail?idregroupement='.$regroupement[$i]->idregroupement); ?>">Demande de Proforma</a></span></td>
-                        </tr>
+                            <td><span class="badge bg-label-warning me-1"><a  href="<?php echo site_url('Proforma/genererPDF?idregroupement='.$regroupement[$i]->idregroupement)?>">Generer PDF</a></span></td>
+                          </tr>
                         <?php } ?>  
                       </tbody>
                   </table>
