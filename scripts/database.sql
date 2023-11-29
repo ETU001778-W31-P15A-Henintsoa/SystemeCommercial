@@ -162,7 +162,7 @@ create table Message(
     idMessage varchar(20) default concat('MESS' || nextval('seqMessage')) primary key,
     idMail varchar(20),
     libelle text,
-    piecejointe varchar(60),
+    piecejointe varchar(100),
     foreign key (idMail) references Mail(idMail)
 );
 

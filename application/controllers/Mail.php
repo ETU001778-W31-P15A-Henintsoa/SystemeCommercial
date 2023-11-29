@@ -98,7 +98,7 @@ class Mail extends CI_Controller {
 			redirect('Mail/versEnvoieMail?idregroupement='.$idregroupement.'&erreur='.$erreur);
 		}
 
-		// redirect("welcome/versAcceuil");
+		redirect("welcome/versAcceuil");
 	}
 
 	public function versAfficheMessages(){

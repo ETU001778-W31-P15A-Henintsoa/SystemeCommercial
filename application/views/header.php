@@ -155,7 +155,7 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="" class="menu-link" target="_blank">
+                  <a href="<?php echo site_url('Login/deconnection') ?>" class="menu-link" target="_blank">
                     <div data-i18n="Basic">Logout</div>
                   </a>
                 </li>
