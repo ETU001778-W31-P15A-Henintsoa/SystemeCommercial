@@ -214,12 +214,6 @@
                         <div data-i18n="Tables"> Liste Regroupements </div>
                       </a>
                     </li>
-
-                  <!-- <li class="menu-item">
-                    <a href="<?php //echo site_url('proforma/versEnregistrementReponseProforma'); ?>" class="menu-link">
-                      <div data-i18n="Tables"> Regroupement Envoyer </div>
-                    </a>
-                  </li> -->
                 </ul>
               </li>
             </li>
@@ -257,6 +251,12 @@
                 </ul>
               </li>
 
+            <li class="menu-item">
+                <a href=<?php echo site_url('mail/versListeFournisseur'); ?> class="menu-link">
+                  <!-- <i class="menu-icon tf-icons bx bx-lock-open-alt"></i> -->
+                  <div data-i18n="Authentications">Messages/Mail</div>
+                </a>
+            </li>
           </ul>
         </aside>
         <!-- / Menu -->

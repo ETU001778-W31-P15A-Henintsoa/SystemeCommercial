@@ -30,7 +30,7 @@
                         </div>
                       </div>
 
-                      <input type="hidden" value="<?= $_GET['idregroupement'] ?> ">
+                      <input type="hidden" value="<?= $_GET['idregroupement'] ?>" name="idregroupement">
 
                       <div class="mb-3">
                         <label for="formFile" class="form-label">Message</label>

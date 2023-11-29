@@ -35,7 +35,7 @@ class Generalisation extends CI_Model {
 
     function miseAJour($NomTable, $nouveau, $conditions){ // Metre values comme => '(data1, data2, 'data3')' par exemple
         $sql = sprintf( 'Update %s set %s where %s',$NomTable, $nouveau, $conditions);
-        // echo $sql;
+        echo $sql;
         $this->db->query($sql);
     }
 

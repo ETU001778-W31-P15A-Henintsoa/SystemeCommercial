@@ -33,7 +33,7 @@ class Mail extends CI_Controller {
 		$this->load->view('envoiemail', $data);
 	}
 
-	public function upload_file() {
+	public function upload_file($idregroupement) {
         $dossier =  FCPATH . 'upload/';
 		$fichier = basename($_FILES['piecejointe']['name']);
 		$taille_maxi = 100000;
@@ -62,18 +62,18 @@ class Mail extends CI_Controller {
 
 			if(move_uploaded_file($_FILES['piecejointe']['tmp_name'], $dossier . $fichier)) //Si
 			{
-				// $erreur = 'Upload effectué avec succès !';
+				$erreur = 'Upload effectué avec succès !';
 				// redirect("Mail/versEnvoieMail?erreur=".$erreur);
 			}
 		else //Sinon (la fonction renvoie FALSE).
 		{
 			$erreur = 'Echec de l\'upload !';
-			redirect("Mail/versEnvoieMail?erreur=".$erreur);
+			redirect('Mail/versEnvoieMail?idregroupement='.$idregroupement.'&erreur='.$erreur);
 		}
 		}
 		else
 		{
-			redirect("Mail/versEnvoieMail?erreur=".$erreur);
+			redirect('Mail/versEnvoieMail?idregroupement='.$idregroupement.'&erreur='.$erreur);
 		}
 		return $_FILES['piecejointe']['name'];
     }
@@ -81,22 +81,49 @@ class Mail extends CI_Controller {
 	public function envoieMail(){
 		$mail = $this->input->post('mail');
 		$message = $this->input->post('message');
-		// $pj = $this->upload_file();
+		$idregroupement = $this->input->post('idregroupement');
+		$pj = $this->upload_file($idregroupement);
+		$this->Mail_modele->copierPdf($pj);
 
 		if($mail=="" || $message==""){
 			$erreur = 'Champ(s) vide(s)';
-			redirect('Mail/versEnvoieMail?erreur='.$erreur);
+			redirect('Mail/versEnvoieMail?idregroupement='.$idregroupement.'&erreur='.$erreur);
 		}
 
-		$retour = $this->Mail_modele->envoieMail($mail, $message, $pj);
+		// var_dump($idregroupement);
+		$retour = $this->Mail_modele->envoieMail($mail, $message, $pj, $idregroupement);
 
 		if($retour==false){
 			$erreur = 'L\'Adresse mail du Fournisseur est invalide';
-			redirect('Mail/versEnvoieMail?erreur='.$erreur);
+			redirect('Mail/versEnvoieMail?idregroupement='.$idregroupement.'&erreur='.$erreur);
 		}
 
-		redirect("welcome/versAcceuil");
+		// redirect("welcome/versAcceuil");
 	}
 
+	public function versAfficheMessages(){
+		$idfourniseur = $this->input->get('idfournisseur');
+		$fournisseur = $this->Generalisation->avoirTableSpecifique('fournisseur', '*', sprintf("idfournisseur='%s'", $idfourniseur));
+		$mailFournissuer = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("idsociete='%s'", $idfourniseur));
+		$mail = $this->Mail_modele->monMail();
+		$data['messages'] = $this->Mail_modele->message($mail, $mailFournissuer[0]);
+		$data['nomFournisseur'] = $fournisseur[0]->nomfournisseur;
+		$this->load->view('header');
+		$this->load->view('affichagemail', $data);
+	}
+
+	public function versListeFournisseur(){
+		$idEmploye=$_SESSION['user'];
+		$employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
+		$data['fournisseurs'] = $this->Generalisation->avoirTable('fournisseur');
+		if($employePoste[0]->nomdepartement=="Systeme commercial"){
+			$this->load->view('header');
+			$this->load->view('listeFournisseurs', $data);
+        }else{
+            $data["error"]="Vous n'avez pas accès à cette page";
+            $this->load->view('header');
+            $this->load->view('errors/erreurValidationAchat',$data);
+        }
+	}
 	
 }

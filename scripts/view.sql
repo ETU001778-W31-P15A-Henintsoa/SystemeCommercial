@@ -70,3 +70,10 @@ create or replace view v_DonneeProforma2 as
         FROM Proforma p
             JOIN DonneeProforma dp ON p.idProforma = dp.idProforma
             JOIN v_detailregroupement vdr ON p.idRegroupement = vdr.idRegroupement;
+
+------------------------ MESSAGE FOURNISSEUR MAIL --------------------------------
+create or replace view v_MailMessage as
+    select Mail.idMail, Mail.dateEnvoie, Mail.envoyeur, Mail.destinataire,
+    Message.idMessage, Message.libelle, Message.piecejointe
+    from Mail
+        join Message on Message.idMail = Mail.idMail;
