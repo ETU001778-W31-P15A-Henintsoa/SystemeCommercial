@@ -50,7 +50,7 @@ class BonDeCommande extends CI_Controller {
         $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
         $idbondecommande = $_GET['id'];
         $idregroupement = $_GET['idregroupement'];
-        echo $employePoste[0]->libelle;
+        // echo $employePoste[0]->libelle;
         if($employePoste[0]->libelle == "premier validation bon achat") {
             $this->Generalisation->miseAJour("bondecommande","etat=21"," idbondecommande='".$idbondecommande."'");
             $this->Generalisation->miseAJour("regroupement","etat=31"," idregroupement='".$idregroupement."'");
@@ -67,8 +67,8 @@ class BonDeCommande extends CI_Controller {
         $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
         $idbondecommande = $_GET['id'];
         $idregroupement = $_GET['idregroupement'];
-        echo $employePoste[0]->libelle;
-        if($employePoste[0]->libelle == "DG"){
+        // echo $employePoste[0]->libelle;
+        if($employePoste[0]->libelle == "Directeur General"){
             $this->Generalisation->miseAJour("bondecommande","etat=31"," idbondecommande='".$idbondecommande."'");
             $this->Generalisation->miseAJour("regroupement","etat=41"," idregroupement='".$idregroupement."'");
             redirect('BonDeCommande/versListeBonDeCommande');

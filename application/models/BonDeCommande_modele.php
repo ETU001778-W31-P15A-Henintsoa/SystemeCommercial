@@ -23,21 +23,21 @@
         }
         
         public function avoirListeBonDeCommandeNonValide() {
-            $sql = "SELECT * FROM v_bondecommande where etat = 0";
+            $sql = "SELECT idbondecommande,datebondecommande,etat,nomfournisseur,idregroupement from v_detailbondecommande where etat=0 group by idbondecommande,datebondecommande,etat,nomfournisseur,idregroupement";
             $query = $this->db->query($sql);
             $result = $query->result_array();
             return $result;
         }
 
         public function avoirListeBonDeCommandeValide() {
-            $sql = "SELECT * FROM v_bondecommande where etat = 21";
+            $sql = "SELECT idbondecommande,datebondecommande,etat,nomfournisseur,idregroupement from v_detailbondecommande where etat=21 group by idbondecommande,datebondecommande,etat,nomfournisseur,idregroupement";
             $query = $this->db->query($sql);
             $result = $query->result_array();
             return $result;
         }
 
         public function avoirListeBonDeCommandeValideDG() {
-            $sql = "SELECT * FROM v_bondecommande where etat = 31";
+            $sql = "SELECT idbondecommande,datebondecommande,etat,nomfournisseur,idregroupement from v_detailbondecommande where etat=31 group by idbondecommande,datebondecommande,etat,nomfournisseur,idregroupement";
             $query = $this->db->query($sql);
             $result = $query->result_array();
             return $result;
@@ -171,18 +171,29 @@
             for($i=0;$i<count($moinsDisant);$i++) {
                 $idregroupement = $moinsDisant[$i]['regroupement']->idregroupement;
                 $quantiteDemandee = $moinsDisant[$i]['regroupement']->quantite;
+<<<<<<< Updated upstream
+=======
+                $date = date("Y-m-d");
+                
+>>>>>>> Stashed changes
                 $reste = $quantiteDemandee;
                     $idArticle = $moinsDisant[$i]['regroupement']->idarticle;
                     
                     while($reste != 0 ) {
                         for($k=0;$k<count($moinsDisant[$i]['data']);$k++) {
                                 $idbondecommande="";
-                                $condition1 = "idfournisseur='".$moinsDisant[$i]['data'][$k]['fournisseur']->idfournisseur."'";
+                                $condition1 = "idfournisseur='".$moinsDisant[$i]['data'][$k]['fournisseur']->idfournisseur."' and datebondecommande='".$date."'";
                                 $bondecommande = $this->Generalisation->avoirTableSpecifique("bondecommande", "idbondecommande",$condition1);
                                 if(count($bondecommande) != 0) {
                                     $idbondecommande = $bondecommande[0]->idbondecommande;  
                                     if($moinsDisant[$i]['data'][$k]['quantite'] >= $reste && $idArticle = $moinsDisant[$i]['regroupement']->idarticle) {
+<<<<<<< Updated upstream
                                         $this->Generalisation->insertion("articlebondecommande(idbondecommande,idarticle,quantite,pu)",sprintf("('%s','%s','%s','%s')",$idbondecommande,$idArticle,$reste,$moinsDisant[$i]['data'][$k]['prixunitaire']));
+=======
+                                        $this->Generalisation->insertion("articlebondecommande(idbondecommande,idarticle,quantite,pu)",sprintf("('%s','%s','%s','%s')",$idbondecommande,$idArticle,$moinsDisant[$i]['data'][$k]['quantite'],$moinsDisant[$i]['data'][$k]['prixunitaire']));
+                                        $reste = 0;
+                                    }else if($moinsDisant[$i]['data'][$k]['quantite'] <= 0 && $idArticle = $moinsDisant[$i]['regroupement']->idarticle ){
+>>>>>>> Stashed changes
                                         $reste = 0;
                                     }else {
                                         $reste -= $moinsDisant[$i]['data'][$k]['quantite'];
@@ -194,7 +205,13 @@
                                         $this->Generalisation->insertion("bondecommande(idfournisseur,idpayement,idlivraison,delailivraison,idregroupement)", sprintf("('%s','%s','%s','%s','%s')",$moinsDisant[$i]['data'][$k]['fournisseur']->idfournisseur,$paiement,$livraison,$date,$idregroupement));  
                                         $commande = $this->Generalisation->avoirTableAutrement("bondecommande","idbondecommande","order by idbondecommande desc limit 1");
                                         $idbondecommande =$commande[0]->idbondecommande;  
+<<<<<<< Updated upstream
                                         $this->Generalisation->insertion("articlebondecommande(idbondecommande,idarticle,quantite,pu)",sprintf("('%s','%s','%s','%s')",$idbondecommande,$idArticle,$reste,$moinsDisant[$i]['data'][$k]['prixunitaire']));
+=======
+                                        $this->Generalisation->insertion("articlebondecommande(idbondecommande,idarticle,quantite,pu)",sprintf("('%s','%s','%s','%s')",$idbondecommande,$idArticle,$moinsDisant[$i]['data'][$k]['quantite'],$moinsDisant[$i]['data'][$k]['prixunitaire']));
+                                        $reste = 0;
+                                    }else if($moinsDisant[$i]['data'][$k]['quantite'] <= 0 && $idArticle = $moinsDisant[$i]['regroupement']->idarticle ){
+>>>>>>> Stashed changes
                                         $reste = 0;
                                     }else {
                                         $reste -= $moinsDisant[$i]['data'][$k]['quantite'];
