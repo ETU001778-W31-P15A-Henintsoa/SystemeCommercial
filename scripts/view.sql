@@ -57,13 +57,15 @@ select Fournisseur.nomfournisseur,bdc.*
 
 create or replace view v_DetailBonDeCommande AS
 select abdc.*,bdc.idfournisseur,bdc.DateBonDeCommande,bdc.delailivraison,Fournisseur.nomFournisseur,Livraison.libelle as livraison,TypedePaiment.libelle as paiement,bdc.etat ,
-bdc.idregroupement
+bdc.idregroupement, Article.nomArticle
 from BonDeCommande bdc
 join Fournisseur on bdc.idfournisseur=Fournisseur.idfournisseur
 join ArticleBonDeCommande abdc on bdc.idBonDeCommande=abdc.idBonDeCommande
 join Livraison on bdc.idLivraison = Livraison.idLivraison
 join TypedePaiment on bdc.idpayement = TypedePaiment.idTypeDePayement
+join Article on Article.idarticle = abdc.idArticle
 where abdc.quantite != 0;
+
 -- ----------------------v_donneeproforma2---------------------------------
 create or replace view v_DonneeProforma2 as
     SELECT DISTINCT p.*,dp.idDonneeProforma,dp.idArticle ,dp.quantite,dp.prixUnitaire,dp.TVA,dp.livraisonPartielle

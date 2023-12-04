@@ -18,8 +18,12 @@
         width:200px;
         margin-left:550px;
     }
+    #titre{
+        margin-left:300px;
+    }
 </style>
  <div class="row mb-5">
+ <h3 class="card-header" id="titre">Liste des achats non livré</h3>
     <?php 
         for ($i=0; $i <count($besoinAchat) ; $i++) { ?>
             <div class="col-md-6 col-lg-4 mb-3"  id="nonValide">
@@ -59,8 +63,6 @@
                 
             </div>
         <?php }?>
-        <div class="row mb-3" id="button">
-             <a href="<?php echo site_url("ControllerBesoinAchat/regrouper") ?>" class="btn btn-primary">Regrouper les achats</a>
-        </div>
+       
        
 </div>

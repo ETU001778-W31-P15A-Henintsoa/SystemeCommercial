@@ -56,7 +56,7 @@
                                     $ttc;
                             ?>
                             <tr>
-                                <td><?php echo $donnees['idarticle']; ?></td>
+                                <td><?php echo $donnees['nomarticle']; ?></td>
                                 <td><?php echo $donnees['quantite']; ?></td>
                                 <td><?php echo $donnees['pu']; ?></td>
                                 <td><?php echo $ttc = $donnees['ttc']; ?></td>

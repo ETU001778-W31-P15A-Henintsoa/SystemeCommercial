@@ -7,7 +7,7 @@ class BesoinAchat extends CI_Model {
         $j=0;
         for ($i=0; $i <count($nonValide) ; $i++) { 
             $affichageNonValide[$j]['besoin']=$nonValide[$i];
-            $affichageNonValide[$j]['detail']=$this->Generalisation->avoirTableSpecifique("v_detailbesoinAchat","*"," idBesoinAchat='".$nonValide[$i]->idbesoinachat."' and etat=1");
+            $affichageNonValide[$j]['detail']=$this->Generalisation->avoirTableSpecifique("v_detailbesoinAchat","*"," idBesoinAchat='".$nonValide[$i]->idbesoinachat."' and etatdetail=1");
             $j++;
         }
         return $affichageNonValide;
@@ -19,7 +19,7 @@ class BesoinAchat extends CI_Model {
         $j=0;
         for ($i=0; $i <count($nonValide) ; $i++) { 
             $affichageValide[$j]['besoin']=$nonValide[$i];
-            $affichageValide[$j]['detail']=$this->Generalisation->avoirTableSpecifique("v_detailbesoinAchat","*"," idBesoinAchat='".$nonValide[$i]->idbesoinachat."' and etat=1");
+            $affichageValide[$j]['detail']=$this->Generalisation->avoirTableSpecifique("v_detailbesoinAchat","*"," idBesoinAchat='".$nonValide[$i]->idbesoinachat."' and etatdetail=1");
             $j++;
         }
         return $affichageValide;
@@ -42,12 +42,12 @@ class BesoinAchat extends CI_Model {
     }
 
     public function avoirAchatValideNonLivre($iddepartement){ //ilay nanaovan'ilay departement 
-        $nonValide=$this->Generalisation->avoirTableSpecifique("v_besoinAchat","*","iddepartement='".$iddepartement."' and etat<11 and etat>0");
+        $nonValide=$this->Generalisation->avoirTableSpecifique("v_besoinAchat","*","iddepartement='".$iddepartement."' and etat<=11 and etat>0");
         $affichageValide=array();
         $j=0;
         for ($i=0; $i <count($nonValide) ; $i++) { 
             $affichageValide[$j]['besoin']=$nonValide[$i];
-            $affichageValide[$j]['detail']=$this->Generalisation->avoirTableSpecifique("v_detailbesoinAchat","*"," idBesoinAchat='".$nonValide[$i]->idbesoinachat."' and etat<11");
+            $affichageValide[$j]['detail']=$this->Generalisation->avoirTableSpecifique("v_detailbesoinAchat","*"," idBesoinAchat='".$nonValide[$i]->idbesoinachat."' and etatdetail<11");
             $j++;
         }
         return $affichageValide;

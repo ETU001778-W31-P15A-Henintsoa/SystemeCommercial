@@ -1,5 +1,6 @@
 <?php 
     // var_dump($besoinAchat[0]);
+    // var_dump($besoinAchat);
 ?>
 <style>
  #nonValide{
@@ -12,7 +13,7 @@
         margin-top:-25px;
     }
     #detail{
-        width:200px;
+        width:400px;
     }
 </style>
  <div class="row mb-5">

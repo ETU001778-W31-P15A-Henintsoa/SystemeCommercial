@@ -83,7 +83,7 @@ class Mail extends CI_Controller {
 		$message = $this->input->post('message');
 		$idregroupement = $this->input->post('idregroupement');
 		$pj = $this->upload_file($idregroupement);
-		$this->Mail_modele->copierPdf($pj);
+		// $this->Mail_modele->copierPdf($pj);
 
 		if($mail=="" || $message==""){
 			$erreur = 'Champ(s) vide(s)';
@@ -92,6 +92,7 @@ class Mail extends CI_Controller {
 
 		// var_dump($idregroupement);
 		$retour = $this->Mail_modele->envoieMail($mail, $message, $pj, $idregroupement);
+		$this->Mail_modele->copierPdf($pj);
 
 		if($retour==false){
 			$erreur = 'L\'Adresse mail du Fournisseur est invalide';

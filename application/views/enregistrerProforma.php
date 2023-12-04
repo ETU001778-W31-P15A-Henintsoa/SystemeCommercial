@@ -49,7 +49,7 @@
                       </div>
 
                       <button type="submit" class="btn btn-primary">Enregistrer</button>
-                      <button type="button" class="btn btn-primary"><a href=""> Retour a L'acceuil</a></button>
+                      <button type="button" class="btn btn-primary"><a href=<?= site_url("welcome/versAcceuil") ?>> Retour a L'acceuil</a></button>
                     
                     </form>
                     </div>
