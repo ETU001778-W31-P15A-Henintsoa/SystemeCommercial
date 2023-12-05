@@ -180,17 +180,17 @@
                         
                         for($k=0;$k<count($moinsDisant[$i]['data']);$k++) {
                                 $idbondecommande="";
-                                $condition1 = "idfournisseur='".$moinsDisant[$i]['data'][$k]['fournisseur']->idfournisseur."' and datebondecommande='".$date."'";
+                                $condition1 = "idfournisseur='".$moinsDisant[$i]['data'][$k]['fournisseur']->idfournisseur."' and datebondecommande='".$date."' and idregroupement='".$idregroupement."'";
                                 $bondecommande = $this->Generalisation->avoirTableSpecifique("bondecommande", "idbondecommande",$condition1);
                                 if(count($bondecommande) != 0) {
-                                    $idbondecommande = $bondecommande[0]->idbondecommande;  
+                                    $idbondecommande = $bondecommande[0]->idbondecommande; 
+                                    // echo $reste; 
                                     if($moinsDisant[$i]['data'][$k]['quantite'] >= $reste && $idArticle = $moinsDisant[$i]['regroupement']->idarticle) {
+                                        // echo "reste".$reste;
                                         $this->Generalisation->insertion("articlebondecommande(idbondecommande,idarticle,quantite,pu)",sprintf("('%s','%s','%s','%s')",$idbondecommande,$idArticle,$reste,$moinsDisant[$i]['data'][$k]['prixunitaire']));
                                         $reste = 0;
-                                    }else if($moinsDisant[$i]['data'][$k]['quantite'] <= 0 && $idArticle = $moinsDisant[$i]['regroupement']->idarticle ){
-                                        // echo "tsy ampy nny donnee";
-                                        $reste = 0;
                                     }else {
+                                        // echo "quantite".$moinsDisant[$i]['data'][$k]['quantite'];
                                         $reste -= $moinsDisant[$i]['data'][$k]['quantite'];
                                         $this->Generalisation->insertion("articlebondecommande(idbondecommande,idarticle,quantite,pu)",sprintf("('%s','%s','%s','%s')",$idbondecommande,$idArticle,$moinsDisant[$i]['data'][$k]['quantite'],$moinsDisant[$i]['data'][$k]['prixunitaire']));
                                     }
@@ -201,9 +201,6 @@
                                         $commande = $this->Generalisation->avoirTableAutrement("bondecommande","idbondecommande","order by idbondecommande desc limit 1");
                                         $idbondecommande =$commande[0]->idbondecommande;  
                                         $this->Generalisation->insertion("articlebondecommande(idbondecommande,idarticle,quantite,pu)",sprintf("('%s','%s','%s','%s')",$idbondecommande,$idArticle,$reste,$moinsDisant[$i]['data'][$k]['prixunitaire']));
-                                        $reste = 0;
-                                    }else if($moinsDisant[$i]['data'][$k]['quantite'] <= 0 && $idArticle = $moinsDisant[$i]['regroupement']->idarticle ){
-                                        // echo "tsy ampy nny donnee
                                         $reste = 0;
                                     }else {
                                         $reste -= $moinsDisant[$i]['data'][$k]['quantite'];

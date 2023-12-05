@@ -12,10 +12,8 @@
             $mail = $this->monMail();
             $message = "Demande de Proforma//".$message;
             $destinataire = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("adressemail='%s'", $destinataire));
-            $fichier = $fichier;
-            // $this->envoyerEmailReel($destinataire, $sujet, $message, $fichier);
+            $fichier =$fichier;
 
-            // var_dump($destinataire);
 
             if(count($destinataire)==0){
                 return false;

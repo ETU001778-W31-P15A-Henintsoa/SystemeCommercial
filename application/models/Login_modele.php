@@ -11,11 +11,8 @@ class Login_modele extends CI_Model {
 			$test = FALSE;
 			foreach ($users as $user) {
 				if ($user->mail == $mail && $user->motdepasse == $mdp) {
-					session_start();
+					$test=TRUE;
 					$_SESSION['user'] = $user -> idemploye;
-					if($user->iddepartement == "DEPT3"){
-						$_SESSION['DeptAchat'] = true;
-					}
 				}
 			}
 			

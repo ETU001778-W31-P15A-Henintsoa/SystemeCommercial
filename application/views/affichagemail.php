@@ -24,8 +24,9 @@
                                 <div id="icone"><i class="fas fa-user"></i></div>
                                 <div id="icone" class="bubble2">
                                     <div class="message"><?= explode("//", $message->libelle)[1] ?></div>
+                                    <br>
                                     <?php if($message->p==1){ ?>
-                                        <div><img src=<?= base_url("upload/".$message->piecejointe) ?> alt=<?= $message->piecejointe ?>></div>
+                                        <div><img src="pdf.png" alt=<?= $message->piecejointe ?>></div>
                                     <?php } ?>    
                                 </div>
                                 
@@ -36,8 +37,9 @@
                        <!-- <i class="fas fa-user"></i> -->
                        <div class="bubble1">
                             <div class="message"><?= explode("//", $message->libelle)[1] ?></div>
+                            <br>
                             <?php if($message->p==1){ ?>
-                                <div><img src="<?= base_url("upload/".$message->piecejointe) ?>" alt=<?= $message->piecejointe ?>></div>
+                                <div><img src="pdf.png" alt=<?= $message->piecejointe ?>></div>
                             <?php } ?>
                         </div>
                         <div id="date"><?= $message->dateenvoie ?></div>

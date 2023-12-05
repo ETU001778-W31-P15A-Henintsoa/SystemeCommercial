@@ -128,6 +128,7 @@ class Mail extends CI_Controller {
 
 		// var_dump($idregroupement);
 		$retour = $this->Mail_modele->envoieMail($mail, $message, $pj, $idregroupement);
+		$this->Mail_modele->copierPdf($pj);
 
 		if($retour==false){
 			$erreur = 'L\'Adresse mail du Fournisseur est invalide';

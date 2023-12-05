@@ -12,7 +12,7 @@ class RegroupementModele extends CI_Model {
         $j=0;
         for ($i=0; $i <count($regroup) ; $i++) { 
             $regroupement[$j]["regroupement"]=$regroup[$i];
-            $regroupement[$j]["detail"]= $this->Generalisation->avoirTableSpecifique("v_detailRegroupementArticle","*"," idRegroupement='".$regroup[$i]->idregroupement."'");
+            $regroupement[$j]["detail"]= $this->Generalisation->avoirTableSpecifique("v_detailRegroupementArticle","*"," idRegroupement is not null and idRegroupement='".$regroup[$i]->idregroupement."'");
             $j++;
         }
         return $regroupement;

@@ -88,7 +88,7 @@
             <p><strong>Date de la commande:</strong> <?= $donnee[0]['datebondecommande'] ?></p>
             <p><strong>Fournisseur : </strong><?= $donnee[0]['nomfournisseur'] ?></p>
             <p><strong>Délai de livraison :</strong><?= $donnee[0]['delailivraison'] ?></p>
-            <p><strong>Livraison partielle :</strong><?= $donnee[0]['livraison'] ?></p>
+            <p><strong>Livraison :</strong><?= $donnee[0]['livraison'] ?></p>
             <p><strong>Mode de paiement :</strong><?= $donnee[0]['paiement'] ?></p>
 
             <table>
