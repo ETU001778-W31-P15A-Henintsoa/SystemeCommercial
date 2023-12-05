@@ -12,8 +12,6 @@
             $mail = $this->monMail();
             $message = "Demande de Proforma//".$message;
             $destinataire = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("adressemail='%s'", $destinataire));
-            $fichier =$fichier;
-
 
             if(count($destinataire)==0){
                 return false;
