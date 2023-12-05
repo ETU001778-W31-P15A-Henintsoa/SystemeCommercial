@@ -33,6 +33,9 @@
                             <td>
                                 <a href="<?php echo site_url("BonDeCommande/genererPDF?id=".$bdcvdg['idbondecommande']."&fournisseur=".$bdcvdg['nomfournisseur']."&date=".$bdcvdg['datebondecommande']); ?>">Generer PDF</a>
                             </td>
+                            <td>
+                                <a href="<?= site_url("Mail/envo")?>">Generer PDF</a>
+                            </td>
                         </tr>
                         <?php } ?>
                         </tbody>

@@ -141,3 +141,11 @@ insert into validation(idBrancheDepartement,libelle)
 values('BDEPT5','Directeur General');
 
 
+------------------------------------ ADRESSEMAIL ------------------------------------------
+insert into adresseMail(idsociete, adresseMAil, motdepasse) values
+('DEPT1', 'rhumaine@gmail.com', 'rhumaine'),
+('DEPT2', 'informatique@gmail.com', 'info'),
+('DEPT3', 'scommecial@gmail.com', 'scom'),
+('DEPT4', 'finance@gmail.com', 'finance');
+
+

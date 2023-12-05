@@ -33,6 +33,21 @@ class Mail extends CI_Controller {
 		$this->load->view('envoiemail', $data);
 	}
 
+	public function versEnvoieMailBonDeCommande()
+	{
+		$idfournisseur = $this->input->get('idfournisseur');
+
+		$data = array();
+		$data['fournisseur'] = $this->Generalisation->avoirTableSpecifique("fournisseur", "*", sprintf("idfournisseur='%s'", $idfournisseur)); 
+
+		if(isset($_GET['erreur'])){
+			$data['erreur'] = $_GET['erreur'];
+		}
+
+		$this->load->view('header');
+		$this->load->view('envoiemailBonDeCommande', $data);
+	}
+
 	public function upload_file($idregroupement) {
         $dossier =  FCPATH . 'upload/';
 		$fichier = basename($_FILES['piecejointe']['name']);
@@ -83,7 +98,28 @@ class Mail extends CI_Controller {
 		$message = $this->input->post('message');
 		$idregroupement = $this->input->post('idregroupement');
 		$pj = $this->upload_file($idregroupement);
-		$this->Mail_modele->copierPdf($pj);
+
+		if($mail=="" || $message==""){
+			$erreur = 'Champ(s) vide(s)';
+			redirect('Mail/versEnvoieMail?idregroupement='.$idregroupement.'&erreur='.$erreur);
+		}
+
+		// var_dump($idregroupement);
+		$retour = $this->Mail_modele->envoieMail($mail, $message, $pj, $idregroupement);
+
+		if($retour==false){
+			$erreur = 'L\'Adresse mail du Fournisseur est invalide';
+			redirect('Mail/versEnvoieMail?idregroupement='.$idregroupement.'&erreur='.$erreur);
+		}
+
+		redirect("welcome/versAcceuil");
+	}
+
+	public function envoieMailBonDeCommande(){
+		$mail = $this->input->post('mail');
+		$message = $this->input->post('message');
+		$idregroupement = $this->input->post('idregroupement');
+		$pj = $this->upload_file($idregroupement);
 
 		if($mail=="" || $message==""){
 			$erreur = 'Champ(s) vide(s)';
@@ -107,6 +143,10 @@ class Mail extends CI_Controller {
 		$mailFournissuer = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("idsociete='%s'", $idfourniseur));
 		$mail = $this->Mail_modele->monMail();
 		$data['messages'] = $this->Mail_modele->message($mail, $mailFournissuer[0]);
+		$data['taille'] = '';
+		if(count($data['messages'])==0){
+			$data['taille'] = 'Aucun message';
+		}
 		$data['nomFournisseur'] = $fournisseur[0]->nomfournisseur;
 		$this->load->view('header');
 		$this->load->view('affichagemail', $data);
@@ -124,6 +164,34 @@ class Mail extends CI_Controller {
             $this->load->view('header');
             $this->load->view('errors/erreurValidationAchat',$data);
         }
+	}
+
+	public function versListeDepartement(){
+		$moi = $this->Generalisation->avoirTableSpecifique('v_posteemploye', '*', sprintf("idemploye='%s'", $_SESSION['user']));
+		$data['departements'] = $this->Generalisation->avoirTableSpecifique('departement', '*', sprintf("iddepartement != '%s'", $moi[0]->iddepartement));
+		$this->load->view('header');
+		$this->load->view('listeEmploye', $data);
+	}
+
+	public function versAfficheMessagesDepartement(){
+		$iddepartement = $this->input->get('iddepartement');
+		$ledestinataire = $this->Generalisation->avoirTableSpecifique("departement", "*", sprintf("iddepartement='%s'", $iddepartement));
+		$destinataire = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("idsociete='%s'", $iddepartement));
+
+		$lenvoyeur = $this->Generalisation->avoirTableSpecifique('v_posteemploye', '*', sprintf("idemploye='%s'", $_SESSION['user']));
+		$envoyeur = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("idsociete='%s'", $lenvoyeur[0]->iddepartement));
+
+		$data['messages'] = $this->Mail_modele->message($envoyeur[0]->idadressemail, $destinataire[0]->idadressemail);
+
+		$data['taille'] = '';
+		if(count($data['messages'])==0){
+			$data['taille'] = 'Aucun message';
+		}
+
+		$data['nomFournisseur'] = $ledestinataire[0]->nomdepartement;
+
+		$this->load->view('header');
+		$this->load->view('affichagemail', $data);
 	}
 	
 }
