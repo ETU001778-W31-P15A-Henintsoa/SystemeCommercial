@@ -149,3 +149,31 @@ insert into adresseMail(idsociete, adresseMAil, motdepasse) values
 ('DEPT4', 'finance@gmail.com', 'finance');
 
 
+---------------------------------------------Fiderana 05-12-23---------------------------------------------------
+  ----------------------------------------------departement-------------------------------------------------
+INSERT INTO Departement (nomDepartement)
+VALUES
+    ('logistique');
+
+INSERT INTO Employe (nom, prenom, adresse, matricule, dateNaissance, mail, motDePasse, etat)
+VALUES
+  ('Mayette', 'Johnson', '123 Rue de la Sarbone', 'MAT12345', '1990-05-15', 'johnson.doe@email.com', 'mdp123', 1);
+
+-----------------------------------------------Branche----------------------------------------------------------
+INSERT INTO Branche (nomBranche,salaireMax, salaireMin, njHParPersonne, mission, descriptionPoste)
+VALUES
+    ('Magasinier',50000.00, 30000.00, 8.0, 'Reponsable des stocks de produits', 'Gestion de sortie et entré des stocks');
+
+-----------------------------------------------BrancheDepartement-------------------------------------------------
+insert into brancheDepartement(idBranche,idDepartement) values
+('BRA7','DEPT6');
+
+--------------------------------------Poste EMploye-----------------------------------------------------------
+insert into employePoste(idBrancheDepartement,dateEmbauche,idEmploye) values
+('BDEPT6','2023-02-04','EMP6');
+
+--------------------------------------Validation-----------------------------------------------------------
+insert into validation(idBrancheDepartement,libelle) values
+('BDEPT6','validation entre');
+
+update validation set libelle='validation entre' where idbranchedepartement='BDEPT6';  

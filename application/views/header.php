@@ -216,6 +216,49 @@
                     </li>
                 </ul>
               </li>
+              <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                  <!-- <i class="menu-icon tf-icons bx bx-lock-open-alt"></i> -->
+                  <div data-i18n="Authentications">Bon de reception</div>
+                </a>
+                <ul class="menu-sub">
+                  <li class="menu-item">
+                    <a href="<?php echo site_url('BonReception/versFormulaireBonReception'); ?>" class="menu-link" target="_blank">
+                      <div data-i18n="Basic">Entrer bon de reception</div>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="<?php echo site_url('BonReception/avoirReceptionNonValide'); ?>" class="menu-link" target="_blank">
+                      <div data-i18n="Basic">Validation</div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                  <!-- <i class="menu-icon tf-icons bx bx-lock-open-alt"></i> -->
+                  <div data-i18n="Authentications">Bon d'entré</div>
+                </a>
+                <ul class="menu-sub">
+                  <li class="menu-item">
+                    <a href="<?php echo site_url('BonEntre/versFormulaireBonEntre'); ?>" class="menu-link" target="_blank">
+                      <div data-i18n="Basic">Entrer bon d'entré</div>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="<?php echo site_url('BonReception/avoirReceptionNonValide'); ?>" class="menu-link" target="_blank">
+                      <div data-i18n="Basic">Validation</div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+            <li class="menu-item">
+                <a href=<?php echo site_url('mail/versListeFournisseur'); ?> class="menu-link">
+                  <!-- <i class="menu-icon tf-icons bx bx-lock-open-alt"></i> -->
+                  <div data-i18n="Authentications">Messages/Mail</div>
+                </a>
             </li>
 
             <li class="menu-item">

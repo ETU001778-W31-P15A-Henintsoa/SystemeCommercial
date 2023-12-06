@@ -57,6 +57,7 @@ select Fournisseur.nomfournisseur,bdc.*
 
 create or replace view v_DetailBonDeCommande AS
 select abdc.*,bdc.idfournisseur,bdc.DateBonDeCommande,bdc.delailivraison,Fournisseur.nomFournisseur,Livraison.libelle as livraison,TypedePaiment.libelle as paiement, bdc.etat ,
+select abdc.*,bdc.idfournisseur,bdc.DateBonDeCommande,bdc.delailivraison,Fournisseur.nomFournisseur,Livraison.libelle as livraison,TypedePaiment.libelle as paiement,bdc.etat ,
 bdc.idregroupement
 from BonDeCommande bdc
 join Fournisseur on bdc.idfournisseur=Fournisseur.idfournisseur
@@ -66,6 +67,7 @@ join TypedePaiment on bdc.idpayement = TypedePaiment.idTypeDePayement
 join Article on Article.idarticle = abdc.idArticle
 where abdc.quantite != 0;
 
+where abdc.quantite != 0;
 -- ----------------------v_donneeproforma2---------------------------------
 create or replace view v_DonneeProforma2 as
     SELECT DISTINCT p.*,dp.idDonneeProforma,dp.idArticle ,dp.quantite,dp.prixUnitaire,dp.TVA,dp.livraisonPartielle
@@ -79,3 +81,26 @@ create or replace view v_MailMessage as
     Message.idMessage, Message.libelle, Message.piecejointe
     from Mail
         join Message on Message.idMail = Mail.idMail;
+        join Message on Message.idMail = Mail.idMail;
+
+--------------------------------------Fiderana 04-12-23----------------------------------------------
+--------------------------------------v_detailBonReception----------------------------------------------
+create or replace view v_detailBonReception as 
+    select dbr.*,br.dateReception,idBonDeCommande,a.nomArticle,etat 
+        from detailBonReception  dbr
+            join bonreception br on br.idBonReception=dbr.idBonReception
+            join article a on a.idArticle=dbr.idArticle;
+
+--------------------------------------v_detailBonEntre----------------------------------------------
+create or replace view v_detailBonEntre as 
+    select dbe.*,be.dateEntre,a.nomArticle,etat 
+        from detailBonEntre  dbe
+            join bonEntre be on be.idBonEntre=dbe.idBonEntre
+            join article a on a.idArticle=dbe.idArticle;
+
+-----------------------------------------v_articleBonCommande-----------------------------------------------
+create or replace view v_articleBonCommande as 
+select abdc.*,bdc.idfournisseur,bdc.DateBonDeCommande,bdc.delailivraison,bdc.etat ,
+bdc.idregroupement
+from BonDeCommande bdc
+join ArticleBonDeCommande abdc on bdc.idBonDeCommande=abdc.idBonDeCommande;

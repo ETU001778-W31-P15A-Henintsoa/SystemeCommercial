@@ -271,3 +271,136 @@ alter table BonDeCommande add delailivraison date;
 alter table BonDeCommande add idregroupement varchar(20),add constraint idreg foreign key(idregroupement) references regroupement(idregroupement);
 
 alter table Proforma alter column piecejointe TYPE varchar(60);
+alter table Proforma alter column piecejointe TYPE varchar(60);
+
+--------------------------------------Fiderana 03-12-23-------------------------------------------------
+--------------------------------------bonDeCommandeFacture-------------------------------------------------
+create sequence seqBonDeCommandeFacture;
+create table bonDeCommandeFacture(
+    idBonDeCommandeFacture varchar(20) default concat('BCFAC' || nextval('seqBonDeCommandeFacture')) primary key,
+    dateFacture date,
+    idBonDeCommande varchar(20),
+    etat int,
+    foreign key(idBonDeCommande) references BonDeCommande(idBonDeCommande)
+);
+--   numeroFacture 
+--------------------------------------------DetailFactureBonDeCommande----------------------------------------
+create sequence seqDetailFactureBonDeCommande;
+create table detailFactureBonDeCommande(
+    idDetailFactureBonDeCommande varchar(20) default concat('DFACBC' || nextval('seqDetailFactureBonDeCommande')) primary key,
+    idArticle varchar(20),
+    quantiteArticle float,
+    prixUnitaire float,
+    foreign key(idArticle) references article(idArticle)
+);
+alter table detailFactureBonDeCommande add idBonDeCommandeFacture varchar(20), add constraint foreignid foreign key(idBonDeCommandeFacture) references BonDeCommandeFacture(idBonDeCommandeFacture);
+
+----------------------------------------Bon de reception--------------------------------------------------
+create sequence seqBonReception;
+create table BonReception(
+    idBonReception varchar(20) default concat('BREC' || nextval('seqBonReception')) primary key,
+    dateReception date,
+    idBonDeCommande varchar(20),
+    etat int, --21 ilay etat rehefa valide tsy misy olana,5 ilay izy rehefa saika hanao validation nefa kay tsy mitovy isa amin'ny tany amin'ny bon de commande, 15 rehefa avy nandefa mail tany amin'ny fournisseur nanao reclam, dia lasa 21 indray io rehefa avy nanao reclam
+    foreign key(idBonDeCommande) references BonDeCommande(idBonDeCommande)
+);
+
+------------------------------------------detailBOnReception-----------------------------------------------------
+create sequence seqDetailBonReception;
+create table detailBonReception(
+    idDetailBonReception varchar(20) default concat('DBREC' || nextval('seqDetailBonReception')) primary key,
+    idBonReception varchar(20),
+    idArticle varchar(20),
+    quantite float,
+    foreign key(idBonReception) references bonReception(idBonReception),
+    foreign key(idArticle) references article(idArticle)
+);
+
+---------------------------------------------bonEntre------------------------------------------------
+create sequence seqBonEntre;
+create table bonEntre(
+    idBonEntre varchar(20) default concat('BENT' || nextval('seqBonEntre')) primary key,
+    dateEntre date,
+    etat int,
+    idBonReception varchar(20),
+    foreign key(idBonReception) references bonreception(idBonReception)
+);
+
+-------------------------------------------DetailBonEntre--------------------------------------------
+create sequence seqDetailBonEntre;
+create table detailBonEntre(
+    idDetailBonEntre varchar(20) default concat('DBENT' || nextval('seqDetailBonEntre')) primary key,
+    idBonEntre varchar(20),
+    idArticle varchar(20),
+    quantite float,
+    foreign key(idArticle) references article(idArticle),
+    foreign key(idBonEntre) references bonEntre(idBonEntre)
+);
+
+
+-----------------------------------------------Client de dimpex------------------------------------------------
+create sequence seqClient;
+create table client(
+    idClient varchar(20) default concat('CLI' || nextval('seqClient')) primary key,
+    nomClient varchar(50),
+    adresseClient varchar(50),
+    mailClient varchar(100)
+);
+
+---------------------------------------------BonSortie-------------------------------------------
+create sequence seqBonSortie;
+create table BonSortie(
+    idBonSortie varchar(20) default concat('BSOR' || nextval('seqBonSortie')) primary key,
+    dateSortie date,
+    idDepartement varchar(20) default null,
+    idClient varchar(20) default null,
+    etat int,
+    foreign key(idDepartement) references departement(idDepartement),
+    foreign key(idClient) references client(idClient)
+);
+
+-----------------------------------------------detailBonSortie--------------------------------------------
+create sequence seqDetailBonSortie;
+create table detailBonSortie(
+    idDetailBonSortie varchar(20) default concat('DBSOR' || nextval('seqDetailBonSortie')) primary key,
+    idArticle varchar(20),
+    quantite float,
+    foreign key(idArticle) references article(idArticle)
+);
+alter table detailBonSortie add idBonSortie varchar(20), add constraint foreignid foreign key(idBonSortie) references BonSortie(idBonSortie);
+ 
+
+-----------------------------------------------AccuseReception----------------------------------------------------
+create sequence seqAccuseReception;
+create table accuseReception(
+    idAccuseReception varchar(20) default concat('AREC' || nextval('seqAccuseReception')) primary key,
+    dateAccuse date,
+    idDepartement varchar(20),
+    idBonSortie varchar(20),
+    etat int,
+    foreign key(idDepartement) references departement(idDepartement),
+    foreign key(idBonSortie) references bonSortie(idBonSortie)
+);
+
+------------------------------------------------detailAccuseReception-------------------------------------------------
+create sequence seqDetailAccuseReception;
+create table detailAccuseReception(
+    idDetailAccuseReception varchar(20) default concat('DAREC' || nextval('seqDetailAccuseReception')) primary key,
+    idAccuseReception varchar(20),
+    idArticle varchar(20),
+    quantite float,
+    foreign key(idAccuseReception) references AccuseReception(idAccuseReception)
+);
+
+----------------------------------------demandeExplication----------------------------------------------------------
+create sequence seqDemandeExplication;
+create table demandeExplication(
+    idDemandeEXplication varchar(20) default concat('DEXP' || nextval('seqDemandeExplication')) primary key,
+    typeBon varchar(20), --inona ilay bon mila asiana demande d'explication ohatra hoe bon de comm ve sa entre...
+    idBon varchar(20),
+    raison text
+);
+
+--  insert into bondecommande values (default,'FOU1','2023-12-01',0,null,null,'2023-12-24','REG1');
+-- insert into articlebondecommande values(default,'COM1','ART1',100,2000);
+-- 
