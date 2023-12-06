@@ -351,8 +351,8 @@ create sequence seqBonSortie;
 create table BonSortie(
     idBonSortie varchar(20) default concat('BSOR' || nextval('seqBonSortie')) primary key,
     dateSortie date,
-    idDepartement varchar(20),
-    idClient varchar(20),
+    idDepartement varchar(20) default null,
+    idClient varchar(20) default null,
     etat int,
     foreign key(idDepartement) references departement(idDepartement),
     foreign key(idClient) references client(idClient)
@@ -366,6 +366,8 @@ create table detailBonSortie(
     quantite float,
     foreign key(idArticle) references article(idArticle)
 );
+alter table detailBonSortie add idBonSortie varchar(20), add constraint foreignid foreign key(idBonSortie) references BonSortie(idBonSortie);
+ 
 
 -----------------------------------------------AccuseReception----------------------------------------------------
 create sequence seqAccuseReception;
@@ -385,5 +387,19 @@ create table detailAccuseReception(
     idDetailAccuseReception varchar(20) default concat('DAREC' || nextval('seqDetailAccuseReception')) primary key,
     idAccuseReception varchar(20),
     idArticle varchar(20),
-    quantite float
+    quantite float,
+    foreign key(idAccuseReception) references AccuseReception(idAccuseReception)
 );
+
+----------------------------------------demandeExplication----------------------------------------------------------
+create sequence seqDemandeExplication;
+create table demandeExplication(
+    idDemandeEXplication varchar(20) default concat('DEXP' || nextval('seqDemandeExplication')) primary key,
+    typeBon varchar(20), --inona ilay bon mila asiana demande d'explication ohatra hoe bon de comm ve sa entre...
+    idBon varchar(20),
+    raison text
+);
+
+--  insert into bondecommande values (default,'FOU1','2023-12-01',0,null,null,'2023-12-24','REG1');
+-- insert into articlebondecommande values(default,'COM1','ART1',100,2000);
+-- 

@@ -86,3 +86,16 @@ create or replace view v_detailBonReception as
             join bonreception br on br.idBonReception=dbr.idBonReception
             join article a on a.idArticle=dbr.idArticle;
 
+--------------------------------------v_detailBonEntre----------------------------------------------
+create or replace view v_detailBonEntre as 
+    select dbe.*,be.dateEntre,a.nomArticle,etat 
+        from detailBonEntre  dbe
+            join bonEntre be on be.idBonEntre=dbe.idBonEntre
+            join article a on a.idArticle=dbe.idArticle;
+
+-----------------------------------------v_articleBonCommande-----------------------------------------------
+create or replace view v_articleBonCommande as 
+select abdc.*,bdc.idfournisseur,bdc.DateBonDeCommande,bdc.delailivraison,bdc.etat ,
+bdc.idregroupement
+from BonDeCommande bdc
+join ArticleBonDeCommande abdc on bdc.idBonDeCommande=abdc.idBonDeCommande;
