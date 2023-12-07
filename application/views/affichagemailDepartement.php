@@ -27,7 +27,7 @@
         <div class="content-wrapper">   
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Interaction mail - </span> <?= $nomFournisseur ?></h4>
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Interaction mail - </span> <?= $nomdepartement ?></h4>
                 
                 <!-- Merged -->
                 <div class="col-md-12">
@@ -69,14 +69,13 @@
 
                 </div>
                 </div>
-                <form action="<?php echo site_url("mail/envoieMailSimple"); ?>" method="post" enctype="multipart/form-data" >
+                <form action="<?php echo site_url("mail/envoieMailSimpleDepartement"); ?>" method="post" enctype="multipart/form-data" >
                 <div class="mb-4">
-                    <?php // echo $idfournisseur ?>
-                    <input type="hidden" value="<?= $idfournisseur ?>" name="idfournisseur">
+                    <input type="hidden" value="<?= $iddepartement ?>" name="iddepartement">
                     <input
                     type="text-area"
                     class="form-control"
-                    placeholder="Repondre a <?= $nomFournisseur ?>"
+                    placeholder="Repondre a <?= $nomdepartement ?>"
                     name="reponse"
                     />
                     <br>

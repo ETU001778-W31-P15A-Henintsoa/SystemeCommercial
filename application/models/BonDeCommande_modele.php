@@ -37,7 +37,7 @@
         }
 
         public function avoirListeBonDeCommandeValideDG() {
-            $sql = "SELECT idbondecommande,datebondecommande,etat,nomfournisseur,idregroupement from v_detailbondecommande where etat=31 group by idbondecommande,datebondecommande,etat,nomfournisseur,idregroupement";
+            $sql = "SELECT idbondecommande,datebondecommande,etat,nomfournisseur,idregroupement,idfournisseur from v_detailbondecommande where etat<=31 group by idbondecommande,datebondecommande,etat,nomfournisseur,idregroupement, idfournisseur";
             $query = $this->db->query($sql);
             $result = $query->result_array();
             return $result;
@@ -52,7 +52,7 @@
 
         public function avoirLivraison() {
             $sql = "SELECT * FROM Livraison";
-            echo $sql;
+            // echo $sql;
             $query = $this->db->query($sql);
             $result = $query->result_array();
             return $result;

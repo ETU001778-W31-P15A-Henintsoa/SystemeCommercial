@@ -58,7 +58,7 @@ select Fournisseur.nomfournisseur,bdc.*
 create or replace view v_DetailBonDeCommande AS
 select abdc.*,bdc.idfournisseur,bdc.DateBonDeCommande,bdc.delailivraison,Fournisseur.nomFournisseur,Livraison.libelle as livraison,TypedePaiment.libelle as paiement, bdc.etat ,
 select abdc.*,bdc.idfournisseur,bdc.DateBonDeCommande,bdc.delailivraison,Fournisseur.nomFournisseur,Livraison.libelle as livraison,TypedePaiment.libelle as paiement,bdc.etat ,
-bdc.idregroupement
+bdc.idregroupement, Article.nomArticle
 from BonDeCommande bdc
 join Fournisseur on bdc.idfournisseur=Fournisseur.idfournisseur
 join ArticleBonDeCommande abdc on bdc.idBonDeCommande=abdc.idBonDeCommande

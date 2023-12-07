@@ -3,6 +3,10 @@
     <title>Liste Bon de Commande</title>
 </head>
 
+<?php 
+    // var_dump($bonDeCommandeValideDG);
+?>
+
 <div class="content-wrapper">
     <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Bon de </span> Commande</h4>
@@ -19,6 +23,8 @@
                             <th><strong>date bon de commande</strong></th>
                             <th><strong></strong></th>
                             <th><strong></strong></th>
+                            <th><strong></strong></th>
+                            <th><strong></strong></th>
                         </tr>
                         <!-- </thead> -->
                         <tbody class="table-border-bottom-0">
@@ -27,14 +33,15 @@
                             <td><?php echo $bdcvdg['idbondecommande'];  ?></td>
                             <td><?php echo $bdcvdg['nomfournisseur']; ?></td>
                             <td><?php echo $bdcvdg['datebondecommande']; ?></td>
+                            <td><span class="<?= $bdcvdg['classe'] ?>"><?= $bdcvdg['libelle'] ?></span></td>
                             <td>
-                                <a href="<?php echo site_url("BonDeCommande/versDetailBonDeCommande?id=".$bdcvdg['idbondecommande']); ?>">Voir Detail</a>
+                                <a href="<?php echo site_url("BonDeCommande/versDetailBonDeCommande?id=".$bdcvdg['idbondecommande']); ?>">Details</a>
                             </td>
                             <td>
-                                <a href="<?php echo site_url("BonDeCommande/genererPDF?id=".$bdcvdg['idbondecommande']."&fournisseur=".$bdcvdg['nomfournisseur']."&date=".$bdcvdg['datebondecommande']); ?>">Generer PDF</a>
+                                <a href="<?php echo site_url("BonDeCommande/genererPDF?id=".$bdcvdg['idbondecommande']."&fournisseur=".$bdcvdg['nomfournisseur']."&date=".$bdcvdg['datebondecommande']); ?>">PDF</a>
                             </td>
                             <td>
-                                <a href="<?= site_url("Mail/envo")?>">Generer PDF</a>
+                                <a href="<?= site_url("Mail/versEnvoieMailBonDeCommande?idbondecommande=".$bdcvdg['idbondecommande']."&idfournisseur=".$bdcvdg['idfournisseur'])?>">Envoyer</a>
                             </td>
                         </tr>
                         <?php } ?>

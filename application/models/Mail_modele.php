@@ -30,11 +30,10 @@
             return true;
         }
 
-        public function envoieMailBonDeCommande($destinataire, $messages, $idbondecommande){
+        public function envoieMailBonDeCommande($destinataire, $message, $piecejointe, $idbondecommande){
             $mail = $this->monMail();
             $message = "Demande de Proforma//".$message;
-            $destinataire = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("adressemail='%s'", $destinataire));
-            $fichier = $fichier;
+        
             // $this->envoyerEmailReel($destinataire, $sujet, $message, $fichier);
 
             // var_dump($destinataire);
@@ -43,13 +42,32 @@
                 return false;
             }
 
-            $this->Generalisation->insertion("mail(dateenvoie, envoyeur, destinataire)", sprintf("(current_date, '%s', '%s')", $mail->idadressemail, $destinataire[0]->idadressemail));
+            $this->Generalisation->insertion("mail(dateenvoie, envoyeur, destinataire)", sprintf("(current_date, '%s', '%s')", $mail->idadressemail, $destinataire->idadressemail));
             
             $mails = $this->Generalisation->avoirTableConditionnee("mail order by idmail");
 
-            $this->Generalisation->insertion("message(idmail, libelle, piecejointe)", sprintf("('%s', '%s', '%s')", $mails[count($mails)-1]->idmail, $message, $fichier));
+            $this->Generalisation->insertion("message(idmail, libelle, piecejointe)", sprintf("('%s', '%s', '%s')", $mails[count($mails)-1]->idmail, $message, $piecejointe));
 
-            $this->Generalisation->miseAJour("bondecommande", "etat=11", sprintf("idbondecommande='%s'", $idbondecommande));
+            $this->Generalisation->miseAJour("bondecommande", "etat=41", sprintf("idbondecommande='%s'", $idbondecommande));
+
+            $this->copierPdf();
+
+            return true;
+        }
+
+        public function envoieMailSimple($destinataire, $message, $piecejointe){
+            $mail = $this->monMail();
+            $message = "//".$message;
+
+            if(count($destinataire)==0){
+                return false;
+            }
+
+            $this->Generalisation->insertion("mail(dateenvoie, envoyeur, destinataire)", sprintf("(current_date, '%s', '%s')", $mail->idadressemail, $destinataire->idadressemail));
+            
+            $mails = $this->Generalisation->avoirTableConditionnee("mail order by idmail");
+
+            $this->Generalisation->insertion("message(idmail, libelle, piecejointe)", sprintf("('%s', '%s', '%s')", $mails[count($mails)-1]->idmail, $message, $piecejointe));
 
             $this->copierPdf();
 
@@ -57,30 +75,22 @@
         }
 
         // Fonctions Fonctionnelles
-        public function envoieMailDepartement($envoyeur, $destinataire, $message, $fichier, $idregroupement){
+        public function envoieMailSimpleDepartement($envoyeur, $destinataire, $message, $fichier, $idregroupement){
             $mail = $this->monMail();
-            $message = "Demande de Proforma//".$message;
-            $destinataire = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("adressemail='%s'", $destinataire));
-            $fichier = $fichier;
-            // $this->envoyerEmailReel($destinataire, $sujet, $message, $fichier);
-
-            // var_dump($destinataire);
+            $message = "MailDepartement//".$message;
 
             if(count($destinataire)==0){
                 return false;
             }
 
-            $this->Generalisation->insertion("mail(dateenvoie, envoyeur, destinataire)", sprintf("(current_date, '%s', '%s')", $mail->idadressemail, $destinataire[0]->idadressemail));
+            $this->Generalisation->insertion("mail(dateenvoie, envoyeur, destinataire)", sprintf("(current_date, '%s', '%s')", $envoyeur[0]->idadressemail, $destinataire[0]->idadressemail));
             
             $mails = $this->Generalisation->avoirTableConditionnee("mail order by idmail");
 
             $this->Generalisation->insertion("message(idmail, libelle, piecejointe)", sprintf("('%s', '%s', '%s')", $mails[count($mails)-1]->idmail, $message, $fichier));
 
-            // $this->Generalisation->miseAJour("regroupement", "etat=11", sprintf("idregroupement='%s'", $idregroupement));
-
             return true;
         }
-
 
         public function monMail(){
             $monentreprise = $this->Generalisation->avoirTable("entreprise");
@@ -88,10 +98,10 @@
             return $mail[0];
         }
 
-
         public function message($mail, $fournisseur){
-            $messages = $this->Generalisation->avoirTableConditionnee(sprintf("v_mailmessage where (envoyeur='%s' and destinataire='%s') or (envoyeur='%s' and destinataire='%s') order by dateenvoie", $mail, $fournisseur, $fournisseur, $mail));
-            // var_dump($messages);
+            // var_dump($mail);
+            $messages = $this->Generalisation->avoirTableConditionnee(sprintf("v_mailmessage where (envoyeur='%s' and destinataire='%s') or (envoyeur='%s' and destinataire='%s') order by dateenvoie", $mail->idadressemail, $fournisseur->idadressemail, $fournisseur->idadressemail, $mail->idadressemail));
+            
             foreach($messages as $message){
                 $message->etat = 0;
                 $message->p = 0;
