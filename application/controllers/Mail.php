@@ -326,5 +326,25 @@ class Mail extends CI_Controller {
 		redirect("welcome/versAcceuil");
 	}
 
+
+	// Bon d'entree
+	public function versEnvoieMailBonEntree(){
+		$iddepartement = $this->input->get('iddepartement');
+		$idbonentree = $this->input->post('idbonentree');
+
+		$data = array();
+		$data['iddepartement'] = $this->Generalisation->avoirTableSpecifique("departement", "*", sprintf("iddepartement='%s'", $iddepartement)); 
+		$data['idbonentree'] = $idbonentree;
+
+		// var_dump($data['fournisseur']);
+
+		if(isset($_GET['erreur'])){
+			$data['erreur'] = $_GET['erreur'];
+		}
+
+		$this->load->view('header');
+		$this->load->view('envoiemailBonEntre', $data);
+	}
+
 	
 }
