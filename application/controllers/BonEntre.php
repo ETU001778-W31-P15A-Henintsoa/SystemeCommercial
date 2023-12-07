@@ -7,7 +7,11 @@ class BonEntre extends CI_Controller {
 
     public function versFormulaireBonEntre(){
         $idEmploye=$_SESSION['user'];//emp3
+
         $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
+
+        
+        // echo $employePoste[0]->nombranche;
 
         if($employePoste[0]->nombranche=="Magasinier"){
             $data['article']=$this->Generalisation->avoirTable("article");

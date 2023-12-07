@@ -58,7 +58,7 @@
                             </div>
                         </div>
                     </div>
-                    <a  href="<?php echo site_url('bonentre/validerBonEntre?idBonEntre='.$entre[$i]['entre']->idbonentre); ?>">Valider</a>
+                    <a  href="<?php echo site_url('BonEntre/validerBonEntre?idBonEntre='.$entre[$i]['entre']->idbonentre); ?>">Valider</a>
                   </div>
                 </div>
             </div>
