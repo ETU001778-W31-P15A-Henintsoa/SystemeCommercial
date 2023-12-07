@@ -26,9 +26,11 @@ class BonEntre extends CI_Controller {
         $valeur="(default,'".$date."',0,'".$idBonReception."')";
         $this->Generalisation->insertion("bonEntre",$valeur);
         $valeur=intval($_POST['nombreArticle']);
-        $bonentre=$this->Generalisation->avoirTableAutrement("bonEntre","*"," order by idBonEntre desc");
+        echo $valeur;
+        $bonentre=$this->Generalisation->avoirTable("bonentre");
+        echo $bonentre[count($bonentre)-1]->idbonentre;
         for ($i=1; $i <=$valeur ; $i++) { 
-            $val="(default,'".$bonentre[0]->idbonentre."','".$_POST['article'.$i]."',".$_POST['quantite'.$i].")";
+            $val="(default,'".$bonentre[count($bonentre)-1]->idbonentre."','".$_POST['article'.$i]."',".$_POST['quantite'.$i].")";
             $this->Generalisation->insertion("detailbonentre",$val);
         }
         $data['article']=$this->Generalisation->avoirTable("article");
@@ -39,10 +41,11 @@ class BonEntre extends CI_Controller {
     public function validerBonEntre(){
         $idBonEntre=$_GET['idBonEntre'];
         $verificationArticle=$this->BonEntreModele->verifierNombre($idBonEntre);
+        echo count($verificationArticle);
         if(count($verificationArticle)==0){
             $this->BonEntreModele->insertionStock($idBonEntre);
             $this->Generalisation->miseAJour("bonentre"," etat=11"," idbonentre='".$idBonEntre."'");//11 ilay etat rehefa 
-            redirect("welcome/versAcceuil");
+           // redirect("welcome/versAcceuil");
         }
         else{
             $data['nbArticleAnormal']=$verificationArticle;
