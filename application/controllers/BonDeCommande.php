@@ -23,9 +23,32 @@ class BonDeCommande extends CI_Controller {
 
     public function versListeBonDeCommande() {
         $this->load->model('BonDeCommande_modele');
+
         $data['bonDeCommandeNonValide'] = $this->BonDeCommande_modele->avoirListeBonDeCommandeNonValide();
         $data['bonDeCommandeValide'] = $this->BonDeCommande_modele->avoirListeBonDeCommandeValide();
         $data['bonDeCommandeValideDG'] = $this->BonDeCommande_modele->avoirListeBonDeCommandeValideDG();
+
+        $i=0;
+
+        foreach($data['bonDeCommandeValideDG'] as $parDG){
+
+            if($parDG['etat']=="41"){
+
+                $data['bonDeCommandeValideDG'][$i]['classe'] = "badge bg-label-success me-1";
+                $data['bonDeCommandeValideDG'][$i]['libelle'] = "envoyee";
+            }else{
+                $data['bonDeCommandeValideDG'][$i]['classe'] = "badge bg-label-primary me-1";
+                $data['bonDeCommandeValideDG'][$i]['libelle'] = "valide";
+            }
+            $i++;
+
+        }
+        
+
+        // var_dump($data['bonDeCommandeValideDG']);
+
+
+
         $this->load->view('header');
         $this->load->view('listeBonDeCommande',$data);
     }
@@ -64,11 +87,12 @@ class BonDeCommande extends CI_Controller {
 
     public function validerparDG(){
         $idEmploye = $_SESSION['user'];
-        $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
+        // $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
+
         $idbondecommande = $_GET['id'];
         $idregroupement = $_GET['idregroupement'];
         // echo $employePoste[0]->libelle;
-        if($employePoste[0]->libelle == "Directeur General"){
+        if($this->Login_modele->validation($idEmploye, "Directeur General")==true){
             $this->Generalisation->miseAJour("bondecommande","etat=31"," idbondecommande='".$idbondecommande."'");
             $this->Generalisation->miseAJour("regroupement","etat=41"," idregroupement='".$idregroupement."'");
             redirect('BonDeCommande/versListeBonDeCommande');
@@ -113,7 +137,7 @@ class BonDeCommande extends CI_Controller {
         // Ajoutez le HTML au PDF
         $pdf->writeHTML($data['content'], true, false, true, false, '');
     
-        // Ajoutez le PDF aux données
+        // Ajoutez le PDF- aux données
         $data['pdf'] = $pdf;
     
         // Chargez la vue avec les données

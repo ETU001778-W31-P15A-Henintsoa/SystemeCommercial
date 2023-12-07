@@ -135,7 +135,7 @@ insert into brancheDepartement(idBranche,idDepartement) values
 ('BRA5','DEPT5');
 
 insert into employePoste(idBrancheDepartement,dateEmbauche,idEmploye) values
-('BDEPT5','2020-02-04','EMP4');
+('BDEPT5','2020-02-04','EMP5');
 
 insert into validation(idBrancheDepartement,libelle)
 values('BDEPT5','Directeur General');
@@ -147,5 +147,6 @@ insert into adresseMail(idsociete, adresseMAil, motdepasse) values
 ('DEPT2', 'informatique@gmail.com', 'info'),
 ('DEPT3', 'scommecial@gmail.com', 'scom'),
 ('DEPT4', 'finance@gmail.com', 'finance');
+('DEPT5', 'hors@gmail.com', 'hors');
 
 

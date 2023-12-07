@@ -13,6 +13,7 @@
 
 			// var_dump(trim($mdp));
 			// var_dump(trim($mail));
+
 			$reponse = $this->Login_modele->verification_login(trim($mail), trim($mdp));
 
 			// var_dump($_SESSION['user']);

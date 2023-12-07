@@ -10,6 +10,7 @@ class Login_modele extends CI_Model {
 
 			$test = FALSE;
 			foreach ($users as $user) {
+				// var_dump($user);
 				if ($user->mail == $mail && $user->motdepasse == $mdp) {
 					$test=TRUE;
 					$_SESSION['user'] = $user -> idemploye;
@@ -22,6 +23,17 @@ class Login_modele extends CI_Model {
 			}
             return $error;
 		}
+	}
+
+	public function validation($idEmploye, $libelle){
+		$employePostes = $this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
+		$retour = false;
+		foreach ($employePostes as $employePoste){
+			if($employePoste->libelle == $libelle){
+				$retour = true;
+			}
+		}
+		return $retour;
 	}
 }
 ?>
