@@ -392,14 +392,38 @@ create table detailAccuseReception(
 );
 
 ----------------------------------------demandeExplication----------------------------------------------------------
-create sequence seqDemandeExplication;
-create table demandeExplication(
-    idDemandeEXplication varchar(20) default concat('DEXP' || nextval('seqDemandeExplication')) primary key,
+create sequence seqExplication;
+create table Explication(
+    idExplication varchar(20) default concat('DEXP' || nextval('seqExplication')) primary key,
     typeBon varchar(20), --inona ilay bon mila asiana demande d'explication ohatra hoe bon de comm ve sa entre...
     idBon varchar(20),
     raison text
 );
 
+----------------------------------------------Fiderana 06-12-23------------------------------------------------------------
+---------------------------------------------------Stock-------------------------------------------------------
+create sequence seqStock;
+create table stock(
+    idStock varchar(20) default concat('STO' || nextval('seqStock')) primary key,
+    dateEntre date,
+    idArticle varchar(20),
+    quantite float,
+    foreign key(idArticle) references article(idArticle)
+);
+
+------------------------------------------------historique-------------------------------------------------
+create sequence seqHistorique;
+create table historique(
+    idHistorique varchar(20) default concat('HIS' || nextval('seqHistorique')) primary key,
+    idStock varchar(20),
+    dateMouvement date,
+    idArticle varchar(20),
+    quantite float,
+    foreign key(idArticle) references article(idArticle),
+    foreign key(idStock) references stock(idStock)
+);
+alter table historique drop idStock;
+alter table historique add typeMouvement int;
 --  insert into bondecommande values (default,'FOU1','2023-12-01',0,null,null,'2023-12-24','REG1');
 -- insert into articlebondecommande values(default,'COM1','ART1',100,2000);
 -- 

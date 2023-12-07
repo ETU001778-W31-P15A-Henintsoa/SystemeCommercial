@@ -59,18 +59,18 @@
     <script src="<?php echo site_url('../assets/js/config.js'); ?>"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-  <!-- Nucleo Icons -->
-  <link href="<?php echo site_url('../assets/css/nucleo-icons.css'); ?>" rel="stylesheet" />
-  <link href="<?php echo site_url('../assets/css/nucleo-svg.css'); ?>" rel="stylesheet" />
-  <!-- Font Awesome Icons -->
-  <!-- <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script> -->
-  <link href="<?php echo site_url('../assets/css/nucleo-svg.css'); ?>" rel="stylesheet" />
+    <!-- Nucleo Icons -->
+    <link href="<?php echo site_url('../assets/css/nucleo-icons.css'); ?>" rel="stylesheet" />
+    <link href="<?php echo site_url('../assets/css/nucleo-svg.css'); ?>" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <!-- <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script> -->
+    <link href="<?php echo site_url('../assets/css/nucleo-svg.css'); ?>" rel="stylesheet" />
 
-  <!-- CSS Files -->
-  <link id="pagestyle" href="<?php echo site_url('../assets/css/soft-ui-dashboard.css'); ?>" rel="stylesheet" />
-  <link rel="apple-touch-icon" sizes="76x76" href="<?php echo site_url('../assets/img/apple-icon.png'); ?>">
-  <link rel="icon" type="image/png" href="<?php echo site_url('../assets/img/favicon.png'); ?>">
-  
+    <!-- CSS Files -->
+    <link id="pagestyle" href="<?php echo site_url('../assets/css/soft-ui-dashboard.css'); ?>" rel="stylesheet" />
+    <link rel="apple-touch-icon" sizes="76x76" href="<?php echo site_url('../assets/img/apple-icon.png'); ?>">
+    <link rel="icon" type="image/png" href="<?php echo site_url('../assets/img/favicon.png'); ?>">
+    
   </head>
 
   <body>
@@ -155,7 +155,7 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="" class="menu-link" target="_blank">
+                  <a href="<?php echo site_url('Login/deconnection') ?>" class="menu-link" target="_blank">
                     <div data-i18n="Basic">Logout</div>
                   </a>
                 </li>
@@ -194,7 +194,8 @@
 
                   <li class="menu-item">
                     <a href="<?php echo site_url('ControllerBesoinAchat/avoirAchatNonLivre'); ?>" class="menu-link">
-                      <div data-i18n="Tables"> Mes demandes d'Achats pas encore livré </div>
+                      <div data-i18n="Tables"> Mes demandes d'
+                        Achats pas encore livré </div>
                     </a>
                   </li>
                   
@@ -208,24 +209,45 @@
                   <div data-i18n="Authentications">Proforma</div>
                 </a>
                 <ul class="menu-sub">
+                    <li class="menu-item">
+                      <a href="<?php echo site_url('welcome/versListeRegroupementEnvoyer'); ?>" class="menu-link">
+                        <div data-i18n="Tables"> Liste Regroupements </div>
+                      </a>
+                    </li>
+                </ul>
+              </li>
+            </li>
+
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <!-- <i class="menu-icon tf-icons bx bx-lock-open-alt"></i> -->
+                <div data-i18n="Authentications">Bon de Commande</div>
+              </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="<?php echo site_url('BonDeCommande/versListeBonDeCommande'); ?>" class="menu-link" target="_blank">
+                    <div data-i18n="Basic">Liste Bon De Commande</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="<?php echo site_url('BonDeCommande/listeregroupement'); ?>" class="menu-link" target="_blank">
+                    <div data-i18n="Basic">listes De regroupement</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                  <!-- <i class="menu-icon tf-icons bx bx-lock-open-alt"></i> -->
+                  <div data-i18n="Authentications">Regroupement</div>
+                </a>
+                <ul class="menu-sub">
                   <li class="menu-item">
-                    <a href="<?php echo site_url('mail/versEnvoieMail'); ?>" class="menu-link">
-                      <div data-i18n="Tables"> Envoyer Mail Demande Proforma </div>
+                    <a href="<?php echo site_url('ControllerRegroupement/versListeRegroupementNonlivre'); ?>" class="menu-link" target="_blank">
+                      <div data-i18n="Basic">Details des regroupements</div>
                     </a>
                   </li>
-
-                  <li class="menu-item">
-                    <a href="<?php echo site_url(''); ?>" class="menu-link">
-                      <div data-i18n="Tables"></div>
-                    </a>
-                  </li>
-
-                  <li class="menu-item">
-                    <a href="<?php echo site_url(''); ?>" class="menu-link">
-                      <div data-i18n="Tables"></div>
-                    </a>
-                  </li>
-
                 </ul>
               </li>
               <li class="menu-item">
@@ -259,7 +281,26 @@
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="<?php echo site_url('BonReception/avoirReceptionNonValide'); ?>" class="menu-link" target="_blank">
+                    <a href="<?php echo site_url('BonEntre/avoirEntreNonValide'); ?>" class="menu-link" target="_blank">
+                      <div data-i18n="Basic">Validation</div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                  <!-- <i class="menu-icon tf-icons bx bx-lock-open-alt"></i> -->
+                  <div data-i18n="Authentications">Bon de sorti</div>
+                </a>
+                <ul class="menu-sub">
+                  <li class="menu-item">
+                    <a href="<?php echo site_url('BonSorti/versFormulaireBonSortiDepartement'); ?>" class="menu-link" target="_blank">
+                      <div data-i18n="Basic">Dispatch aux département</div>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="<?php echo site_url('BOnSorti/avoirSortiNonValideDept'); ?>" class="menu-link" target="_blank">
                       <div data-i18n="Basic">Validation</div>
                     </a>
                   </li>
