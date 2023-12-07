@@ -1,5 +1,6 @@
 <?php 
     if(! defined('BASEPATH')) exit('No direct script access allowed');
+    date_default_timezone_set('Africa/Nairobi'); 
     class BonEntreModele extends CI_Model{
         public function verifierNombre($idEntre){
             $detailEntre=$this->Generalisation->avoirTableSpecifique("v_detailBonEntre","*"," idBonEntre='".$idEntre."' order by idArticle desc");
@@ -26,6 +27,27 @@
                 $detailentre[$i]['detail']=$this->Generalisation->avoirTableSpecifique("v_detailBonEntre","*"," idbonentre='".$entre[$i]->idbonentre."'");
             }
             return $detailentre;
+        }
+
+        public function avoirEntreSpecifique($identre){
+            return $this->Generalisation->avoirTableSpecifique("v_detailBonEntre","*"," idbonentre='".$identre."'");
+        }
+
+        public function insertionStock($identre){
+            $detailEntre=$this->avoirEntreSpecifique($identre);
+            for ($i=0; $i <count($detailEntre) ; $i++) { 
+                echo "yess";
+                $stock=$this->Generalisation->avoirTableSpecifique("stock","*"," idarticle='".$detailEntre[$i]->idarticle."'");
+                if(count($stock)==0){
+                    $valeur="(default,'".$detailEntre[$i]->dateentre."','".$detailEntre[$i]->idarticle."',".$detailEntre[$i]->quantite.")";
+                    $this->Generalisation->insertion("stock",$valeur);
+                }else{
+                    $quantite=$detailEntre[$i]->quantite+$stock[0]->quantite;
+                    $this->Generalisation->miseAJour("stock"," quantite=".$quantite," idarticle='".$detailEntre[$i]->idarticle."'");
+                }
+                $valeur="(default,'".$detailEntre[$i]->dateentre."','".$detailEntre[$i]->idarticle."',".$detailEntre[$i]->quantite.",1)";
+                $this->Generalisation->insertion("historique",$valeur);
+            }
         }
     }
 ?>

@@ -93,7 +93,7 @@ create or replace view v_detailBonReception as
 
 --------------------------------------v_detailBonEntre----------------------------------------------
 create or replace view v_detailBonEntre as 
-    select dbe.*,be.dateEntre,a.nomArticle,etat 
+    select dbe.*,be.dateEntre,a.nomArticle,etat ,be.idbonreception
         from detailBonEntre  dbe
             join bonEntre be on be.idBonEntre=dbe.idBonEntre
             join article a on a.idArticle=dbe.idArticle;
@@ -104,3 +104,21 @@ select abdc.*,bdc.idfournisseur,bdc.DateBonDeCommande,bdc.delailivraison,bdc.eta
 bdc.idregroupement
 from BonDeCommande bdc
 join ArticleBonDeCommande abdc on bdc.idBonDeCommande=abdc.idBonDeCommande;
+
+--------------------------------------Fiderana 06-12-23----------------------------------------------
+---------------------------------------------v_stock----------------------------------------------------
+create or replace view v_stock as
+    select idArticle,sum(quantite) as quantite from stock group by idArticle;
+
+-------------------------------------------v_stockArticle---------------------------------------------------
+create or replace view v_stockArticle as 
+    select a.*,quantite default 0 from article a
+        left join v_stock s on a.idArticle=s.idArticle;
+
+----------------------------------------------v_detailBonSortie--------------------------------------------------
+----------------------------------------------07 decembre Fiderana--------------------------------------------------
+create or replace view v_detailBonSortieDept as 
+    select dbs.*,bs.datesortie,bs.idDepartement,nomDepartement
+        from bonSortie bs 
+            join detailbonSortie dbs on dbs.idbonsortie=bs.idbonsortie
+            join departement d on d.idDepartement=bs.idDepartement;
