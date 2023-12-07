@@ -1,9 +1,12 @@
+<?php
+    // var_dump($anormal); 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bon de <?= $nombon ?> </title>
+    <title>Bon de Reception</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -77,16 +80,18 @@
 </head>
 <body>
     <header>
-        <h1>Bon de <?= $nombon ?></h1>
+        <h1>Bon de Reception</h1>
     </header>
 
     <section>
         <div class="order-summary">
-            <h2>Récapitulatif de la <?= $action ?> </h2>
+            <h2>Récapitulatif de la reception </h2>
 
             <!-- Informations sur la commande -->
-            <p><strong>Date de la commande:</strong> <?= $date ?></p>
-            <p><strong>Envoyeur : </strong><?= $nom ?></p>
+            <p><strong>Date de reception:</strong> <?= $reception[0]->datereception ?></p>
+            <p><strong>Envoyeur : </strong> DIMPEX </p>
+            <p><strong>Destinataire : </strong> <?= $fournisseur->nomfournisseur ?> </p>
+            <p><strong>Identifiant Bon de Commande : </strong> <?= $reception[0]->idbondecommande ?> </p>
 
             <table>
                 <thead>
@@ -96,10 +101,33 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php foreach($reception as $r){ 
+                        if($r->quantite != 0){?>
+                        <tr>
+                            <td><?= $r->nomarticle ?></td>
+                            <td><?= $r->quantite?></td>
+                        </tr>   
+                    <?php }
+                    } ?>
+                </tbody>
+            </table>
+                <h5 style="text-decoration: underline;">Non equivalence dans la reception</h5>
+            <table>
+                <thead>
                     <tr>
-                        <td></td>
+                        <th>Designation</th>
+                        <th>Quantité Commande</th>
+                        <th>Quantité Recus</th>
                     </tr>
-                    
+                </thead>
+                <tbody>
+                    <?php foreach($anormal as $a){  ?>
+                        <tr>
+                            <td><?= $a['article'] ?></td>
+                            <td style="color: green;"><?= $a['quantiteDemande']?></td>
+                            <td style="color: red;"><?= $a['quantiteRecu']?></td>
+                        </tr>   
+                    <?php } ?>
                 </tbody>
             </table>
         </div>

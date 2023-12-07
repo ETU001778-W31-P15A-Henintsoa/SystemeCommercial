@@ -9,6 +9,7 @@
             for ($i=0; $i <count($detailBonCommande) ; $i++) { 
                 if($detailBonCommande[$i]->quantite!=$detailReception[$i]->quantite){
                     $articleAQuantiteanormal[$j]['article']=$detailReception[$i]->nomarticle;
+                    $articleAQuantiteanormal[$j]['idreception']=$idReception;
                     $articleAQuantiteanormal[$j]['quantiteDemande']=$detailBonCommande[$i]->quantite;
                     $articleAQuantiteanormal[$j]['quantiteRecu']=$detailReception[$i]->quantite;
                     $articleAQuantiteanormal[$j]['fournisseur']=$detailBonCommande[$i]->idfournisseur;
@@ -26,6 +27,19 @@
                 $detailReception[$i]['detail']=$this->Generalisation->avoirTableSpecifique("v_detailBonReception","*"," idbonreception='".$reception[$i]->idbonreception."'");
             }
             return $detailReception;
+        }
+
+        public function avoirDonnee($idReception){
+            $articleAQuantiteanormal = $this->verifierNombre($idReception);
+
+            $detailReception=$this->Generalisation->avoirTableSpecifique("v_detailBonReception","*"," idbonreception='".$idReception."' order by idArticle desc");
+
+            $data = array();
+
+            $data['reception'] = $detailReception;
+            $data['anormal'] = $articleAQuantiteanormal;
+            
+            return $data;        
         }
     }
 ?>

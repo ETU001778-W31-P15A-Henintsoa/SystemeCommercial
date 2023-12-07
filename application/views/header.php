@@ -155,7 +155,7 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="<?php echo site_url('Login/deconnection') ?>" class="menu-link" target="_blank">
+                  <a href="<?php echo site_url('Login/deconnection') ?>" class="menu-link">
                     <div data-i18n="Basic">Logout</div>
                   </a>
                 </li>
@@ -223,12 +223,12 @@
                 </a>
                 <ul class="menu-sub">
                   <li class="menu-item">
-                    <a href="<?php echo site_url('BonReception/versFormulaireBonReception'); ?>" class="menu-link" target="_blank">
+                    <a href="<?php echo site_url('BonReception/versFormulaireBonReception'); ?>" class="menu-link">
                       <div data-i18n="Basic">Entrer bon de reception</div>
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="<?php echo site_url('BonReception/avoirReceptionNonValide'); ?>" class="menu-link" target="_blank">
+                    <a href="<?php echo site_url('BonReception/avoirReceptionNonValide'); ?>" class="menu-link">
                       <div data-i18n="Basic">Validation</div>
                     </a>
                   </li>
@@ -242,24 +242,17 @@
                 </a>
                 <ul class="menu-sub">
                   <li class="menu-item">
-                    <a href="<?php echo site_url('BonEntre/versFormulaireBonEntre'); ?>" class="menu-link" target="_blank">
+                    <a href="<?php echo site_url('BonEntre/versFormulaireBonEntre'); ?>" class="menu-link">
                       <div data-i18n="Basic">Entrer bon d'entré</div>
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="<?php echo site_url('BonReception/avoirReceptionNonValide'); ?>" class="menu-link" target="_blank">
+                    <a href="<?php echo site_url('BonReception/avoirReceptionNonValide'); ?>" class="menu-link">
                       <div data-i18n="Basic">Validation</div>
                     </a>
                   </li>
                 </ul>
               </li>
-
-            <li class="menu-item">
-                <a href=<?php echo site_url('mail/versListeFournisseur'); ?> class="menu-link">
-                  <!-- <i class="menu-icon tf-icons bx bx-lock-open-alt"></i> -->
-                  <div data-i18n="Authentications">Messages/Mail</div>
-                </a>
-            </li>
 
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -268,12 +261,12 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="<?php echo site_url('BonDeCommande/versListeBonDeCommande'); ?>" class="menu-link" target="_blank">
+                  <a href="<?php echo site_url('BonDeCommande/versListeBonDeCommande'); ?>" class="menu-link">
                     <div data-i18n="Basic">Liste Bon De Commande</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="<?php echo site_url('BonDeCommande/listeregroupement'); ?>" class="menu-link" target="_blank">
+                  <a href="<?php echo site_url('BonDeCommande/listeregroupement'); ?>" class="menu-link">
                     <div data-i18n="Basic">listes De regroupement</div>
                   </a>
                 </li>
@@ -287,7 +280,7 @@
                 </a>
                 <ul class="menu-sub">
                   <li class="menu-item">
-                    <a href="<?php echo site_url('ControllerRegroupement/versListeRegroupementNonlivre'); ?>" class="menu-link" target="_blank">
+                    <a href="<?php echo site_url('ControllerRegroupement/versListeRegroupementNonlivre'); ?>" class="menu-link">
                       <div data-i18n="Basic">Details des regroupements</div>
                     </a>
                   </li>

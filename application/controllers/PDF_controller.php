@@ -5,7 +5,7 @@
 
 		public function pdf(){
 			$this->load->model('PDF_modele');
-            $this->PDF_modele->genererPDF();
+      $this->PDF_modele->genererPDF();
 			// redirection('index.php');
 		}
     }

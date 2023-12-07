@@ -118,6 +118,7 @@ class BonDeCommande extends CI_Controller {
         if (empty($data['donnee'])) {
             show_error("Aucune donnée trouvée pour le bon de commande avec l'ID $idbondecommande");
         }
+        
         return $this->load->view('BonDeCommandePDF', $data, true);
     }
   

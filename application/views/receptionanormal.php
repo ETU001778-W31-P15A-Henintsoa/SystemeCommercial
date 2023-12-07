@@ -44,6 +44,9 @@
     </table>
     </div>
     <div class="demo-inline-spacing">
-        <button type="button" class="btn btn-primary"><a href= <?php echo   "?idfouniseur=".$nbArticleAnormal[0]['fournisseur'] ;?>>Envoyer un mail et valider</a></button>
+        <button type="button" class="btn btn-primary"><a href= <?= site_url("Mail/versEnvoieMailBonDeReception?idfournisseur=".$nbArticleAnormal[0]['fournisseur']."&idreception=".$nbArticleAnormal[0]['idreception']); ?>>Envoyer un mail et valider</a></button>
+
+
+        <button type="button" class="btn btn-primary"><a href= <?= site_url("BonReception/genererPDF?idfourniseur=".$nbArticleAnormal[0]['fournisseur']."&idreception=".$nbArticleAnormal[0]['idreception']); ?>>Gerener PDF</a></button>
     </div>
 </div>

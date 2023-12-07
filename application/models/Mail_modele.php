@@ -7,6 +7,10 @@
             shell_exec("cp -rf /var/www/html/SystemeCommercial/SystemeCommercial/upload/* /var/www/html/Fournisseur/FournisseurSystemeCommercial/upload/");
         }
 
+        public function updatereception($idreception){
+            $this->Generalisation->miseAJour("bonreception", "etat=21", sprintf("idbonreception='%s'", $idreception));
+        }
+
         // Fonctions Fonctionnelles
         public function envoieMail($destinataire, $message, $fichier, $idregroupement){
             $mail = $this->monMail();
@@ -49,6 +53,25 @@
             $this->Generalisation->insertion("message(idmail, libelle, piecejointe)", sprintf("('%s', '%s', '%s')", $mails[count($mails)-1]->idmail, $message, $piecejointe));
 
             $this->Generalisation->miseAJour("bondecommande", "etat=41", sprintf("idbondecommande='%s'", $idbondecommande));
+
+            $this->copierPdf();
+
+            return true;
+        }
+
+        public function envoieMailReception($destinataire, $message, $piecejointe){
+            $mail = $this->monMail();
+            $message = "Demande de Proforma//".$message;
+
+            if(count($destinataire)==0){
+                return false;
+            }
+
+            $this->Generalisation->insertion("mail(dateenvoie, envoyeur, destinataire)", sprintf("(current_date, '%s', '%s')", $mail->idadressemail, $destinataire->idadressemail));
+            
+            $mails = $this->Generalisation->avoirTableConditionnee("mail order by idmail");
+
+            $this->Generalisation->insertion("message(idmail, libelle, piecejointe)", sprintf("('%s', '%s', '%s')", $mails[count($mails)-1]->idmail, $message, $piecejointe));
 
             $this->copierPdf();
 
