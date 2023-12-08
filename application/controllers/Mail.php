@@ -128,8 +128,6 @@ class Mail extends CI_Controller {
 
 		redirect("Mail/versAfficheMessages?idfournisseur=".$idfournisseur);
 	}
-
-
 	
 	public function versAfficheMessages(){
 		$idfourniseur = $this->input->get('idfournisseur');
@@ -311,6 +309,53 @@ class Mail extends CI_Controller {
 			redirect('Mail/versEnvoieMailBonDeReception?idfournisseur='.$idfournisseur.'&idreception='.$idreception.'&erreur='.$erreur);
 		}
 
+		$pj = $this->upload_file('versEnvoieMailBonDeReception?idfournisseur='.$idfournisseur.'&idreception='.$idreception);
+		
+
+		$retour = $this->Mail_modele->envoieMailReception($mailfournisseur[0], $message, $pj);
+
+		$this->Mail_modele->updatereception($idreception);
+
+		if($retour==false){
+			$erreur = 'L\'Adresse mail du Fournisseur est invalide';
+			redirect('Mail/versEnvoieMailBonDeReception?idfournisseur='.$idfournisseur.'&idreception='.$idreception.'&erreur='.$erreur);
+		}
+
+		redirect("welcome/versAcceuil");
+	}
+
+
+	// Bon d'entree
+	public function versEnvoieMailBonEntree(){
+		$iddepartement = $this->input->get('iddepartement');
+		$idbonentree = $this->input->post('idbonentree');
+
+		$data = array();
+		$data['iddepartement'] = $this->Generalisation->avoirTableSpecifique("departement", "*", sprintf("iddepartement='%s'", $iddepartement)); 
+		$data['idbonentree'] = $idbonentree;
+
+		// var_dump($data['fournisseur']);
+
+		if(isset($_GET['erreur'])){
+			$data['erreur'] = $_GET['erreur'];
+		}
+
+		$this->load->view('header');
+		$this->load->view('envoiemailBonEntre', $data);
+	}
+
+	public function envoieMailEntree(){
+		$iddepartement= $this->input->post('iddepartement');
+		$idreception = $this->input->post('idreception');
+
+		$iddepartement = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("idsociete='%s'", $iddepartement));
+		
+		$message = $this->input->post('message');
+		if($message==""){
+			$erreur = 'Champ(s) vide(s)';
+			redirect('Mail/versEnvoieMailBonDeReception?idfournisseur='.$idfournisseur.'&idreception='.$idreception.'&erreur='.$erreur);
+		}
+
 		// $pj = $this->upload_file('versEnvoieMailBonDeReception?idfournisseur='.$idfournisseur.'&idreception='.$idreception);
 		
 
@@ -326,5 +371,54 @@ class Mail extends CI_Controller {
 		redirect("welcome/versAcceuil");
 	}
 
+
+	// Bon de sortie
+	public function versEnvoieMailBonDeSortie(){
+		$iddepartement = $this->input->get('iddepartement');
+		$idbonsortie = $this->input->post('idbondesorti');
+
+		$data = array();
+		$data['iddepartement'] = $this->Generalisation->avoirTableSpecifique("departement", "*", sprintf("iddepartement='%s'", $iddepartement)); 
+		$data['idbonsortie'] = $idbonsortie;
+
+
+		if(isset($_GET['erreur'])){
+			$data['erreur'] = $_GET['erreur'];
+		}
+
+		$this->load->view('header');
+		$this->load->view('envoiemailBonSorti', $data);
+	}
+
+	public function envoieMailSortie(){
+		$iddepartement = $this->input->post('iddepartement');
+		$idbonsortie = $this->input->post('idbonsortie');
+
+		$mailDepartementDestinataire = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("idsociete='%s'", $iddepartement));
+
+		// envoyeur
+		$employe =  $this->Generalisation->avoirTableSpecifique("v_posteemploye", "*", sprintf("idemploye='%s'", $_SESSION['user']));
+		$mailDepartementEnvoyeur = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("idsociete='%s'", $employe[0]->iddepartement));
+		
+		$message = $this->input->post('message');
+		if($message==""){
+			$erreur = 'Champ(s) vide(s)';
+			redirect('Mail/versEnvoieMailBonDeSortie?iddepartement='.$iddepartement.'&idbonsortie='.$idbonsortie.'&erreur='.$erreur);
+		}
+
+		$pj = $this->upload_file('versEnvoieMailBonDeSortie?iddepartement='.$iddepartement.'&idreception='.$idbonsortie);
+		
+
+		$retour = $this->Mail_modele->envoieMailDepartement( $mailDepartementEnvoyeur, $mailDepartementDestinataire, $message, $pj);
+
+		$this->Mail_modele->updatesortie($idbonsortie);
+
+		if($retour==false){
+			$erreur = 'L\'Adresse mail du Fournisseur est invalide';
+			redirect('Mail/versEnvoieMailBonDeSortie?iddepartement='.$idfournisseur.'&idbonsortie='.$idbonsortie.'&erreur='.$erreur);
+		}
+
+		redirect("welcome/versAcceuil");
+	}
 	
 }

@@ -225,12 +225,12 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="<?php echo site_url('BonDeCommande/versListeBonDeCommande'); ?>" class="menu-link" target="_blank">
+                  <a href="<?php echo site_url('BonDeCommande/versListeBonDeCommande'); ?>" class="menu-link">
                     <div data-i18n="Basic">Liste Bon De Commande</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="<?php echo site_url('BonDeCommande/listeregroupement'); ?>" class="menu-link" target="_blank">
+                  <a href="<?php echo site_url('BonDeCommande/listeregroupement'); ?>" class="menu-link">
                     <div data-i18n="Basic">listes De regroupement</div>
                   </a>
                 </li>
@@ -244,7 +244,7 @@
                 </a>
                 <ul class="menu-sub">
                   <li class="menu-item">
-                    <a href="<?php echo site_url('ControllerRegroupement/versListeRegroupementNonlivre'); ?>" class="menu-link" target="_blank">
+                    <a href="<?php echo site_url('ControllerRegroupement/versListeRegroupementNonlivre'); ?>" class="menu-link">
                       <div data-i18n="Basic">Details des regroupements</div>
                     </a>
                   </li>
@@ -281,7 +281,7 @@
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="<?php echo site_url('BonEntre/avoirEntreNonValide'); ?>" class="menu-link" target="_blank">
+                    <a href="<?php echo site_url('BonEntre/avoirEntreNonValide'); ?>" class="menu-link">
                       <div data-i18n="Basic">Validation</div>
                     </a>
                   </li>
@@ -295,12 +295,12 @@
                 </a>
                 <ul class="menu-sub">
                   <li class="menu-item">
-                    <a href="<?php echo site_url('BonSorti/versFormulaireBonSortiDepartement'); ?>" class="menu-link" target="_blank">
+                    <a href="<?php echo site_url('BonSorti/versFormulaireBonSortiDepartement'); ?>" class="menu-link">
                       <div data-i18n="Basic">Dispatch aux département</div>
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="<?php echo site_url('BOnSorti/avoirSortiNonValideDept'); ?>" class="menu-link" target="_blank">
+                    <a href="<?php echo site_url('BOnSorti/avoirSortiNonValideDept'); ?>" class="menu-link">
                       <div data-i18n="Basic">Validation</div>
                     </a>
                   </li>

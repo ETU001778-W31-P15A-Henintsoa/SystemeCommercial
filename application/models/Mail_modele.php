@@ -11,6 +11,10 @@
             $this->Generalisation->miseAJour("bonreception", "etat=21", sprintf("idbonreception='%s'", $idreception));
         }
 
+        public function updatesortie($idbondortie){
+            $this->Generalisation->miseAJour("bonsortie", "etat=21", sprintf("idbondesortie='%s'", $idreception));
+        }
+
         // Fonctions Fonctionnelles
         public function envoieMail($destinataire, $message, $fichier, $idregroupement){
             $mail = $this->monMail();
@@ -98,7 +102,7 @@
         }
 
         // Fonctions Fonctionnelles
-        public function envoieMailSimpleDepartement($envoyeur, $destinataire, $message, $fichier, $idregroupement){
+        public function envoieMailSimpleDepartement($envoyeur, $destinataire, $message, $fichier){
             $mail = $this->monMail();
             $message = "MailDepartement//".$message;
 
