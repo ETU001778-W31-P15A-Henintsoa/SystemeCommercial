@@ -88,8 +88,6 @@ class BonEntre extends CI_Controller {
         $this->Generalisation->miseAJour("bonentre"," etat=11"," idbonentre='".$idBonEntre."'");//11 ilay etat rehefa
         redirect("welcome/versAcceuil");
     }
-
-    public function 
 }
 
 //stage impreniation
