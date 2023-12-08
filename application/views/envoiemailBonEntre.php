@@ -9,14 +9,14 @@
                 <!-- Merged -->
                 <div class="col-md-12">
                   <div class="card mb-4">
-                    <h5 class="card-header">Envoyer Bon D'Entree a <?= $fournisseur ?></h5>
+                    <h5 class="card-header">Envoyer Bon D'Entree - DEPARTEMENT Logistique</h5>
                     
                     <div class="card-body demo-vertical-spacing demo-only-element">
                       <?php if(isset($erreur)){
                       echo "<p style='color:red;''>".$erreur."</p>";
                       } ?>
-                    <form action="<?php echo site_url("mail/envoieMail"); ?>" method="post" enctype="multipart/form-data">
-                      <input type="hidden" value="<?= $_GET['idregroupement'] ?>" name="idregroupement">
+                    <form action="<?php echo site_url("mail/envoieMailEntree"); ?>" method="post" enctype="multipart/form-data">
+                      <input type="hidden" value="<?= $_GET['idbonentre'] ?>" name="idbonentre">
 
                       <div class="mb-3">
                         <label for="formFile" class="form-label">Message</label>

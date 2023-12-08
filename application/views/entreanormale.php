@@ -44,10 +44,7 @@
     </table>
     </div>
     <div class="demo-inline-spacing">
-        <button type="button" class="btn btn-primary"><a href= <?php echo site_url("BonEntre/versFormulaireExplication?idBon=".$nbArticleAnormal[0]['idbonentre']) ;?>>Expliquer </a></button>
-    </div>
-
-    <div class="demo-inline-spacing">
+        <button type="button" class="btn btn-primary"><a href= <?php echo site_url("BonEntre/versFormulaireExplication?idbonentree=".$nbArticleAnormal[0]['idbonentre']) ;?>>Expliquer </a></button>
         <button type="button" class="btn btn-primary"><a href= <?php echo site_url("Welcome/versAcceuil") ;?>>Annuler </a></button>
     </div>
 </div>

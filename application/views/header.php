@@ -285,6 +285,11 @@
                       <div data-i18n="Basic">Validation</div>
                     </a>
                   </li>
+                  <li class="menu-item">
+                    <a href="<?php echo site_url('BonEntre/versEntreValide'); ?>" class="menu-link">
+                      <div data-i18n="Basic">Entrees Valides</div>
+                    </a>
+                  </li>
                 </ul>
               </li>
 

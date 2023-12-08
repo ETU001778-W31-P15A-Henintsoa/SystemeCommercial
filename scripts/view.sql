@@ -122,3 +122,10 @@ create or replace view v_detailBonSortieDept as
         from bonSortie bs 
             join detailbonSortie dbs on dbs.idbonsortie=bs.idbonsortie
             join departement d on d.idDepartement=bs.idDepartement;
+
+
+create or replace view v_explicationBonEntree as
+    select Bonentre.*, 
+    Explication.idExplication, Explication.typeBon, Explication.raison
+    from Bonentre
+        join Explication on Explication.idBon = Bonentre.idBonEntre;

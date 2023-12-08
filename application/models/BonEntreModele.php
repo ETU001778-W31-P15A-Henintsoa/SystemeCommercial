@@ -5,10 +5,14 @@
         public function verifierNombre($idEntre){
             $detailEntre=$this->Generalisation->avoirTableSpecifique("v_detailBonEntre","*"," idBonEntre='".$idEntre."' order by idArticle desc");
             // var_dump($detailEntre);
-            $detailReception=$this->Generalisation->avoirTableSpecifique("v_detailBonReception","*"," idBonReception='".$detailEntre[0]->idbonentre."' order by idArticle desc");
+            $detailReception=$this->Generalisation->avoirTableSpecifique("v_detailBonReception","*"," idBonReception='".$detailEntre[0]->idbonreception."' order by idArticle desc");
             $articleAQuantiteanormal=array();
             $j=0;
+            echo count($detailEntre);
+            echo count($detailReception);
             for ($i=0; $i <count($detailReception) ; $i++) {
+                echo $detailReception[$i]->quantite."recu";
+                echo $detailEntre[$i]->quantite."entre";
                 if($detailReception[$i]->quantite!=$detailEntre[$i]->quantite){
                     $articleAQuantiteanormal[$j]['article']=$detailEntre[$i]->nomarticle;
                     $articleAQuantiteanormal[$j]['quantiteDemande']=$detailReception[$i]->quantite;
@@ -37,7 +41,7 @@
         public function insertionStock($identre){
             $detailEntre=$this->avoirEntreSpecifique($identre);
             for ($i=0; $i <count($detailEntre) ; $i++) { 
-                echo "yess";
+                 // echo "yess";
                 $stock=$this->Generalisation->avoirTableSpecifique("stock","*"," idarticle='".$detailEntre[$i]->idarticle."'");
                 if(count($stock)==0){
                     $valeur="(default,'".$detailEntre[$i]->dateentre."','".$detailEntre[$i]->idarticle."',".$detailEntre[$i]->quantite.")";

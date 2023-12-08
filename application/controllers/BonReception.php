@@ -65,18 +65,38 @@ class BonReception extends CI_Controller {
         }
     }
 
-            public function avoirDonnee($idReception){
-            $articleAQuantiteanormal = $this->verifierNombre($idReception);
+    public function versBonDeReceptionPdf($idboncommande, $idfournisseur){
+        $fournisseur = $this->Generalisation->avoirTableSpecifique("fournisseur", "*", sprintf("idfournisseur='%s'", $idfournisseur));
+        $data = $this->ReceptionModele->avoirDonnee($idboncommande);
+        $data['fournisseur'] = $fournisseur[0];
+        return $this->load->view('BonReceptionPDF', $data, true);
+    }
 
-            $detailReception=$this->Generalisation->avoirTableSpecifique("v_detailBonReception","*"," idbonreception='".$idReception."' order by idArticle desc");
+    public function genererPDF() {
+        $idboncommande = $this->input->get('idreception');
+        $idfournisseur = $this->input->get('idfourniseur');
 
-            $data = array();
+        $fournisseur = $this->Generalisation->avoirTableSpecifique("fournisseur", "*", sprintf("idfournisseur='%s'", $idfournisseur));
 
-            $data['reception'] = $detailReception;
-            $data['anormal'] = $articleAQuantiteanormal;
-            
-            return $data;        
-        }
+        // Créer une instance de votre classe MYPDF
+        $pdf = new TCPDF();
+    
+
+        $nomPDF = "Reception_".date("Y-M-D")."_DIMPEX.pdf";
+        $pdf->AddPage();
+        $data['content'] = $this->versBonDeReceptionPdf($idboncommande, $idfournisseur);
+    
+        // Ajoutez le HTML au PDF
+        $pdf->writeHTML($data['content'], true, false, true, false, '');
+    
+        // Ajoutez le PDF- aux données
+        $data['pdf'] = $pdf;
+    
+        // Chargez la vue avec les données
+        $this->load->view('BonDeCommandePDF', $data);
+        $pdf->Output($nomPDF, 'I');
+    }
+
 }
 
 //stage impreniation

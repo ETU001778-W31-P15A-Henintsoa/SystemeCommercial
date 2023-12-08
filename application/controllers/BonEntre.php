@@ -30,9 +30,9 @@ class BonEntre extends CI_Controller {
         $valeur="(default,'".$date."',0,'".$idBonReception."')";
         $this->Generalisation->insertion("bonEntre",$valeur);
         $valeur=intval($_POST['nombreArticle']);
-        echo $valeur;
+        // echo $valeur;
         $bonentre=$this->Generalisation->avoirTable("bonentre");
-        echo $bonentre[count($bonentre)-1]->idbonentre;
+        // echo $bonentre[count($bonentre)-1]->idbonentre;
         for ($i=1; $i <=$valeur ; $i++) { 
             $val="(default,'".$bonentre[count($bonentre)-1]->idbonentre."','".$_POST['article'.$i]."',".$_POST['quantite'.$i].")";
             $this->Generalisation->insertion("detailbonentre",$val);
@@ -45,10 +45,11 @@ class BonEntre extends CI_Controller {
     public function validerBonEntre(){
         $idBonEntre=$_GET['idBonEntre'];
         $verificationArticle=$this->BonEntreModele->verifierNombre($idBonEntre);
-        // echo count($verificationArticle);
+        echo count($verificationArticle);
         if(count($verificationArticle)==0){
             $this->BonEntreModele->insertionStock($idBonEntre);
-            $this->Generalisation->miseAJour("bonentre"," etat=11"," idbonentre='".$idBonEntre."'");//11 ilay etat rehefa 
+            echo "tafidi";
+            //$this->Generalisation->miseAJour("bonentre"," etat=11"," idbonentre='".$idBonEntre."'");//11 ilay etat rehefa 
            // redirect("welcome/versAcceuil");
         }
         else{
@@ -74,7 +75,7 @@ class BonEntre extends CI_Controller {
     }
 
     public function versFormulaireExplication(){
-        $data['idBon']=$_GET['idBon'];
+        $data['idBon']=$_GET['idbonentree'];
         $this->load->view('header');
         $this->load->view('ExplicationEntre',$data);
     }
@@ -87,6 +88,41 @@ class BonEntre extends CI_Controller {
         $this->BonEntreModele->insertionStock($idBonEntre);
         $this->Generalisation->miseAJour("bonentre"," etat=11"," idbonentre='".$idBonEntre."'");//11 ilay etat rehefa
         redirect("welcome/versAcceuil");
+    }
+
+    public function versEntreValide(){
+        $data['valide'] = $this->Generalisation->avoirTableSpecifique("bonentre", "*", "etat=11");
+
+        // var_dump($data['valide']);
+        $this->load->view('header');
+        $this->load->view('entreValide', $data);
+    }
+
+    public function versBonEntrePdf($idbonentre){
+        $data = $this->BonEntreModele->avoirDonnee($idbonentre);    
+        return $this->load->view('BonEntrePDF', $data, true);
+    }
+
+    public function genererPDF() {
+        $idbonentre = $this->input->get('idbonentre');
+
+        // Créer une instance de votre classe MYPDF
+        $pdf = new TCPDF();
+    
+
+        $nomPDF = "Entree_".date("Y-M-D")."_Magasine.pdf";
+        $pdf->AddPage();
+        $data['content'] = $this->versBonEntrePdf($idbonentre);
+    
+        // Ajoutez le HTML au PDF0
+        $pdf->writeHTML($data['content'], true, false, true, false, '');
+    
+        // Ajoutez le PDF- aux données
+        $data['pdf'] = $pdf;
+    
+        // Chargez la vue avec les données
+        $this->load->view('BonDeCommandePDF', $data);
+        $pdf->Output($nomPDF, 'I');
     }
 }
 
