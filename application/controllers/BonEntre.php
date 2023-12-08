@@ -45,7 +45,7 @@ class BonEntre extends CI_Controller {
     public function validerBonEntre(){
         $idBonEntre=$_GET['idBonEntre'];
         $verificationArticle=$this->BonEntreModele->verifierNombre($idBonEntre);
-        echo count($verificationArticle);
+        // echo count($verificationArticle);
         if(count($verificationArticle)==0){
             $this->BonEntreModele->insertionStock($idBonEntre);
             $this->Generalisation->miseAJour("bonentre"," etat=11"," idbonentre='".$idBonEntre."'");//11 ilay etat rehefa 
@@ -88,6 +88,8 @@ class BonEntre extends CI_Controller {
         $this->Generalisation->miseAJour("bonentre"," etat=11"," idbonentre='".$idBonEntre."'");//11 ilay etat rehefa
         redirect("welcome/versAcceuil");
     }
+
+    public function 
 }
 
 //stage impreniation

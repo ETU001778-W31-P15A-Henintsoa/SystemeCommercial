@@ -64,6 +64,19 @@ class BonReception extends CI_Controller {
             $this->load->view('errors/erreurValidationAchat',$data);
         }
     }
+
+            public function avoirDonnee($idReception){
+            $articleAQuantiteanormal = $this->verifierNombre($idReception);
+
+            $detailReception=$this->Generalisation->avoirTableSpecifique("v_detailBonReception","*"," idbonreception='".$idReception."' order by idArticle desc");
+
+            $data = array();
+
+            $data['reception'] = $detailReception;
+            $data['anormal'] = $articleAQuantiteanormal;
+            
+            return $data;        
+        }
 }
 
 //stage impreniation

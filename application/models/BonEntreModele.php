@@ -4,7 +4,8 @@
     class BonEntreModele extends CI_Model{
         public function verifierNombre($idEntre){
             $detailEntre=$this->Generalisation->avoirTableSpecifique("v_detailBonEntre","*"," idBonEntre='".$idEntre."' order by idArticle desc");
-            $detailReception=$this->Generalisation->avoirTableSpecifique("v_detailBonReception","*"," idBonReception='".$detailEntre[0]->idbonreception."' order by idArticle desc");
+            // var_dump($detailEntre);
+            $detailReception=$this->Generalisation->avoirTableSpecifique("v_detailBonReception","*"," idBonReception='".$detailEntre[0]->idbonentre."' order by idArticle desc");
             $articleAQuantiteanormal=array();
             $j=0;
             for ($i=0; $i <count($detailReception) ; $i++) {
@@ -48,6 +49,18 @@
                 $valeur="(default,'".$detailEntre[$i]->dateentre."','".$detailEntre[$i]->idarticle."',".$detailEntre[$i]->quantite.",1)";
                 $this->Generalisation->insertion("historique",$valeur);
             }
+        }
+
+        public function avoirDonnee($idEntre){
+            $articleAQuantiteanormal = $this->verifierNombre($idEntre);
+            $detailEntre=$this->Generalisation->avoirTableSpecifique("v_detailBonEntre","*"," idBonEntre='".$idEntre."' order by idArticle desc");
+
+            $data = array();
+
+            $data['entree'] = $detailEntre;
+            $data['anormal'] = $articleAQuantiteanormal;
+            
+            return $data;        
         }
     }
 ?>
