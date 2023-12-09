@@ -300,8 +300,32 @@
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="<?php echo site_url('BOnSorti/avoirSortiNonValideDept'); ?>" class="menu-link" target="_blank">
+                    <a href="<?php echo site_url('BonSorti/avoirSortiNonValideDept'); ?>" class="menu-link">
                       <div data-i18n="Basic">Validation</div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                  <!-- <i class="menu-icon tf-icons bx bx-lock-open-alt"></i> -->
+                  <div data-i18n="Authentications">Accuse de reception</div>
+                </a>
+                <ul class="menu-sub">
+                  <li class="menu-item">
+                    <a href="<?php echo site_url('AccuseReception/versFormulaireAccuse'); ?>" class="menu-link">
+                      <div data-i18n="Basic">Entré des produits recus</div>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="<?php echo site_url('AccuseReception/versListeNonValide'); ?>" class="menu-link">
+                      <div data-i18n="Basic">Validation</div>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="<?php echo site_url('AccuseReception/listevalide'); ?>" class="menu-link">
+                      <div data-i18n="Basic">Liste des sortis validés</div>
                     </a>
                   </li>
                 </ul>
