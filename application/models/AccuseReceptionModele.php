@@ -27,5 +27,15 @@
             }
             return $daccuse;
         } 
+
+        public function avoirValide($iddepartement){
+            $accuse=$this->Generalisation->avoirTableSpecifique("accusereception","*"," etat=11 and iddepartement='".$iddepartement."'");
+            $daccuse=array();
+            for ($i=0; $i <count($accuse); $i++) { 
+                $daccuse[$i]['accuse']=$accuse[$i];
+                $daccuse[$i]['detail']=$this->Generalisation->avoirTableSpecifique("v_detailaccusereception","*"," idaccusereception='".$accuse[$i]->idaccusereception."'");
+            }
+            return $daccuse;
+        } 
     }
 ?>
