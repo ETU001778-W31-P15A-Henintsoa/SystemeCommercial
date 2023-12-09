@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enregistrement de sorti</title>
+    <title>Entre de produit rexu</title>
 </head>
 <style>
     body{
@@ -22,70 +22,19 @@
     } */
 </style>
 <body>
-
-<div class="row mb-3" id="besoin">
-    <?php 
-        for ($i=0; $i <count($besoin) ; $i++) { ?>
-            <div class="col-md-6 col-lg-4 mb-3"  id="nonValide">
-                  <div class="card">
-                    <div class="card-body">
-                        <div>
-                        <div>
-                            <h5 class="card-title" id="date"><?php echo "Date d'insertion de besoin: ".$besoin[$i]['besoin']->dateinsertion; ?></h5></div>    
-                        </div>
-                        <br>
-                        <div>
-                            <h5 class="card-title" id="date"><?php echo "Departement: ".$besoin[$i]['besoin']->nomdepartement; ?></h5></div>    
-                        </div>  
-
-                        <div class="card" id="detail">
-                            <div class="table-responsive text-nowrap">
-                            <table class="table" >
-                                <thead>
-                                    <tr>
-                                        <th>Article</th>
-                                        <th>Quantite</th>
-                                        <tr><th>
-                                    </tr>
-                                </thead>
-                                <tbody class="table-border-bottom-0">
-                                    <?php
-                                        for ($j=0; $j <count($besoin[$i]['detail']) ; $j++) { ?>
-                                                <tr>
-                                                    <td><?php echo $besoin[$i]['detail'][$j]->nomarticle; ?></td>
-                                                    <td><?php echo $besoin[$i]['detail'][$j]->quantite; ?></td>
-                                                </tr>
-                                    <?php }
-                                    ?>
-                                </tbody>
-                            </table>
-                            </div>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-        <?php }?>
-       
-</div>
-<br>
-<br>
-    <form action="<?php echo site_url("BonSorti/entrerSortidepartement"); ?>" method="post" >
+    <form action="<?php echo site_url("AccuseReception/entrerAccuseReception"); ?>" method="post" >
         <input type="hidden" value="1" name="nombreArticle" id="inputHidden">
         <div class="mb-3 row">
-            <label for="html5-date-input" class="col-md-2 col-form-label">Date de sorti</label>
+            <label for="html5-date-input" class="col-md-2 col-form-label">Date de reception par le département</label>
                 <div class="col-md-10">
-                    <input class="form-control" type="date"  id="html5-date-input" name="datesorti" />
+                    <input class="form-control" type="date"  id="html5-date-input" name="dateAccuse" />
                 </div>
         </div>
         <div class="mb-3 row">
-            <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" name="idDepartement">
-                <?php 
-                    for ($i=0; $i <count($departement) ; $i++) { ?>
-                        <option value="<?php echo $departement[$i]->iddepartement; ?>"><?php echo $departement[$i]->nomdepartement; ?></option>
-                <?php }
-                ?>
-            </select>
+            <label for="html5-date-input" class="col-md-2 col-form-label">Numero de bon de sorti</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="text"  id="html5-date-input" name="idBonSorti" />
+                </div>
         </div>
         <div class="mb-3" id="form">
             <label for="exampleFormControlSelect1" class="form-label">Entrez un article</label>

@@ -22,10 +22,20 @@ class BonSorti extends CI_Controller {
     }
 
     public function versFormulaireBonSortiDepartement(){
-        $data['article']=$this->Generalisation->avoirTable("article");
-        $data['departement']=$this->Generalisation->avoirTable("departement");
-        $this->load->view('header');
-        $this->load->view('FormulaireSortiDepartement',$data);
+        $idEmploye=$_SESSION['user'];//emp3
+        $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
+
+        if($employePoste[0]->nombranche=="Magasinier"){
+            $data['article']=$this->Generalisation->avoirTable("article");
+            $data['departement']=$this->Generalisation->avoirTable("departement");
+            $data['besoin']=$this->BesoinAchat->avoirToutAchatValideNonLivre();
+            $this->load->view('header');
+            $this->load->view('FormulaireSortiDepartement',$data);
+        }else{
+            $data["error"]="Vous n'avez pas accès à cette page";
+            $this->load->view('header');
+            $this->load->view('errors/erreurValidationAchat',$data);
+        }
     }
 
     public function entrerSortiClient(){
@@ -78,13 +88,23 @@ class BonSorti extends CI_Controller {
     public function validerBonSortiDept(){
         $idbonsortie=$_GET['idbonsortie'];
         $sorti=$this->BonSortiModele->avoirdetailSortiSpecifique($idbonsortie);
+        $besoin=$this->Generalisation->avoirTableSpecifique("v_detailbesoinachat","*"," iddepartement='".$sorti[0]['sorti']->iddepartement."'");
+        $quantitesup=$this->BonSortiModele->verifierSortie($sorti,$besoin);
         $quantiteinsu=$this->BonSortiModele->verifierStock($sorti);
-        if(count($quantiteinsu)==0){
-            $this->BonSortiModele->misAJourStock($sorti);
+       // echo count( $quantitesup);
+        if(count($quantitesup)==0){
+             if(count($quantiteinsu)==0){
+                $this->BonSortiModele->misAJourStock($sorti);
+                redirect("Welcome/versAcceuil");
+            }else{
+                $data['insu']=$quantiteinsu;
+                $this->load->view('header');
+                $this->load->view('sortiinsuffisant',$data);
+            }
         }else{
-            $data['insu']=$quantiteinsu;
+            $data['quantitesup']=$quantitesup;
             $this->load->view('header');
-            $this->load->view('sortiinsuffisant',$data);
+            $this->load->view('SortiSup',$data);
         }
     }
 
@@ -92,7 +112,22 @@ class BonSorti extends CI_Controller {
         $idbonsorti=$_GET['idbonsorti'];
         $valeur="etat=-1";
         $this->Generalisation->miseAJour("bonsortie",$valeur," idbonsortie='".$idbonsorti."'");
-        redirect("welcome/versAcceuil");
+        redirect("Welcome/versAcceuil");
+    }
+
+    public function avoirSortiValideDept(){
+        $idEmploye=$_SESSION['user'];
+        $employePoste=$this->Generalisation->avoirTableSpecifique("v_posteEmployeValidation","*"," idemploye='".$idEmploye."'");
+
+        if($employePoste[0]->nombranche=="Magasinier"){
+            $data["sorti"]=$this->BonSortiModele->avoirSortiValideDept();
+            $this->load->view('header');
+            $this->load->view('SortiDeptValide',$data);
+        }else{
+            $data["error"]="Vous n'avez pas accès à cette page";
+            $this->load->view('header');
+            $this->load->view('errors/erreurValidationAchat',$data);
+        }
     }
 }
 ?>
