@@ -76,5 +76,14 @@ class AccuseReception extends CI_Controller {
     public function annuler(){
         redirect("welcome/versAcceuil");
     }
+
+    public function listevalide(){
+        $employe=$_SESSION['user'];
+        $dept=$this->Generalisation->avoirTableSpecifique("v_posteemploye","*"," idemploye='".$employe."'");
+        $idDepartement=$dept[0]->iddepartement;
+        $data['accuse']=$this->AccuseReceptionModele->avoirValide($idDepartement);
+        $this->load->view('header');
+        $this->load->view('AccuseValide',$data);
+    }
 }
 ?>
