@@ -377,26 +377,28 @@ class Mail extends CI_Controller {
 
 
 	// Bon de sortie
-	public function versEnvoieMailBonDeSortie(){
+	public function versEnvoieMailBonSortie(){
 		$iddepartement = $this->input->get('iddepartement');
-		$idbonsortie = $this->input->post('idbondesorti');
+		$idbonsorti = $this->input->post('idbonsorti');
 
 		$data = array();
 		$data['iddepartement'] = $this->Generalisation->avoirTableSpecifique("departement", "*", sprintf("iddepartement='%s'", $iddepartement)); 
-		$data['idbonsortie'] = $idbonsortie;
+		$data['idbonsorti'] = $idbonsorti;
 
+		// var_dump($data['fournisseur']);
 
 		if(isset($_GET['erreur'])){
 			$data['erreur'] = $_GET['erreur'];
 		}
 
 		$this->load->view('header');
-		$this->load->view('envoiemailBonSorti', $data);
+		$this->load->view('envoiemailSorti', $data);
 	}
+
 
 	public function envoieMailSortie(){
 		$iddepartement = $this->input->post('iddepartement');
-		$idbonsortie = $this->input->post('idbonsortie');
+		$idbonsorti = $this->input->post('idbonsorti');
 
 		$mailDepartementDestinataire = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("idsociete='%s'", $iddepartement));
 
@@ -407,19 +409,19 @@ class Mail extends CI_Controller {
 		$message = $this->input->post('message');
 		if($message==""){
 			$erreur = 'Champ(s) vide(s)';
-			redirect('Mail/versEnvoieMailBonDeSortie?iddepartement='.$iddepartement.'&idbonsortie='.$idbonsortie.'&erreur='.$erreur);
+			redirect('Mail/versEnvoieMailBonDeSortie?iddepartement='.$iddepartement.'&idbonsorti='.$idbonsorti.'&erreur='.$erreur);
 		}
 
-		$pj = $this->upload_file('versEnvoieMailBonDeSortie?iddepartement='.$iddepartement.'&idreception='.$idbonsortie);
+		$pj = $this->upload_file('versEnvoieMailBonDeSortie?iddepartement='.$iddepartement.'&idreception='.$idbonsorti);
 		
 
 		$retour = $this->Mail_modele->envoieMailDepartement( $mailDepartementEnvoyeur, $mailDepartementDestinataire, $message, $pj);
 
-		$this->Mail_modele->updatesortie($idbonsortie);
+		$this->Mail_modele->updatesortie($idbonsorti);
 
 		if($retour==false){
 			$erreur = 'L\'Adresse mail du Fournisseur est invalide';
-			redirect('Mail/versEnvoieMailBonDeSortie?iddepartement='.$idfournisseur.'&idbonsortie='.$idbonsortie.'&erreur='.$erreur);
+			redirect('Mail/versEnvoieMailBonDeSortie?iddepartement='.$idfournisseur.'&idbonsorti='.$idbonsorti.'&erreur='.$erreur);
 		}
 
 		redirect("welcome/versAcceuil");
