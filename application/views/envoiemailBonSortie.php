@@ -15,7 +15,7 @@
                       <?php if(isset($erreur)){
                       echo "<p style='color:red;''>".$erreur."</p>";
                       } ?>
-                    <form action="<?php echo site_url("mail/envoieMailReception"); ?>" method="post" enctype="multipart/form-data">
+                    <form action="<?php echo site_url("mail/envoieMailSortie"); ?>" method="post" enctype="multipart/form-data">
                       <input type="hidden" value="<?= $departement[0]->iddepartement ?>" name="iddepartement">
                       <input type="hidden" value="<?= $_GET['idbonsortie']?>" name="idbonsortie">
 

@@ -146,8 +146,9 @@ insert into adresseMail(idsociete, adresseMAil, motdepasse) values
 ('DEPT1', 'rhumaine@gmail.com', 'rhumaine'),
 ('DEPT2', 'informatique@gmail.com', 'info'),
 ('DEPT3', 'scommecial@gmail.com', 'scom'),
-('DEPT4', 'finance@gmail.com', 'finance');
-('DEPT5', 'hors@gmail.com', 'hors');
+('DEPT4', 'finance@gmail.com', 'finance'),
+('DEPT5', 'hors@gmail.com', 'hors'),
+('DEPT6', 'log@gmail.com', 'log');
 
 
 ---------------------------------------------Fiderana 05-12-23---------------------------------------------------

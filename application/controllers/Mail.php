@@ -328,7 +328,7 @@ class Mail extends CI_Controller {
 	// Bon d'entree
 	public function versEnvoieMailBonEntree(){
 		$iddepartement = $this->input->get('iddepartement');
-		$idbonentree = $this->input->post('idbonentree');
+		$idbonentree = $this->input->post('idbonentre');
 
 		$data = array();
 		$data['iddepartement'] = $this->Generalisation->avoirTableSpecifique("departement", "*", sprintf("iddepartement='%s'", $iddepartement)); 
@@ -345,28 +345,32 @@ class Mail extends CI_Controller {
 	}
 
 	public function envoieMailEntree(){
-		$iddepartement= $this->input->post('iddepartement');
-		$idreception = $this->input->post('idreception');
+		$departement= $this->Generalisation->avoirTableSpecifique("departement", "*", "nomdepartement='logistique'");
+		$idbonentre = $this->input->post('idbonentre');
 
-		$iddepartement = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("idsociete='%s'", $iddepartement));
-		
+		$mailDepartement = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("idsociete='%s'", $departement[0]->iddepartement));
+
+		// Employer
+		$employe = $this->Generalisation->avoirTableSpecifique("v_posteemploye", "*", sprintf("idemploye='%s'", $_SESSION['user']));
+		$mailDepartementEnvoyeur = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("idsociete='%s'", $employe[0]->iddepartement));
+
 		$message = $this->input->post('message');
 		if($message==""){
 			$erreur = 'Champ(s) vide(s)';
-			redirect('Mail/versEnvoieMailBonDeReception?idfournisseur='.$idfournisseur.'&idreception='.$idreception.'&erreur='.$erreur);
+			redirect('Mail/versEnvoieMailBonEntree?idbonentre='.$idbonentre.'&erreur='.$erreur);
 		}
 
-		// $pj = $this->upload_file('versEnvoieMailBonDeReception?idfournisseur='.$idfournisseur.'&idreception='.$idreception);
+		$pj = $this->upload_file('versEnvoieMailBonEntree?idbonentre='.$idbonentre);
 		
 
-		// $retour = $this->Mail_modele->envoieMailReception($mailfournisseur[0], $message, $pj);
+		$retour = $this->Mail_modele->envoieMailSimpleDepartement($mailDepartementEnvoyeur, $mailDepartement, $message, $pj);
 
-		// $this->Mail_modele->updatereception($idreception);
+		$this->Mail_modele->updatereception($idbonentre);
 
-		// if($retour==false){
-		// 	$erreur = 'L\'Adresse mail du Fournisseur est invalide';
-		// 	redirect('Mail/versEnvoieMailBonDeReception?idfournisseur='.$idfournisseur.'&idreception='.$idreception.'&erreur='.$erreur);
-		// }
+		if($retour==false){
+			$erreur = 'L\'Adresse mail du Fournisseur est invalide';
+			redirect('Mail/versEnvoieMailBonEntree?idbonentre='.$idbonentre.'&erreur='.$erreur);
+		}
 
 		redirect("welcome/versAcceuil");
 	}
