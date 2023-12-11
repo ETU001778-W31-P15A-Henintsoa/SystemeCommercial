@@ -271,7 +271,6 @@ alter table BonDeCommande add delailivraison date;
 alter table BonDeCommande add idregroupement varchar(20),add constraint idreg foreign key(idregroupement) references regroupement(idregroupement);
 
 alter table Proforma alter column piecejointe TYPE varchar(60);
-alter table Proforma alter column piecejointe TYPE varchar(60);
 
 --------------------------------------Fiderana 03-12-23-------------------------------------------------
 --------------------------------------bonDeCommandeFacture-------------------------------------------------

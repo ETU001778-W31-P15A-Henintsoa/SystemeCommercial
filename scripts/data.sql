@@ -135,21 +135,10 @@ insert into brancheDepartement(idBranche,idDepartement) values
 ('BRA5','DEPT5');
 
 insert into employePoste(idBrancheDepartement,dateEmbauche,idEmploye) values
-('BDEPT5','2020-02-04','EMP5');
+('BDEPT5','2020-02-04','EMP4');
 
 insert into validation(idBrancheDepartement,libelle)
 values('BDEPT5','Directeur General');
-
-
------------------------------------- ADRESSEMAIL ------------------------------------------
-insert into adresseMail(idsociete, adresseMAil, motdepasse) values
-('DEPT1', 'rhumaine@gmail.com', 'rhumaine'),
-('DEPT2', 'informatique@gmail.com', 'info'),
-('DEPT3', 'scommecial@gmail.com', 'scom'),
-('DEPT4', 'finance@gmail.com', 'finance'),
-('DEPT5', 'hors@gmail.com', 'hors'),
-('DEPT6', 'log@gmail.com', 'log');
-
 
 ---------------------------------------------Fiderana 05-12-23---------------------------------------------------
   ----------------------------------------------departement-------------------------------------------------
@@ -179,3 +168,5 @@ insert into validation(idBrancheDepartement,libelle) values
 ('BDEPT6','validation entre');
 
 update validation set libelle='validation entre' where idbranchedepartement='BDEPT6';  
+
+--insert into stock values(default,'2023-12-08','ART1',50);

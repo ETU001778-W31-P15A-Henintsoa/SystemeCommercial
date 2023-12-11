@@ -56,17 +56,13 @@ select Fournisseur.nomfournisseur,bdc.*
     join Fournisseur on bdc.idfournisseur=Fournisseur.idfournisseur; 
 
 create or replace view v_DetailBonDeCommande AS
-select abdc.*,bdc.idfournisseur,bdc.DateBonDeCommande,bdc.delailivraison,Fournisseur.nomFournisseur,Livraison.libelle as livraison,TypedePaiment.libelle as paiement, bdc.etat ,
 select abdc.*,bdc.idfournisseur,bdc.DateBonDeCommande,bdc.delailivraison,Fournisseur.nomFournisseur,Livraison.libelle as livraison,TypedePaiment.libelle as paiement,bdc.etat ,
-bdc.idregroupement, Article.nomArticle
+bdc.idregroupement
 from BonDeCommande bdc
 join Fournisseur on bdc.idfournisseur=Fournisseur.idfournisseur
 join ArticleBonDeCommande abdc on bdc.idBonDeCommande=abdc.idBonDeCommande
 join Livraison on bdc.idLivraison = Livraison.idLivraison
 join TypedePaiment on bdc.idpayement = TypedePaiment.idTypeDePayement
-join Article on Article.idarticle = abdc.idArticle
-where abdc.quantite != 0;
-
 where abdc.quantite != 0;
 -- ----------------------v_donneeproforma2---------------------------------
 create or replace view v_DonneeProforma2 as
@@ -80,7 +76,6 @@ create or replace view v_MailMessage as
     select Mail.idMail, Mail.dateEnvoie, Mail.envoyeur, Mail.destinataire,
     Message.idMessage, Message.libelle, Message.piecejointe
     from Mail
-        join Message on Message.idMail = Mail.idMail;
         join Message on Message.idMail = Mail.idMail;
 
 --------------------------------------Fiderana 04-12-23----------------------------------------------
@@ -112,20 +107,27 @@ create or replace view v_stock as
 
 -------------------------------------------v_stockArticle---------------------------------------------------
 create or replace view v_stockArticle as 
-    select a.*,quantite from article a
+    select a.*,quantite default 0 from article a
         left join v_stock s on a.idArticle=s.idArticle;
 
-----------------------------------------------v_detailBonSortie--------------------------------------------------
 ----------------------------------------------07 decembre Fiderana--------------------------------------------------
-create or replace view v_detailBonSortieDept as 
-    select dbs.*,bs.datesortie,bs.idDepartement,nomDepartement
+----------------------------------------------v_bonSortie--------------------------------------------------
+create or replace view v_bonSortie as 
+    select bs.*,nomDepartement
         from bonSortie bs 
-            join detailbonSortie dbs on dbs.idbonsortie=bs.idbonsortie
             join departement d on d.idDepartement=bs.idDepartement;
 
+----------------------------------------------v_detailBonSortie--------------------------------------------------
+create or replace view v_detailBonsortieDept as 
+    select dbs.*,bs.datesortie,bs.idDepartement,nomDepartement,etat,nomArticle
+        from bonSortie bs 
+            join detailbonSortie dbs on dbs.idbonsortie=bs.idbonsortie
+            join departement d on d.idDepartement=bs.idDepartement
+            join article a on a.idArticle=dbs.idArticle;
 
-create or replace view v_explicationBonEntree as
-    select Bonentre.*, 
-    Explication.idExplication, Explication.typeBon, Explication.raison
-    from Bonentre
-        join Explication on Explication.idBon = Bonentre.idBonEntre;
+------------------------------------------------v_detailaccusereception-----------------------------------------
+create or replace view v_detailaccusereception as 
+    select dar.*,ar.dateAccuse,a.nomArticle,etat ,ar.idbonsortie
+        from accusereception ar
+            join detailaccusereception dar on ar.idAccusereception=dar.idAccusereception
+            join article a on a.idArticle=dar.idArticle;
