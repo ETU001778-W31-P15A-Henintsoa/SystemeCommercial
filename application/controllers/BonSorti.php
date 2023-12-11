@@ -129,5 +129,36 @@ class BonSorti extends CI_Controller {
             $this->load->view('errors/erreurValidationAchat',$data);
         }
     }
+
+
+    public function versBonSortiePdf($iddepartement, $idbonsortie){
+        $data = $this->BonSortiModele->avoirDonnee($iddepartement, $idbonsortie);    
+        return $this->load->view('BonSortiePDF', $data, true);
+    }
+
+    public function genererPDF() {
+        $idbonsorti = $this->input->get('idbonsorti');
+        $iddepartement = $this->input->get('iddepartement');
+
+        $departement = $this->Generalisation->avoirTableSpecifique("departement", "*", sprintf("iddepartement='%s'", $iddepartement));
+
+        // Créer une instance de votre classe MYPDF
+        $pdf = new TCPDF();
+    
+
+        $nomPDF = "Sortie".date("Y-M-D")."_".$departement[0]->nomdepartement.".pdf";
+        $pdf->AddPage();
+        $data['content'] = $this->versBonSortiePdf($iddepartement, $idbonsorti);
+    
+        // Ajoutez le HTML au PDF0
+        $pdf->writeHTML($data['content'], true, false, true, false, '');
+    
+        // Ajoutez le PDF- aux données
+        $data['pdf'] = $pdf;
+    
+        // Chargez la vue avec les données
+        $this->load->view('BonDeCommandePDF', $data);
+        $pdf->Output($nomPDF, 'I');
+    }
 }
 ?>

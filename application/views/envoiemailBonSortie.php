@@ -1,10 +1,9 @@
         <div class="content-wrapper">   
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Envoyer un </span> Bon Reception</h4>
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Envoyer un </span> Bon Sortie</h4>
 
               <div class="row">
-
 
                 <!-- Merged -->
                 <div class="col-md-12">
@@ -17,7 +16,7 @@
                       } ?>
                     <form action="<?php echo site_url("mail/envoieMailSortie"); ?>" method="post" enctype="multipart/form-data">
                       <input type="hidden" value="<?= $departement[0]->iddepartement ?>" name="iddepartement">
-                      <input type="hidden" value="<?= $_GET['idbonsorti']?>" name="idbonsorti">
+                      <input type="hidden" value="<?= $bonsortie?>" name="idbonsorti">
 
                       <div class="mb-3">
                         <label for="formFile" class="form-label">Message</label>

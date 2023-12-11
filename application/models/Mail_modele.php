@@ -12,7 +12,7 @@
         }
 
         public function updatesortie($idbondortie){
-            $this->Generalisation->miseAJour("bonsortie", "etat=21", sprintf("idbondesortie='%s'", $idreception));
+            $this->Generalisation->miseAJour("bonsortie", "etat=21", sprintf("idbonsortie='%s'", $idbondortie));
         }
 
         // Fonctions Fonctionnelles
@@ -115,6 +115,8 @@
             $mails = $this->Generalisation->avoirTableConditionnee("mail order by idmail");
 
             $this->Generalisation->insertion("message(idmail, libelle, piecejointe)", sprintf("('%s', '%s', '%s')", $mails[count($mails)-1]->idmail, $message, $fichier));
+
+            $this->copierPdf();
 
             return true;
         }

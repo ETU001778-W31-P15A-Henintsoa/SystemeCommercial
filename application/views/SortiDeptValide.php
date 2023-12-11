@@ -40,7 +40,9 @@
 
                         <div class="card" id="detail">
                             <div class="table-responsive text-nowrap">
-                            <table class="table" >
+                             <?php
+                                        for ($j=0; $j <count($sorti[$i]['detail']) ; $j++) { ?>
+                                <table class="table" >
                                 <thead>
                                     <tr>
                                         <th>Article</th>
@@ -49,22 +51,24 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    <?php
-                                        for ($j=0; $j <count($sorti[$i]['detail']) ; $j++) { ?>
+                                   
                                                 <tr>
                                                     <td><?php echo $sorti[$i]['detail'][$j]->nomarticle; ?></td>
                                                     <td><?php echo $sorti[$i]['detail'][$j]->quantite; ?></td>
                                                 </tr>
-                                    <?php }
-                                    ?>
+                                    
                                 </tbody>
                             </table>
-                            </div>
-                        </div>
+                            <div>
+                        <a  href="<?php echo site_url('Mail/versEnvoieMailBonSortie?idbonsorti='.$sorti[$i]['sorti']->idbonsortie).'&iddepartement='.$sorti[$i]['sorti']->iddepartement; ?>">Envoyer Mail</a>
                     </div>
-                        <a  href="<?php echo site_url('BonSorti/validerBonSortiDept?idbonsortie='.$sorti[$i]['sorti']->idbonsortie); ?>">Envoyer Mail</a>
+                    <div>
+                        <a  href="<?php echo site_url('BonSorti/genererPDF?idbonsorti='.$sorti[$i]['sorti']->idbonsortie).'&iddepartement='.$sorti[$i]['sorti']->iddepartement; ?>">Generer PDF</a>
                     </div>
 
+                            <?php } ?>
+                            </div>
+                        </div>
                 </div>
             </div>
         <?php }?>

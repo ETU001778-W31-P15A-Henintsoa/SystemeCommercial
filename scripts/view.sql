@@ -107,7 +107,7 @@ create or replace view v_stock as
 
 -------------------------------------------v_stockArticle---------------------------------------------------
 create or replace view v_stockArticle as 
-    select a.*,quantite default 0 from article a
+    select a.*,quantite from article a
         left join v_stock s on a.idArticle=s.idArticle;
 
 ----------------------------------------------07 decembre Fiderana--------------------------------------------------

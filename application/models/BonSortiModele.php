@@ -24,6 +24,16 @@ date_default_timezone_set('Africa/Nairobi'); // Remplacez 'Africa/Nairobi' par l
             return $detailsortie;
         }
 
+        public function avoirSortiValideDeptUnitaire($iddepartement, $idsortie){
+            $sortie=$this->Generalisation->avoirTableSpecifique("v_bonSortie","*", sprintf(" iddepartement='%s' and idbonsortie='%s' and etat=11", $iddepartement, $idsortie));
+            $detailsortie=array();
+            for ($i=0; $i <count($sortie); $i++) { 
+                $detailsortie[$i]['sorti']=$sortie[$i];
+                $detailsortie[$i]['detail']=$this->Generalisation->avoirTableSpecifique("v_detailBonsortieDept","*"," idbonsortie='".$sortie[$i]->idbonsortie."'");
+            }
+            return $detailsortie;
+        }
+
         public function avoirdetailSortiSpecifique($idSorti){
             $sortie=$this->Generalisation->avoirTableSpecifique("bonsortie","*"," idbonsortie='".$idSorti."'");
             $detailsortie=array();
@@ -87,6 +97,13 @@ date_default_timezone_set('Africa/Nairobi'); // Remplacez 'Africa/Nairobi' par l
             return $quantiteSup;
         }
 
+
+        public function avoirDonnee($iddepartement, $idbonsorti){
+            $articleAQuantite= $this->avoirSortiValideDeptUnitaire($iddepartement, $idbonsorti);
+            $data = array();
+            $data['articles'] = $articleAQuantite;
+            return $data;
+        }
         
     }
 ?>
