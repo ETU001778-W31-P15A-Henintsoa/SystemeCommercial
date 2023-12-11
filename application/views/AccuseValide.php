@@ -45,6 +45,8 @@
 
                         <div class="card" id="detail">
                             <div class="table-responsive text-nowrap">
+                            <?php
+                                        for ($j=0; $j <count($accuse[$i]['detail']) ; $j++) { ?>
                             <table class="table" >
                                 <thead>
                                     <tr>
@@ -54,22 +56,23 @@
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                    <?php
-                                        for ($j=0; $j <count($accuse[$i]['detail']) ; $j++) { ?>
+                                  
                                                 <tr>
                                                     <td><?php echo $accuse[$i]['detail'][$j]->nomarticle; ?></td>
                                                     <td><?php echo $accuse[$i]['detail'][$j]->quantite; ?></td>
-                                                </tr>
-                                    <?php }
-                                    ?>
+                                    </tr>
                                 </tbody>
                             </table>
-                            </div>
-                        </div>
-                    </div>
-                        <a  href="<?php echo site_url('AccuseReception/validerAccuseReception?idaccuse='.$accuse[$i]['accuse']->idaccusereception); ?>">Convertir en PDF</a>
+                            <hr>                            </div>
+                        <a  href="<?php echo site_url('AccuseReception/genererPDF?idaccuse='.$accuse[$i]['accuse']->idaccusereception); ?>">Convertir en PDF</a>
                         <a  href="<?php echo site_url('AccuseReception/annuler'); ?>">Annuler </a>
                     </div>
+                            
+                                    <?php }
+                                    ?>
+                            </div>
+                        </div>
+                  
 
                 </div>
             </div>

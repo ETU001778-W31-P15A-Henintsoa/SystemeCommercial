@@ -131,9 +131,14 @@
             // var_dump($mail);
             $messages = $this->Generalisation->avoirTableConditionnee(sprintf("v_mailmessage where (envoyeur='%s' and destinataire='%s') or (envoyeur='%s' and destinataire='%s') order by dateenvoie", $mail->idadressemail, $fournisseur->idadressemail, $fournisseur->idadressemail, $mail->idadressemail));
             
+            // var_dump($mail); 
+
             foreach($messages as $message){
                 $message->etat = 0;
                 $message->p = 0;
+                
+                // echo $message->envoyeur;
+                // echo $mail->idadressemail; 
                 if($message->envoyeur == $mail->idadressemail){
                     $message->etat = 1;
                 }
@@ -141,6 +146,7 @@
                     $message->p = 1;
                 }
             }
+            // var_dump($messages);
             return $messages;
         }
 

@@ -34,7 +34,6 @@
                   <div class="card mb-3" id="conteneur-message">
                     <p style="color: grey;"><?= $taille ?></p>
                     <?php
-                    // var_dump($messages); 
                     foreach($messages as $message){ 
                         if($message->etat==1){
                         ?>

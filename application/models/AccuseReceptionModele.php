@@ -37,5 +37,27 @@
             }
             return $daccuse;
         } 
+
+        public function avoirValideAffichage($idaccuser){
+            $accuse=$this->Generalisation->avoirTableSpecifique("accusereception","*"," etat=11 and idaccusereception='".$idaccuser."'");
+            $daccuse=array();
+            for ($i=0; $i <count($accuse); $i++) { 
+                $daccuse[$i]['accuse']=$accuse[$i];
+                $daccuse[$i]['detail']=$this->Generalisation->avoirTableSpecifique("v_detailaccusereception","*"," idaccusereception='".$accuse[$i]->idaccusereception."'");
+            }
+            return $daccuse;
+        } 
+
+        public function avoirDonnee($idaccuse){
+            $articleAQuantiteanormal = $this->verifierNombre($idaccuse);
+            $detailEntre=$this->avoirValideAffichage($idaccuse);
+
+            $data = array();
+
+            $data['entree'] = $detailEntre;
+            $data['anormal'] = $articleAQuantiteanormal;
+            
+            return $data;        
+        }
     }
 ?>

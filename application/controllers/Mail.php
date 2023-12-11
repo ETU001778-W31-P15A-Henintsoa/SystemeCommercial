@@ -176,9 +176,10 @@ class Mail extends CI_Controller {
 		
 		$destinataire = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("idsociete='%s'", $iddepartement));
 
-		$lenvoyeur = $this->Generalisation->avoirTableSpecifique('v_posteemploye', '*', sprintf("idemploye='%s'", $_SESSION['user']));
-
-		$envoyeur = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("idsociete='%s'", $lenvoyeur[0]->iddepartement));
+		$employe = $this->Generalisation->avoirTableSpecifique("v_posteemploye", "*", sprintf("idemploye='%s'", $_SESSION['user']));
+		
+		$envoyeur = $this->Generalisation->avoirTableSpecifique("adressemail", "*", sprintf("idsociete='%s'", $employe[0]->iddepartement));
+		
 
 		$data['messages'] = $this->Mail_modele->message($envoyeur[0], $destinataire[0]);
 
