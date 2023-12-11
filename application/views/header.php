@@ -285,11 +285,6 @@
                       <div data-i18n="Basic">Validation</div>
                     </a>
                   </li>
-                  <li class="menu-item">
-                    <a href="<?php echo site_url('BonEntre/versEntreValide'); ?>" class="menu-link">
-                      <div data-i18n="Basic">Entrees Valides</div>
-                    </a>
-                  </li>
                 </ul>
               </li>
 
@@ -307,6 +302,11 @@
                   <li class="menu-item">
                     <a href="<?php echo site_url('BonSorti/avoirSortiNonValideDept'); ?>" class="menu-link">
                       <div data-i18n="Basic">Validation</div>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="<?php echo site_url('BonSorti/avoirSortiValideDept'); ?>" class="menu-link">
+                      <div data-i18n="Basic">Liste des sortis validés</div>
                     </a>
                   </li>
                 </ul>
@@ -335,6 +335,7 @@
                   </li>
                 </ul>
               </li>
+
 
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
