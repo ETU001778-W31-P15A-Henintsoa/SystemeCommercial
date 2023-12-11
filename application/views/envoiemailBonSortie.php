@@ -17,7 +17,7 @@
                       } ?>
                     <form action="<?php echo site_url("mail/envoieMailSortie"); ?>" method="post" enctype="multipart/form-data">
                       <input type="hidden" value="<?= $departement[0]->iddepartement ?>" name="iddepartement">
-                      <input type="hidden" value="<?= $_GET['idbonsortie']?>" name="idbonsortie">
+                      <input type="hidden" value="<?= $_GET['idbonsorti']?>" name="idbonsorti">
 
                       <div class="mb-3">
                         <label for="formFile" class="form-label">Message</label>

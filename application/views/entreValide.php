@@ -26,8 +26,9 @@
                                                 <td><?php echo $valide[$j]->idbonentre ?></td>
                                                 <td><?php echo $valide[$j]->dateentre; ?></td>
                                                 <td><?php echo $valide[$j]->idbonreception; ?></td>
-                                                <td><a href= <?= site_url("Mail/versEnvoieMailBonEntree?idbonentre=".$valide[$j]->idbonentre)?>>Envoyer</a></td>
-                                                <td><a href= <?= site_url("BonEntre/genererPDF?idbonentre".$valide[$j]->idbonentre); ?>>Gerener PDF</a></td>
+                                                <!-- <td><a href= <?php // site_url("Mail/versEnvoieMailBonEntree?idbonentre=".$valide[$j]->idbonentre)?>>Envoyer</a></td> -->
+                                                <td><a href= <?= site_url("BonEntre/versDetailBonEntree?idbonentre=".$valide[$j]->idbonentre); ?>>Details</a></td>
+                                                <td><a href= <?= site_url("BonEntre/genererPDF?idbonentre=".$valide[$j]->idbonentre); ?>>Gerener PDF</a></td>
                                             </tr>
                                         <?php }
                                 ?>

@@ -1,12 +1,12 @@
 <?php
-    // var_dump($anormal); 
+    // var_dump($entree); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bon de Reception</title>
+    <title>Bon de entree</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -80,18 +80,18 @@
 </head>
 <body>
     <header>
-        <h1>Bon de Reception</h1>
+        <h1>Bon d'Entree</h1>
     </header>
 
     <section>
         <div class="order-summary">
-            <h2>Récapitulatif de la reception </h2>
+            <h2>Récapitulatif de l'Entree </h2>
 
             <!-- Informations sur la commande -->
-            <p><strong>Date de reception:</strong> <?= $reception[0]->datereception ?></p>
-            <p><strong>Envoyeur : </strong> Magasine </p>
-            <p><strong>Destinataire : </strong> Logistique </p>
-            <p><strong>Identifiant Bon reception : </strong> <?= $reception[0]->idbondecommande ?> </p>
+            <p><strong>Date d'entree:</strong> <?= $entree[0]->dateentre ?></p>
+            <!-- <p><strong>Envoyeur : </strong> Magasine </p>
+            <p><strong>Destinataire : </strong> Logistique </p> -->
+            <p><strong>Identifiant Bon entree : </strong> <?= $entree[0]->idbonreception ?> </p>
 
             <table>
                 <thead>
@@ -101,7 +101,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($reception as $r){ 
+                    <?php foreach($entree as $r){ 
                         if($r->quantite != 0){?>
                         <tr>
                             <td><?= $r->nomarticle ?></td>
@@ -111,8 +111,11 @@
                     } ?>
                 </tbody>
             </table>
-                <h5 style="text-decoration: underline;">Non equivalence dans la reception</h5>
-            <table>
+            <br>
+            <br>
+                <h5 style="text-decoration: underline;">Non equivalence dans la entree</h5>
+            <br>
+                <table>
                 <thead>
                     <tr>
                         <th>Designation</th>

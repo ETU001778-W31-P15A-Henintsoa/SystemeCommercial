@@ -98,6 +98,14 @@ class BonEntre extends CI_Controller {
         $this->load->view('entreValide', $data);
     }
 
+    public function versDetailBonEntree(){
+        $idbonentre = $this->input->get('idbonentre');
+        $data = $this->BonEntreModele->avoirDonnee($idbonentre);
+        // var_dump($data);
+        $this->load->view('header');
+        $this->load->view('detailEntree', $data);
+    }
+
     public function versBonEntrePdf($idbonentre){
         $data = $this->BonEntreModele->avoirDonnee($idbonentre);    
         return $this->load->view('BonEntrePDF', $data, true);

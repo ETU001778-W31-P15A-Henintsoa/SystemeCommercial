@@ -8,11 +8,7 @@
             $detailReception=$this->Generalisation->avoirTableSpecifique("v_detailBonReception","*"," idBonReception='".$detailEntre[0]->idbonreception."' order by idArticle desc");
             $articleAQuantiteanormal=array();
             $j=0;
-            echo count($detailEntre);
-            echo count($detailReception);
             for ($i=0; $i <count($detailReception) ; $i++) {
-                echo $detailReception[$i]->quantite."recu";
-                echo $detailEntre[$i]->quantite."entre";
                 if($detailReception[$i]->quantite!=$detailEntre[$i]->quantite){
                     $articleAQuantiteanormal[$j]['article']=$detailEntre[$i]->nomarticle;
                     $articleAQuantiteanormal[$j]['quantiteDemande']=$detailReception[$i]->quantite;

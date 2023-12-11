@@ -86,5 +86,7 @@ date_default_timezone_set('Africa/Nairobi'); // Remplacez 'Africa/Nairobi' par l
             }
             return $quantiteSup;
         }
+
+        
     }
 ?>
